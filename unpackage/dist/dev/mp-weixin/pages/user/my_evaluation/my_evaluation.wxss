@@ -1,0 +1,55 @@
+
+.shop_info{
+	width: 700rpx;
+	border-radius: 10rpx;
+	padding: 25rpx;
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	        align-items: center;
+	border-bottom: 1rpx solid #E5E5E5;
+	padding-bottom: 25rpx;
+}
+.shop_info image{
+	width: 115rpx;
+	height: 115rpx;
+	margin-right:25rpx;
+}
+sunui-star{
+	margin: 0rpx 50rpx;
+}
+textarea{
+	width: 700rpx;
+	height: 150rpx;
+	margin: 0 auto;
+}
+.add_pic{
+	width: 700rpx;
+	height: 180rpx;
+	margin: 0 auto;
+	overflow: hidden;
+	border-bottom: 1rpx solid #E5E5E5;
+	padding-bottom: 20rpx;
+}
+.score{
+	width: 700rpx;
+	margin: 0 auto;
+	margin-bottom: 100rpx;
+}
+.score .title{
+	width: 700rpx;
+	display: block;
+	margin: 25rpx 0rpx;
+}
+.score .score_list{
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	        align-items: center;
+	margin: 5rpx 0rpx;
+}
+

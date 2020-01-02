@@ -1,0 +1,339 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* .imageUploadContainer{
+	padding: 10upx 5upx;
+	margin: 10upx 5upx;
+} */
+.dragging{
+	-webkit-transform: scale(1.2);
+	        transform: scale(1.2)
+}
+.imageUploadList{
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-flex-wrap: wrap;
+	        flex-wrap: wrap;
+}
+.imageItem, .imageUpload{
+	width: 140rpx;
+	height: 140rpx;
+	/* margin: 10upx; */
+	margin: 30rpx 25rpx 25rpx 4rpx;
+}
+.imageDel{
+	position: relative;
+	left: 120rpx;
+	bottom: 165rpx;
+	background-color: rgba(0,0,0,0.5);
+	width: 35rpx;
+	height: 32rpx;
+	text-align: center;
+	line-height: 30rpx;
+	border-radius: 50rpx;
+	color: white;
+	font-size: 30rpx;
+	padding-bottom: 2rpx;
+}
+.imageItem image, .moveImage{
+	width: 140rpx;
+	height: 140rpx;
+	border-radius: 8rpx;
+}
+.imageUpload{
+	line-height: 130rpx;
+	text-align: center;
+	font-size: 140rpx;
+	color: #D9D9D9;
+	border: 1px solid #D9D9D9;
+	border-radius: 8rpx;
+}
+.moveImage{
+	position: absolute;
+}
+

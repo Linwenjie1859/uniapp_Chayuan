@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "查看物流",
+  "usingComponents": {
+    "ali": "/components/WuLiu-step"
+  }
+}

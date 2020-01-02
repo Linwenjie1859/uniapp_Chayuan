@@ -1,0 +1,45 @@
+
+.info_edit{
+	width: 660rpx;
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	        align-items: center;
+	margin: 70rpx auto;
+}
+.info_edit .portrait{
+	width: 90rpx;
+	height: 90rpx;
+	border-radius: 50%;
+}
+.info_edit text{
+	display: block;
+	width: 450rpx;
+	margin-left: 26rpx;
+}
+.info_list{
+	width: 660rpx;
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	        align-items: center;
+	margin: 0 auto;
+	margin-bottom: 80rpx;
+}
+.info_list text{
+	display: block;
+	width: 625rpx;
+}
+.info_list image{
+	width: 35rpx;
+	height: 35rpx;
+}
+.supplement{
+	margin-bottom: 120rpx;
+}
+
+

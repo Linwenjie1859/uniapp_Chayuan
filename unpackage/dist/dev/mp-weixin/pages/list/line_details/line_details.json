@@ -1,0 +1,8 @@
+{
+  "navigationBarTitleText": "线路详情",
+  "usingComponents": {
+    "uni-popup": "/components/uni-popup/uni-popup",
+    "tabs": "/components/wiszx-tabs/tabs",
+    "mx-date-picker": "/components/mx-datepicker/mx-datepicker"
+  }
+}

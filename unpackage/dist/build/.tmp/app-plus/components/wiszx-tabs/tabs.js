@@ -1,0 +1,10 @@
+(global["webpackJsonp"]=global["webpackJsonp"]||[]).push([["components/wiszx-tabs/tabs"],{"0561":function(t,n,a){"use strict";var r=a("d476"),e=a.n(r);e.a},"6cc9":function(t,n,a){"use strict";Object.defineProperty(n,"__esModule",{value:!0}),n.default=void 0;var r={name:"Tabs",data:function(){return{id:"tab_0",start:0}},props:{TabList:{default:function(){return[]},type:Array},currentTab:{default:0,type:Number}},computed:{transformX:function(){var t=this.currentTab;return"translate3d(".concat(100*t,"%, 0px, 0px)")},transformXx:function(){var t=this.currentTab;return"translate3d(-".concat(100*t,"%, 0px, 0px)")}},methods:{tabChange:function(t){this.currentTab!=t&&(this.$emit("tabs",t),this.id="tab_".concat(t))},touchstart:function(t){this.start=t.touches[0].clientX},touchend:function(t){var n=t.changedTouches[0].clientX;n-this.start>100&&this.currentTab>=1?this.tabChange(this.currentTab-1):this.start-n>100&&this.currentTab<this.TabList.length-1&&this.tabChange(this.currentTab+1)}}};n.default=r},"7a8f":function(t,n,a){"use strict";var r=function(){var t=this,n=t.$createElement;t._self._c},e=[];a.d(n,"a",function(){return r}),a.d(n,"b",function(){return e})},c81f:function(t,n,a){"use strict";a.r(n);var r=a("6cc9"),e=a.n(r);for(var u in r)"default"!==u&&function(t){a.d(n,t,function(){return r[t]})}(u);n["default"]=e.a},d476:function(t,n,a){},f86d:function(t,n,a){"use strict";a.r(n);var r=a("7a8f"),e=a("c81f");for(var u in e)"default"!==u&&function(t){a.d(n,t,function(){return e[t]})}(u);a("0561");var c=a("2877"),i=Object(c["a"])(e["default"],r["a"],r["b"],!1,null,null,null);n["default"]=i.exports}}]);
+;(global["webpackJsonp"] = global["webpackJsonp"] || []).push([
+    'components/wiszx-tabs/tabs-create-component',
+    {
+        'components/wiszx-tabs/tabs-create-component':(function(module, exports, __webpack_require__){
+            __webpack_require__('6e42')['createComponent'](__webpack_require__("f86d"))
+        })
+    },
+    [['components/wiszx-tabs/tabs-create-component']]
+]);

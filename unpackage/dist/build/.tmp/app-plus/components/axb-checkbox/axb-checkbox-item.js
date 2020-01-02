@@ -1,0 +1,10 @@
+(global["webpackJsonp"]=global["webpackJsonp"]||[]).push([["components/axb-checkbox/axb-checkbox-item"],{1126:function(t,e,n){"use strict";var u=n("2cf2"),a=n.n(u);a.a},"2cf2":function(t,e,n){},"3f84":function(t,e,n){"use strict";var u=function(){var t=this,e=t.$createElement;t._self._c},a=[];n.d(e,"a",function(){return u}),n.d(e,"b",function(){return a})},"9e39":function(t,e,n){"use strict";n.r(e);var u=n("3f84"),a=n("c589");for(var c in a)"default"!==c&&function(t){n.d(e,t,function(){return a[t]})}(c);n("1126");var f=n("2877"),r=Object(f["a"])(a["default"],u["a"],u["b"],!1,null,null,null);e["default"]=r.exports},c589:function(t,e,n){"use strict";n.r(e);var u=n("f70a"),a=n.n(u);for(var c in u)"default"!==c&&function(t){n.d(e,t,function(){return u[t]})}(c);e["default"]=a.a},f70a:function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0}),e.default=void 0;var u=function(t,e,n){var u,a,c,f,r=function r(){var o=(new Date).getTime(),i=o-a;i<e&&i>=0?(clearTimeout(u),u=setTimeout(r,e-i)):(clearTimeout(u),u=null,n||(t.apply(c,f),u||(c=f=null)))};return function(){c=this,f=arguments,a=(new Date).getTime();var o=n&&!u;u||(u=setTimeout(r,e)),o&&(t.apply(c,f),c=f=null)}},a={props:{name:{type:String,default:""},value:{default:null},checked:{type:[Boolean,Number],default:!1}},computed:{widthDefault:function(){return this.name.length<=3},activeStyle:function(){return"background: #f66d3c;color: #ffffff;"},itemStyle:function(){return"background: #f7f7f7;color: #7d7d7d;"}},data:function(){return{}},methods:{handleChange:u(c,200,!0)}};function c(){this.$emit("change",this.value)}e.default=a}}]);
+;(global["webpackJsonp"] = global["webpackJsonp"] || []).push([
+    'components/axb-checkbox/axb-checkbox-item-create-component',
+    {
+        'components/axb-checkbox/axb-checkbox-item-create-component':(function(module, exports, __webpack_require__){
+            __webpack_require__('6e42')['createComponent'](__webpack_require__("9e39"))
+        })
+    },
+    [['components/axb-checkbox/axb-checkbox-item-create-component']]
+]);

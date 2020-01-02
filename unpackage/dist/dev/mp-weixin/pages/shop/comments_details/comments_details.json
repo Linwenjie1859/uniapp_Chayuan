@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "评论详情",
+  "enablePullDownRefresh": true,
+  "usingComponents": {
+    "axb-check-box": "/components/axb-checkbox/axb-checkbox"
+  }
+}

@@ -1,0 +1,11 @@
+
+.img-has-small-size{
+	width: 240rpx;
+	height: 180rpx;
+}
+.img-has-size{
+	width: 750rpx;
+	height: 300rpx;
+}
+
+

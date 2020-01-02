@@ -1,0 +1,2 @@
+setCssToHead([".",[1],"img-has-size.",[1],"data-v-ea257406{ height: ",[0,50],"; width: ",[0,50],"; }\n",],undefined,{path:"./pages/user/confirm_payment/confirm_payment.wxss"})();
+document.dispatchEvent(new CustomEvent("generateFuncReady", { detail: { generateFunc: $gwx('./pages/user/confirm_payment/confirm_payment.wxml') } }));

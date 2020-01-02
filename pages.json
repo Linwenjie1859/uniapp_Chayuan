@@ -1,0 +1,317 @@
+{
+	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+		{
+			"path": "pages/tabber/home/home",
+			"style": {
+				"enablePullDownRefresh": true,
+				"navigationStyle": "custom",
+				"app-plus": {
+					"titleNView": false
+				}
+			}
+		},{ 
+			"path": "pages/login/code_login/code_login",
+			"style": {
+				"navigationStyle": "custom",
+				"app-plus": {
+					"titleNView": false
+				}
+			}
+		}, {
+			"path": "pages/login/pwd_login/pwd_login",
+			"style": {
+				"app-plus": {
+					"titleNView": false
+				},
+				"navigationBarTitleText": "登录注册"
+			}
+		},
+		{
+			"path": "pages/tabber/user/user", 
+			"style": {
+				"navigationStyle": "custom",
+				"app-plus": {
+					"titleNView": false
+				}
+			}
+		},
+		{
+			"path": "pages/list/search_list/search_list",
+			"style": {
+				"navigationStyle": "custom",
+				"app-plus": {
+					"titleNView": false
+				}
+			}
+		}, {
+			"path": "pages/list/search/search",
+			"style": {
+				"navigationStyle": "custom",
+				"app-plus": {
+					"titleNView": false
+				}
+			}
+		}, 
+		{
+			"path": "pages/shop/shop_commodity/shop_commodity",
+			"style": {
+				"navigationBarTitleText": "店铺详情",
+				"enablePullDownRefresh":true
+			}
+		},
+		{
+			"path": "pages/list/line_details/line_details",
+			"style": {
+				"navigationBarTitleText": "线路详情"
+			}
+		}, {
+			"path": "pages/list/goode_details/goode_details",
+			"style": {
+				"navigationStyle": "custom",
+				"app-plus": {
+					"titleNView": false
+				}
+			}
+		}, {
+			"path": "pages/tabber/fengyang_fair/fengyang_fair",
+			"style": {
+				"navigationStyle": "custom",
+				"app-plus": {
+					"titleNView": false
+				}
+			}
+		}, {
+			"path": "pages/tabber/benefit_products/benefit_products",
+			"style": {
+				"navigationStyle": "custom",
+				"app-plus": {
+					"titleNView": false
+				}
+			}
+		}, {
+			"path": "pages/list/ideal_life/ideal_life",
+			"style": {
+				"navigationBarTitleText": "理想生活"
+			}
+		}, {
+			"path": "pages/list/agricultural_specialty/agricultural_specialty",
+			"style": {
+				"navigationBarTitleText": "热门商品",
+				"enablePullDownRefresh": true
+			}
+		},
+		{
+			"path": "pages/tabber/shopping_cart/shopping_cart",
+			"style": {
+				"navigationBarTitleText": "购物车",
+				"enablePullDownRefresh": true
+			}
+		}, {
+			"path": "pages/list/flowering_seasons/flowering_seasons",
+			"style": {
+				"navigationBarTitleText": "花开四季"
+			}
+		}, {
+			"path": "pages/list/fruit_garden/fruit_garden",
+			"style": {
+				"navigationBarTitleText": "果香满园"
+			}
+		}, {
+			"path": "pages/list/fengyang_scenery/fengyang_scenery",
+			"style": {
+				"navigationBarTitleText": "漫游厦门"
+			}
+		},
+		{
+			"path": "pages/list/more_list/more_list",
+			"style": {
+				"navigationBarTitleText": "漫游厦门",
+				"enablePullDownRefresh": true
+			}
+		}
+		, {
+			"path": "pages/user/my_evaluation/my_evaluation",
+			"style": {
+				"navigationBarTitleText": "发布评价"
+			}
+		}, {
+			"path": "pages/user/my_coupon/my_coupon",
+			"style": {
+				"navigationBarTitleText": "优惠券",
+				"enablePullDownRefresh": true
+			}
+		}, 
+		{
+			"path": "pages/user/get_coupon/get_coupon",
+			"style": {
+				"navigationBarTitleText": "领取优惠券",
+				"enablePullDownRefresh": true
+			}
+		},{
+			"path": "pages/shop/comments_details/comments_details",
+			"style": {
+				"navigationBarTitleText": "评论详情",
+				"enablePullDownRefresh": true
+			}
+		}, {
+			"path": "pages/shop/shop_collection_coupon/shop_collection_coupon",
+			"style": {
+				"navigationBarTitleText": "优惠券详情",
+				"enablePullDownRefresh": true
+			}
+		}, {
+			"path": "pages/user/confirmation_transaction/confirmation_transaction",
+			"style": {
+				"navigationBarTitleText": "确认交易"
+			}
+		}, {
+			"path": "pages/user/confirm_payment/confirm_payment",
+			"style": {
+				"navigationBarTitleText": "确认支付"
+			}
+		}, {
+			"path": "pages/user/add_address/add_address",
+			"style": {
+				"navigationBarTitleText": "添加新地址"
+			}
+		}, {
+			"path": "pages/user/confirm_order/confirm_order",
+			"style": {
+				"navigationBarTitleText": "确认订单"
+			}
+		}, {
+			"path": "pages/user/admin_address/admin_address",
+			"style": {
+				"navigationBarTitleText": "管理收货地址"
+			}
+		},
+		{
+			"path": "pages/user/order_details/order_details",
+			"style": {
+				"navigationBarTitleText": "订单详情"
+			}
+		}, {
+			"path": "pages/user/my_order/my_order",
+			"style": {
+				"navigationBarTitleText": "我的订单" 
+			}
+		}, {
+			"path": "pages/user/my_news/my_news",
+			"style": {
+				"navigationBarTitleText": "我的消息"
+			}
+		},
+		
+		{
+			"path": "pages/shop/shop_logistics/shop_logistics",
+			"style": {
+				"navigationBarTitleText": "查看物流"
+			}
+		},
+		{
+			"path": "pages/shop/my_collection/my_collection",
+			"style": {
+				"navigationBarTitleText": "我的收藏",
+				"enablePullDownRefresh": true
+			}
+		},
+		{
+			"path": "pages/shop/shop_collection/shop_collection",
+			"style": {
+				"navigationBarTitleText": "关注店铺"
+			}
+		},
+		{
+			"path": "pages/login/modify_nicknames/modify_nicknames",
+			"style": {
+				"navigationBarTitleText": "修改昵称"
+			}
+		},
+		{
+			"path": "pages/login/safety_monitoring/safety_monitoring",
+			"style": {
+				"navigationBarTitleText": "安全监测"
+			}
+		},
+		{
+			"path": "pages/login/reset_password/reset_password",
+			"style": {
+				"navigationBarTitleText": "重置密码"
+			}
+		},
+		{
+			"path": "pages/user/info_edit/info_edit",
+			"style": {
+				"navigationBarTitleText": "编辑信息"
+			}
+		},
+		{
+			"path": "pages/login/register/register",
+			"style": {
+				"navigationBarTitleText": "注册"
+			}
+		},  {
+			"path": "pages/user/my_info/my_info",
+			"style": {
+				"navigationBarTitleText": "设置"
+			}
+		}
+	    ,{
+            "path" : "pages/shop/successful_payment/successful_payment",
+            "style" : {"navigationBarTitleText": "支付"}
+        }
+        ,{
+            "path" : "pages/list/news_detail/news_detail",
+            "style" : {"navigationBarTitleText": "消息"}
+        }
+        ,{
+            "path" : "pages/list/list_detail/list_detail",
+            "style" : {"navigationBarTitleText": "文章详情"}
+        }
+        ,{
+            "path" : "pages/map/map",
+            "style" : {"navigationBarTitleText": "地图导航"}
+        }
+        ,{
+            "path" : "pages/subscribe/subscribe",
+            "style" : {}
+        }
+    ],
+	"globalStyle": {
+		"navigationBarBackgroundColor": "#FFFFFF",
+		"navigationBarTextStyle":"black"
+	},
+	"tabBar": {
+		"color": "#999999",
+		"selectedColor": "#1296db",
+		"borderStyle": "black",
+		"backgroundColor": "#ffffff",
+		"list": [{
+				"pagePath": "pages/tabber/home/home",
+				"iconPath": "/static/index_default.png",
+				"selectedIconPath": "/static/index_check.png",
+				"text": "生态圈" 
+			},
+			{
+				"pagePath": "pages/subscribe/subscribe",
+				"iconPath": "/static/play_default.png",
+				"selectedIconPath": "/static/play_check.png",
+				"text": "我的庄园"
+			},
+			{
+				"pagePath": "pages/tabber/user/user",
+				"iconPath": "/static/people_default.png",
+				"selectedIconPath": "/static/people_check.png",
+				"text": "个人中心"
+			}
+		]
+	},
+	"condition": { //模式配置，仅开发期间生效
+		"current": 0, //当前激活的模式（list 的索引项）
+		"list": [{
+			"name": "Chayuan", //模式名称  
+			"path": "pages/subscribe/subscribe" //启动页面，必选
+		}]
+	} 
+}
+ 

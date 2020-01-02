@@ -1,0 +1,27 @@
+
+.radio{
+	display: inline-block;
+	height: 60rpx;
+	line-height: 60rpx;
+	padding: 0 22rpx;
+	background: #FFFFFF;
+	border: 1px solid #F2F2F2;
+	border-radius: 10rpx;
+	font-size: 26rpx;
+	color: #999999;
+	box-sizing: border-box;
+}
+.radio:not(:last-child){
+	 margin: 0 20rpx 30rpx 0;
+}
+.radio-primay{
+	 background: #FF3700 !important;
+	 color: #FFFFFF !important;
+	 border: 1px solid #3c7ef6 !important;
+}
+.radio-width-default{
+	 width: 120rpx;
+	 text-align: center;
+	 padding: 0rpx;
+}
+

@@ -1,0 +1,27 @@
+
+.successful{
+	width: 700rpx;
+	margin: 0 auto;
+	text-align: center;
+	margin-top: 200rpx;
+	position: relative;
+}
+.successful image{
+	width: 200rpx;
+	height: 200rpx;
+	margin: 0 auto;
+}
+.successful text{
+	display: block;
+	width: 700rpx;
+	margin: 100rpx auto;
+	text-align: center;
+}
+.successful .btn{
+	width: 200rpx;
+	position: absolute;
+	top: 800rpx;
+	left: 50%;
+	margin-left: -150rpx;
+}
+

@@ -1,0 +1,133 @@
+<template>
+	<view class="flex flex-direction bg-white" style="height: 100vh;">
+		<view class="flex justify-center align-center padding-tb-xl flex-sub">
+			<view class="cu-avatar round xl"></view> 
+		</view>
+		<view class="flex flex-direction align-start padding-lr-xl margin-lr-xl flex-treble">
+			<view class="margin-top-xl solid-bottom">
+				<input type="text" placeholder="请输入账号名称" v-model="phone" style="width: 550rpx;"/>
+			</view>
+			<view class="margin-top-xl solid-bottom">
+				<input type="password" value="" placeholder="请输入账号名称" v-model="pwd" style="width: 550rpx;"/>
+			</view>
+			<view class="flex justify-end self-end align-center text-df text-grey margin-top">
+				<text class="margin-right-sm" @tap="register">验证码登录</text>
+				<text @tap="reset_password">忘记密码?</text>
+			</view>
+			<view class="flex margin-top-xl" style="width: 550rpx;">
+				<button type="primary" class="round bg-gradual-green" style="width: 550rpx;" @tap="login">登录</button>
+			</view>
+		</view>
+		<view class="flex padding-lr-xl margin-lr-xl flex-twice">
+			<view class="flex flex-direction " style="width: 550rpx;">
+				<view class="flex justify-center solid-bottom padding-bottom-sm margin-bottom">
+					<text class="text-grey">第三方账号登录</text>
+				</view>
+				<view class="flex justify-around text-sm text-green align-center">
+					<view class="flex flex-direction align-center">
+						<image src="/static/weixin_icon.png" mode="" class="height-width-sl"></image>
+						<text class="margin-top-sm">微信</text>
+					</view>
+					<view class="flex flex-direction align-center">
+						<image src="/static/qq_icon.png" mode="" class="height-width-sl"></image>
+						<text class="margin-top-sm">QQ</text>
+					</view>
+					<view class="flex flex-direction align-center">
+						<image src="/static/weibo_icon.png" mode="" class="height-width-sl"></image>
+						<text class="margin-top-sm">微博</text>
+					</view>
+				</view>
+			</view>
+		</view>
+	</view>
+</template>
+
+<script>
+import { mapState, mapMutations } from 'vuex';
+export default {
+	data() {
+		return {
+			StatusBarHeight:this.StatusBarHeight,
+			StatusAddNav:this.StatusAddNav,
+			type: 1,
+			showBack: true,
+			phone: '',
+			pwd: ''
+		};
+	},
+	onLoad() {
+		
+	},
+	methods: {
+		// 跳转
+		code_login(e) {
+			this.type = 2;
+		},
+		pwd_login(e) {
+			this.type = 1;
+		},
+		reset_password(e) {
+			uni.navigateTo({
+				url: '/pages/login/safety_monitoring/safety_monitoring'
+			});
+		},
+		register(e) {
+			uni.navigateTo({
+				url: '/pages/login/register/register'
+			});
+		},
+		login() {
+			let that = this;
+			if (!that.checkMobile(that.phone)) {
+				that.Tips({ title: '请输入正确的手机号' });
+				return;
+			}
+			if (that.pwd == '') {
+				that.Tips({ title: '请输入密码' });
+				return;
+			}
+			that.basePost(
+				that.U({ c: 'login', a: 'login_by_mobile_pwd' }),
+				{
+					phone: that.phone,
+					pwd: that.pwd
+				},
+				function(res) {
+					let data=res.data;
+					that.loginStore(data);
+					console.log(data.phone);
+					that.Tips({ title: '登录成功！' }, { tab: 3, url: 2 });
+					uni.setStorage({
+						key:'data',
+						data:data
+					});
+				},
+				function(res) {
+					that.Tips({ title: '账号或密码不正确。' });
+				}
+			);
+			// uni.navigateTo({
+			// 	url: "/pages/tabber/home/home"
+			// })
+		},
+		//返回上一页
+		back() {
+			uni.navigateBack();
+		},
+		...mapMutations(['loginStore'])
+	}
+};
+</script>
+
+<style scoped>
+	.height-width-sl{
+		height: 60rpx;
+		width: 60rpx;
+	}
+.position-relative{
+	position: relative;
+}
+.position-absolute{
+	position: absolute;
+}
+</style>

@@ -1,0 +1,20 @@
+
+.radio {
+	width: 145rpx;
+	display: inline-block;
+	height: 60rpx;
+	line-height: 60rpx;
+	border-radius: 50rpx;
+	font-size: 24rpx;
+	box-sizing: border-box;
+	text-align: center;
+	margin: 0rpx 0rpx 0rpx 25rpx;
+}
+.radio:not(:last-child) {
+	margin: 0 20rpx 30rpx 0;
+}
+.radio-width-default {
+	text-align: center;
+}
+
+

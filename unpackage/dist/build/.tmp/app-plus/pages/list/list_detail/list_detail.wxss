@@ -1,0 +1,18 @@
+
+.has-bg.data-v-56cca986{
+	background: rgba(135,153,163,0.1);
+}
+.view-has-icon.data-v-56cca986{
+	width: 310rpx;
+	margin:10rpx 7rpx;
+}
+.view-has-padding.data-v-56cca986{
+	padding: 3rpx 8rpx;
+}
+.img-has-height.data-v-56cca986{
+	height: 380rpx;
+	width: 710rpx;
+	margin:10rpx 0;
+}
+
+

@@ -1,0 +1,17 @@
+
+.bg-has-gray.data-v-51c1fe79{
+		background-color: rgba(255,255,255,0.3);
+}
+.text-has-size.data-v-51c1fe79{
+		font-size: 68rpx;
+}
+.text-price.data-v-51c1fe79::before{
+		font-size: 60%;
+}
+.has-radius.data-v-51c1fe79 {
+	border-radius: 18rpx;
+}
+.has-padding-sm.data-v-51c1fe79 {
+	padding: 7rpx 11rpx;
+}
+

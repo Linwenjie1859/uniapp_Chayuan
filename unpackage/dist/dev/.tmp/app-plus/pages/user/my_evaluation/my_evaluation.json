@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "发布评价",
+  "usingComponents": {
+    "sunui-star": "/components/sunui-star/sunui-star",
+    "robby-image-upload": "/components/robby-image-upload/robby-image-upload"
+  }
+}

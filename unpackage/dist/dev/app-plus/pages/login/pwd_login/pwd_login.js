@@ -1,0 +1,2 @@
+setCssToHead([".",[1],"height-width-sl.",[1],"data-v-47316647{ height: ",[0,60],"; width: ",[0,60],"; }\n.",[1],"position-relative.",[1],"data-v-47316647{ position: relative; }\n.",[1],"position-absolute.",[1],"data-v-47316647{ position: absolute; }\n",],undefined,{path:"./pages/login/pwd_login/pwd_login.wxss"})();
+document.dispatchEvent(new CustomEvent("generateFuncReady", { detail: { generateFunc: $gwx('./pages/login/pwd_login/pwd_login.wxml') } }));

@@ -1,0 +1,1 @@
+<view><block wx:if="{{flag}}"><web-view src="{{'http://api.map.baidu.com/marker?location='+mapInfo.lat+','+mapInfo.lng+'&title='+mapInfo.store_name+'&content='+mapInfo.store_name+'&output=html&src=webapp.baidu.openAPIdemo'}}"></web-view></block></view>
