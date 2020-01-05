@@ -3,6 +3,7 @@ import App from './App'
 // 星星评价
 import sunUiStar from './components/sunui-star/sunui-star.vue'
 import uniLoadMore from '@/components/uni-load-more/uni-load-more.vue';
+import numScroll from '@/components/numScroll.vue';
 // 引入插件
 import util from '@/common/util.js'
 
@@ -13,14 +14,14 @@ Vue.config.productionTip = false
 // 星星评价
 Vue.component('sunui-star',sunUiStar);
 Vue.component('uni-load-more',uniLoadMore);
+Vue.component('num-scroll',numScroll);
 App.mpType = 'app'
 
 // Vue.prototype.navHeight = 0;
 Vue.prototype.routineStyle = '#ffffff'; 
 Vue.prototype.openPages = '';
 Vue.prototype.urlImages = '';
-// Vue.prototype.url = 'http://www.xiamen.com';
-Vue.prototype.url = 'http://xiamen.vswxx.top'; 
+Vue.prototype.url = 'http://www.chayuan.com';
 // Vue.prototype.token = '';
 // Vue.prototype.isLog = true;
 // Vue.prototype.MyMenus = [];
@@ -36,6 +37,11 @@ Vue.filter('numIsInteger',function(value){
 
 Vue.filter('subString',function(value){
 	return value.substring(0,1);
+})
+
+Vue.filter('subStringToCity',function(value){
+	console.log(value);
+	return value.substr(0,value.indexOf('/'));
 })
 
 App.mpType = 'app'

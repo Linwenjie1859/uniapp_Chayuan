@@ -1,0 +1,25 @@
+
+.has-sub-margin-xs.data-v-11ca4fec{
+		margin-left: -10rpx;
+}
+.text-has-border.data-v-11ca4fec {
+		max-width: 80rpx;
+		height: 49rpx;
+		text-align: center;
+		border-top: 1px solid #e0e0e0;
+		border-bottom: 1px solid #e0e0e0;
+		padding: 5rpx 10rpx;
+}
+.text-has-border-right.data-v-11ca4fec {
+		border: 1px solid #e0e0e0;
+		border-top-right-radius: 8rpx;
+		border-bottom-right-radius: 8rpx;
+		padding: 5rpx 20rpx;
+}
+.text-has-border-left.data-v-11ca4fec {
+		border: 1px solid #e0e0e0;
+		border-top-left-radius: 8rpx;
+		border-bottom-left-radius: 8rpx;
+		padding: 5rpx 20rpx;
+}
+

@@ -354,6 +354,7 @@ var interceptors = {
 
 
 var baseApi = /*#__PURE__*/Object.freeze({
+  __proto__: null,
   upx2px: upx2px,
   interceptors: interceptors,
   addInterceptor: addInterceptor,
@@ -540,6 +541,7 @@ function getProvider(_ref2)
 }
 
 var extraApi = /*#__PURE__*/Object.freeze({
+  __proto__: null,
   getProvider: getProvider });
 
 
@@ -575,6 +577,7 @@ function $emit() {
 }
 
 var eventApi = /*#__PURE__*/Object.freeze({
+  __proto__: null,
   $on: $on,
   $off: $off,
   $once: $once,
@@ -583,8 +586,8 @@ var eventApi = /*#__PURE__*/Object.freeze({
 
 
 
-var api = /*#__PURE__*/Object.freeze({});
-
+var api = /*#__PURE__*/Object.freeze({
+  __proto__: null });
 
 
 var MPPage = Page;
@@ -734,7 +737,7 @@ function initData(vueOptions, context) {
     try {
       data = data.call(context); // 支持 Vue.prototype 上挂的数据
     } catch (e) {
-      if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
+      if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
         console.warn('根据 Vue 的 data 函数初始化小程序 data 失败，请尽量确保 data 函数中不访问 vm 对象，否则可能影响首次数据渲染速度。', data);
       }
     }
@@ -1218,14 +1221,17 @@ var mocks = ['__route__', '__wxExparserNodeId__', '__wxWebviewId__'];
 
 function findVmByVueId(vm, vuePid) {
   var $children = vm.$children;
-  // 优先查找直属
-  var parentVm = $children.find(function (childVm) {return childVm.$scope._$vueId === vuePid;});
-  if (parentVm) {
-    return parentVm;
+  // 优先查找直属(反向查找:https://github.com/dcloudio/uni-app/issues/1200)
+  for (var i = $children.length - 1; i >= 0; i--) {
+    var childVm = $children[i];
+    if (childVm.$scope._$vueId === vuePid) {
+      return childVm;
+    }
   }
   // 反向递归查找
-  for (var i = $children.length - 1; i >= 0; i--) {
-    parentVm = findVmByVueId($children[i], vuePid);
+  var parentVm;
+  for (var _i = $children.length - 1; _i >= 0; _i--) {
+    parentVm = findVmByVueId($children[_i], vuePid);
     if (parentVm) {
       return parentVm;
     }
@@ -2994,9 +3000,9 @@ var index_esm = {
 /***/ }),
 
 /***/ 16:
-/*!********************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/runtime/componentNormalizer.js ***!
-  \********************************************************************/
+/*!**********************************************************************************************************!*\
+  !*** ./node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-loader/lib/runtime/componentNormalizer.js ***!
+  \**********************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -3017,12 +3023,26 @@ function normalizeComponent (
   injectStyles,
   scopeId,
   moduleIdentifier, /* server only */
-  shadowMode /* vue-cli only */
+  shadowMode, /* vue-cli only */
+  components, // fixed by xxxxxx auto components
+  renderjs // fixed by xxxxxx renderjs
 ) {
   // Vue.extend constructor export interop
   var options = typeof scriptExports === 'function'
     ? scriptExports.options
     : scriptExports
+
+  // fixed by xxxxxx auto components
+  if (components) {
+    options.components = Object.assign(components, options.components || {})
+  }
+  // fixed by xxxxxx renderjs
+  if (renderjs) {
+    (renderjs.beforeCreate || (renderjs.beforeCreate = [])).unshift(function() {
+      this[renderjs.__module] = this
+    });
+    (options.mixins || (options.mixins = [])).push(renderjs)
+  }
 
   // render functions
   if (render) {
@@ -3154,7 +3174,7 @@ store;exports.default = _default;
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* WEBPACK VAR INJECTION */(function(global) {/*!
- * Vue.js v2.6.10
+ * Vue.js v2.6.11
  * (c) 2014-2019 Evan You
  * Released under the MIT License.
  */
@@ -3853,7 +3873,13 @@ var uid = 0;
  * directives subscribing to it.
  */
 var Dep = function Dep () {
-  this.id = uid++;
+  // fixed by xxxxxx (nvue vuex)
+  /* eslint-disable no-undef */
+  if(typeof SharedObject !== 'undefined'){
+    this.id = SharedObject.uid++;
+  } else {
+    this.id = uid++;
+  }
   this.subs = [];
 };
 
@@ -5117,7 +5143,7 @@ if (typeof Promise !== 'undefined' && isNative(Promise)) {
   };
 } else if (typeof setImmediate !== 'undefined' && isNative(setImmediate)) {
   // Fallback to setImmediate.
-  // Techinically it leverages the (macro) task queue,
+  // Technically it leverages the (macro) task queue,
   // but it is still a better choice than setTimeout.
   timerFunc = function () {
     setImmediate(flushCallbacks);
@@ -5183,7 +5209,7 @@ if (true) {
     warn(
       "Property \"" + key + "\" must be accessed with \"$data." + key + "\" because " +
       'properties starting with "$" or "_" are not proxied in the Vue instance to ' +
-      'prevent conflicts with Vue internals' +
+      'prevent conflicts with Vue internals. ' +
       'See: https://vuejs.org/v2/api/#data',
       target
     );
@@ -5383,17 +5409,48 @@ function updateListeners (
 
 /*  */
 
+// fixed by xxxxxx (mp properties)
+function extractPropertiesFromVNodeData(data, Ctor, res, context) {
+  var propOptions = Ctor.options.mpOptions && Ctor.options.mpOptions.properties;
+  if (isUndef(propOptions)) {
+    return res
+  }
+  var externalClasses = Ctor.options.mpOptions.externalClasses || [];
+  var attrs = data.attrs;
+  var props = data.props;
+  if (isDef(attrs) || isDef(props)) {
+    for (var key in propOptions) {
+      var altKey = hyphenate(key);
+      var result = checkProp(res, props, key, altKey, true) ||
+          checkProp(res, attrs, key, altKey, false);
+      // externalClass
+      if (
+        result &&
+        res[key] &&
+        externalClasses.indexOf(altKey) !== -1 &&
+        context[camelize(res[key])]
+      ) {
+        // 赋值 externalClass 真正的值(模板里 externalClass 的值可能是字符串)
+        res[key] = context[camelize(res[key])];
+      }
+    }
+  }
+  return res
+}
+
 function extractPropsFromVNodeData (
   data,
   Ctor,
-  tag
+  tag,
+  context// fixed by xxxxxx
 ) {
   // we are only extracting raw values here.
   // validation and default values are handled in the child
   // component itself.
   var propOptions = Ctor.options.props;
   if (isUndef(propOptions)) {
-    return
+    // fixed by xxxxxx
+    return extractPropertiesFromVNodeData(data, Ctor, {}, context)
   }
   var res = {};
   var attrs = data.attrs;
@@ -5421,7 +5478,8 @@ function extractPropsFromVNodeData (
       checkProp(res, attrs, key, altKey, false);
     }
   }
-  return res
+  // fixed by xxxxxx
+  return extractPropertiesFromVNodeData(data, Ctor, res, context)
 }
 
 function checkProp (
@@ -5754,12 +5812,12 @@ function renderList (
   if (Array.isArray(val) || typeof val === 'string') {
     ret = new Array(val.length);
     for (i = 0, l = val.length; i < l; i++) {
-      ret[i] = render(val[i], i);
+      ret[i] = render(val[i], i, i, i); // fixed by xxxxxx
     }
   } else if (typeof val === 'number') {
     ret = new Array(val);
     for (i = 0; i < val; i++) {
-      ret[i] = render(i + 1, i);
+      ret[i] = render(i + 1, i, i, i); // fixed by xxxxxx
     }
   } else if (isObject(val)) {
     if (hasSymbol && val[Symbol.iterator]) {
@@ -5767,7 +5825,7 @@ function renderList (
       var iterator = val[Symbol.iterator]();
       var result = iterator.next();
       while (!result.done) {
-        ret.push(render(result.value, ret.length));
+        ret.push(render(result.value, ret.length, i++, i)); // fixed by xxxxxx
         result = iterator.next();
       }
     } else {
@@ -5775,7 +5833,7 @@ function renderList (
       ret = new Array(keys.length);
       for (i = 0, l = keys.length; i < l; i++) {
         key = keys[i];
-        ret[i] = render(val[key], key, i);
+        ret[i] = render(val[key], key, i, i); // fixed by xxxxxx
       }
     }
   }
@@ -5810,7 +5868,8 @@ function renderSlot (
       }
       props = extend(extend({}, bindObject), props);
     }
-    nodes = scopedSlotFn(props) || fallback;
+    // fixed by xxxxxx app-plus scopedSlot
+    nodes = scopedSlotFn(props, this, props._i) || fallback;
   } else {
     nodes = this.$slots[name] || fallback;
   }
@@ -6038,7 +6097,7 @@ function bindDynamicKeys (baseObj, values) {
     if (typeof key === 'string' && key) {
       baseObj[values[i]] = values[i + 1];
     } else if ( true && key !== '' && key !== null) {
-      // null is a speical value for explicitly removing a binding
+      // null is a special value for explicitly removing a binding
       warn(
         ("Invalid value for dynamic directive argument (expected string or null): " + key),
         this
@@ -6262,6 +6321,8 @@ var componentVNodeHooks = {
     var context = vnode.context;
     var componentInstance = vnode.componentInstance;
     if (!componentInstance._isMounted) {
+      callHook(componentInstance, 'onServiceCreated');
+      callHook(componentInstance, 'onServiceAttached');
       componentInstance._isMounted = true;
       callHook(componentInstance, 'mounted');
     }
@@ -6351,7 +6412,7 @@ function createComponent (
   }
 
   // extract props
-  var propsData = extractPropsFromVNodeData(data, Ctor, tag);
+  var propsData = extractPropsFromVNodeData(data, Ctor, tag, context); // fixed by xxxxxx
 
   // functional component
   if (isTrue(Ctor.options.functional)) {
@@ -6534,6 +6595,12 @@ function _createElement (
     ns = (context.$vnode && context.$vnode.ns) || config.getTagNamespace(tag);
     if (config.isReservedTag(tag)) {
       // platform built-in elements
+      if ( true && isDef(data) && isDef(data.nativeOn)) {
+        warn(
+          ("The .native modifier for v-on is only valid on components but it was used on <" + tag + ">."),
+          context
+        );
+      }
       vnode = new VNode(
         config.parsePlatformTagName(tag), data, children,
         undefined, undefined, context
@@ -6659,7 +6726,7 @@ function renderMixin (Vue) {
     // render self
     var vnode;
     try {
-      // There's no need to maintain a stack becaues all render fns are called
+      // There's no need to maintain a stack because all render fns are called
       // separately from one another. Nested component's render fns are called
       // when parent component is patched.
       currentRenderingInstance = vm;
@@ -7194,7 +7261,10 @@ function updateChildComponent (
     // keep a copy of raw propsData
     vm.$options.propsData = propsData;
   }
-
+  
+  // fixed by xxxxxx update properties(mp runtime)
+  vm._$updateProperties && vm._$updateProperties(vm);
+  
   // update listeners
   listeners = listeners || emptyObject;
   var oldListeners = vm.$options._parentListeners;
@@ -8513,7 +8583,7 @@ Object.defineProperty(Vue, 'FunctionalRenderContext', {
   value: FunctionalRenderContext
 });
 
-Vue.version = '2.6.10';
+Vue.version = '2.6.11';
 
 /**
  * https://raw.githubusercontent.com/Tencent/westore/master/packages/westore/utils/diff.js
@@ -8626,7 +8696,7 @@ function type(obj) {
 
 function flushCallbacks$1(vm) {
     if (vm.__next_tick_callbacks && vm.__next_tick_callbacks.length) {
-        if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
+        if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
             var mpInstance = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
                 ']:flushCallbacks[' + vm.__next_tick_callbacks.length + ']');
@@ -8647,14 +8717,14 @@ function nextTick$1(vm, cb) {
     //1.nextTick 之前 已 setData 且 setData 还未回调完成
     //2.nextTick 之前存在 render watcher
     if (!vm.__next_tick_pending && !hasRenderWatcher(vm)) {
-        if(Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG){
+        if(Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG){
             var mpInstance = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
                 ']:nextVueTick');
         }
         return nextTick(cb, vm)
     }else{
-        if(Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG){
+        if(Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG){
             var mpInstance$1 = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance$1.is || mpInstance$1.route) + '][' + vm._uid +
                 ']:nextMPTick');
@@ -8730,7 +8800,7 @@ var patch = function(oldVnode, vnode) {
     });
     var diffData = diff(data, mpData);
     if (Object.keys(diffData).length) {
-      if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
+      if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
         console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + this._uid +
           ']差量更新',
           JSON.stringify(diffData));
@@ -8903,7 +8973,13 @@ function getTarget(obj, path) {
 function internalMixin(Vue) {
 
   Vue.config.errorHandler = function(err) {
-    console.error(err);
+    /* eslint-disable no-undef */
+    var app = getApp();
+    if (app && app.onError) {
+      app.onError(err);
+    } else {
+      console.error(err);
+    }
   };
 
   var oldEmit = Vue.prototype.$emit;
@@ -8923,9 +8999,21 @@ function internalMixin(Vue) {
 
   MP_METHODS.forEach(function (method) {
     Vue.prototype[method] = function(args) {
-      if (this.$scope) {
+      if (this.$scope && this.$scope[method]) {
         return this.$scope[method](args)
       }
+      // mp-alipay
+      if (typeof my === 'undefined') {
+        return
+      }
+      if (method === 'createSelectorQuery') {
+        /* eslint-disable no-undef */
+        return my.createSelectorQuery(args)
+      } else if (method === 'createIntersectionObserver') {
+        /* eslint-disable no-undef */
+        return my.createIntersectionObserver(args)
+      }
+      // TODO mp-alipay 暂不支持 selectAllComponents,selectComponent
     };
   });
 
@@ -8946,7 +9034,7 @@ function internalMixin(Vue) {
       }
     }
     if (vm._hasHookEvent) {
-      vm.$emit('hook:' + hook);
+      vm.$emit('hook:' + hook, args);
     }
     popTarget();
     return ret
@@ -9942,7 +10030,7 @@ module.exports = g;
 
 /***/ }),
 
-/***/ 419:
+/***/ 470:
 /*!**************************************************************************************!*\
   !*** F:/uni-app/cy_Chayuan_Uniapp/components/mpvue-citypicker/city-data/province.js ***!
   \**************************************************************************************/
@@ -10092,7 +10180,7 @@ provinceData;exports.default = _default;
 
 /***/ }),
 
-/***/ 420:
+/***/ 471:
 /*!**********************************************************************************!*\
   !*** F:/uni-app/cy_Chayuan_Uniapp/components/mpvue-citypicker/city-data/city.js ***!
   \**********************************************************************************/
@@ -11606,7 +11694,7 @@ cityData;exports.default = _default;
 
 /***/ }),
 
-/***/ 421:
+/***/ 472:
 /*!**********************************************************************************!*\
   !*** F:/uni-app/cy_Chayuan_Uniapp/components/mpvue-citypicker/city-data/area.js ***!
   \**********************************************************************************/
@@ -25053,7 +25141,7 @@ main();
 /*! exports provided: _from, _id, _inBundle, _integrity, _location, _phantomChildren, _requested, _requiredBy, _resolved, _shasum, _spec, _where, author, bugs, bundleDependencies, deprecated, description, devDependencies, files, gitHead, homepage, license, main, name, repository, scripts, version, default */
 /***/ (function(module) {
 
-module.exports = {"_from":"@dcloudio/uni-stat@^2.0.0-alpha-24420191128001","_id":"@dcloudio/uni-stat@2.0.0-v3-24020191018001","_inBundle":false,"_integrity":"sha512-nYBm5pRrYzrj2dKMqucWSF2PwInUMnn3MLHM/ik3gnLUEKSW61rzcY1RPlUwaH7c+Snm6N+bAJzmj3GvlrlVXA==","_location":"/@dcloudio/uni-stat","_phantomChildren":{},"_requested":{"type":"range","registry":true,"raw":"@dcloudio/uni-stat@^2.0.0-alpha-24420191128001","name":"@dcloudio/uni-stat","escapedName":"@dcloudio%2funi-stat","scope":"@dcloudio","rawSpec":"^2.0.0-alpha-24420191128001","saveSpec":null,"fetchSpec":"^2.0.0-alpha-24420191128001"},"_requiredBy":["/","/@dcloudio/vue-cli-plugin-uni"],"_resolved":"https://registry.npmjs.org/@dcloudio/uni-stat/-/uni-stat-2.0.0-v3-24020191018001.tgz","_shasum":"6ef04326cc0b945726413eebe442ab8f47c7536c","_spec":"@dcloudio/uni-stat@^2.0.0-alpha-24420191128001","_where":"/Users/guoshengqiang/Documents/dcloud-plugins/alpha/uniapp-cli","author":"","bugs":{"url":"https://github.com/dcloudio/uni-app/issues"},"bundleDependencies":false,"deprecated":false,"description":"","devDependencies":{"@babel/core":"^7.5.5","@babel/preset-env":"^7.5.5","eslint":"^6.1.0","rollup":"^1.19.3","rollup-plugin-babel":"^4.3.3","rollup-plugin-clear":"^2.0.7","rollup-plugin-commonjs":"^10.0.2","rollup-plugin-copy":"^3.1.0","rollup-plugin-eslint":"^7.0.0","rollup-plugin-json":"^4.0.0","rollup-plugin-node-resolve":"^5.2.0","rollup-plugin-replace":"^2.2.0","rollup-plugin-uglify":"^6.0.2"},"files":["dist","package.json","LICENSE"],"gitHead":"197e8df53cc9d4c3f6eb722b918ccf51672b5cfe","homepage":"https://github.com/dcloudio/uni-app#readme","license":"Apache-2.0","main":"dist/index.js","name":"@dcloudio/uni-stat","repository":{"type":"git","url":"git+https://github.com/dcloudio/uni-app.git","directory":"packages/uni-stat"},"scripts":{"build":"NODE_ENV=production rollup -c rollup.config.js","dev":"NODE_ENV=development rollup -w -c rollup.config.js"},"version":"2.0.0-v3-24020191018001"};
+module.exports = {"_from":"@dcloudio/uni-stat@alpha","_id":"@dcloudio/uni-stat@2.0.0-alpha-25120200103005","_inBundle":false,"_integrity":"sha512-nYoIrRV2e5o/vzr6foSdWi3Rl2p0GuO+LPY3JctyY6uTKgPnuH99d7aL/QQdJ1SacQjBWO+QGK1qankN7oyrWw==","_location":"/@dcloudio/uni-stat","_phantomChildren":{},"_requested":{"type":"tag","registry":true,"raw":"@dcloudio/uni-stat@alpha","name":"@dcloudio/uni-stat","escapedName":"@dcloudio%2funi-stat","scope":"@dcloudio","rawSpec":"alpha","saveSpec":null,"fetchSpec":"alpha"},"_requiredBy":["#USER","/","/@dcloudio/vue-cli-plugin-uni"],"_resolved":"https://registry.npmjs.org/@dcloudio/uni-stat/-/uni-stat-2.0.0-alpha-25120200103005.tgz","_shasum":"a77a63481f36474f3e86686868051219d1bb12df","_spec":"@dcloudio/uni-stat@alpha","_where":"/Users/guoshengqiang/Documents/dcloud-plugins/alpha/uniapp-cli","author":"","bugs":{"url":"https://github.com/dcloudio/uni-app/issues"},"bundleDependencies":false,"deprecated":false,"description":"","devDependencies":{"@babel/core":"^7.5.5","@babel/preset-env":"^7.5.5","eslint":"^6.1.0","rollup":"^1.19.3","rollup-plugin-babel":"^4.3.3","rollup-plugin-clear":"^2.0.7","rollup-plugin-commonjs":"^10.0.2","rollup-plugin-copy":"^3.1.0","rollup-plugin-eslint":"^7.0.0","rollup-plugin-json":"^4.0.0","rollup-plugin-node-resolve":"^5.2.0","rollup-plugin-replace":"^2.2.0","rollup-plugin-uglify":"^6.0.2"},"files":["dist","package.json","LICENSE"],"gitHead":"6be187a3dfe15f95dd6146d9fec08e1f81100987","homepage":"https://github.com/dcloudio/uni-app#readme","license":"Apache-2.0","main":"dist/index.js","name":"@dcloudio/uni-stat","repository":{"type":"git","url":"git+https://github.com/dcloudio/uni-app.git","directory":"packages/uni-stat"},"scripts":{"build":"NODE_ENV=production rollup -c rollup.config.js","dev":"NODE_ENV=development rollup -w -c rollup.config.js"},"version":"2.0.0-alpha-25120200103005"};
 
 /***/ }),
 
@@ -25065,7 +25153,7 @@ module.exports = {"_from":"@dcloudio/uni-stat@^2.0.0-alpha-24420191128001","_id"
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = { "pages": { "pages/tabber/home/home": { "enablePullDownRefresh": true, "navigationStyle": "custom", "usingComponents": {} }, "pages/login/code_login/code_login": { "navigationStyle": "custom", "usingComponents": {} }, "pages/login/pwd_login/pwd_login": { "navigationBarTitleText": "登录注册", "usingComponents": {} }, "pages/tabber/user/user": { "navigationStyle": "custom", "usingComponents": {} }, "pages/list/search_list/search_list": { "navigationStyle": "custom", "usingComponents": {} }, "pages/list/search/search": { "navigationStyle": "custom", "usingComponents": {} }, "pages/shop/shop_commodity/shop_commodity": { "navigationBarTitleText": "店铺详情", "enablePullDownRefresh": true, "usingComponents": {} }, "pages/list/line_details/line_details": { "navigationBarTitleText": "线路详情", "usingComponents": { "uni-popup": "/components/uni-popup/uni-popup", "tabs": "/components/wiszx-tabs/tabs", "mx-date-picker": "/components/mx-datepicker/mx-datepicker" } }, "pages/list/goode_details/goode_details": { "navigationStyle": "custom", "usingComponents": { "uni-popup": "/components/uni-popup/uni-popup" } }, "pages/tabber/fengyang_fair/fengyang_fair": { "navigationStyle": "custom", "usingComponents": {} }, "pages/tabber/benefit_products/benefit_products": { "navigationStyle": "custom", "usingComponents": {} }, "pages/list/ideal_life/ideal_life": { "navigationBarTitleText": "理想生活", "usingComponents": {} }, "pages/list/agricultural_specialty/agricultural_specialty": { "navigationBarTitleText": "热门商品", "enablePullDownRefresh": true, "usingComponents": {} }, "pages/tabber/shopping_cart/shopping_cart": { "navigationBarTitleText": "购物车", "enablePullDownRefresh": true, "usingComponents": { "uni-load-more": "/components/uni-load-more/uni-load-more" } }, "pages/list/flowering_seasons/flowering_seasons": { "navigationBarTitleText": "花开四季", "usingComponents": {} }, "pages/list/fruit_garden/fruit_garden": { "navigationBarTitleText": "果香满园", "usingComponents": {} }, "pages/list/fengyang_scenery/fengyang_scenery": { "navigationBarTitleText": "漫游厦门", "usingComponents": {} }, "pages/list/more_list/more_list": { "navigationBarTitleText": "漫游厦门", "enablePullDownRefresh": true, "usingComponents": {} }, "pages/user/my_evaluation/my_evaluation": { "navigationBarTitleText": "发布评价", "usingComponents": { "robby-image-upload": "/components/robby-image-upload/robby-image-upload" } }, "pages/user/my_coupon/my_coupon": { "navigationBarTitleText": "优惠券", "enablePullDownRefresh": true, "usingComponents": { "uni-load-more": "/components/uni-load-more/uni-load-more" } }, "pages/user/get_coupon/get_coupon": { "navigationBarTitleText": "领取优惠券", "enablePullDownRefresh": true, "usingComponents": {} }, "pages/shop/comments_details/comments_details": { "navigationBarTitleText": "评论详情", "enablePullDownRefresh": true, "usingComponents": { "axb-check-box": "/components/axb-checkbox/axb-checkbox" } }, "pages/shop/shop_collection_coupon/shop_collection_coupon": { "navigationBarTitleText": "优惠券详情", "enablePullDownRefresh": true, "usingComponents": {} }, "pages/user/confirmation_transaction/confirmation_transaction": { "navigationBarTitleText": "确认交易", "usingComponents": {} }, "pages/user/confirm_payment/confirm_payment": { "navigationBarTitleText": "确认支付", "usingComponents": {} }, "pages/user/add_address/add_address": { "navigationBarTitleText": "添加新地址", "usingComponents": { "mpvue-city-picker": "/components/mpvue-citypicker/mpvueCityPicker" } }, "pages/user/confirm_order/confirm_order": { "navigationBarTitleText": "确认订单", "usingComponents": {} }, "pages/user/admin_address/admin_address": { "navigationBarTitleText": "管理收货地址", "usingComponents": {} }, "pages/user/order_details/order_details": { "navigationBarTitleText": "订单详情", "usingComponents": {} }, "pages/user/my_order/my_order": { "navigationBarTitleText": "我的订单", "usingComponents": { "uni-load-more": "/components/uni-load-more/uni-load-more" } }, "pages/user/my_news/my_news": { "navigationBarTitleText": "我的消息", "usingComponents": {} }, "pages/shop/shop_logistics/shop_logistics": { "navigationBarTitleText": "查看物流", "usingComponents": { "ali": "/components/WuLiu-step" } }, "pages/shop/my_collection/my_collection": { "navigationBarTitleText": "我的收藏", "enablePullDownRefresh": true, "usingComponents": {} }, "pages/shop/shop_collection/shop_collection": { "navigationBarTitleText": "关注店铺", "usingComponents": {} }, "pages/login/modify_nicknames/modify_nicknames": { "navigationBarTitleText": "修改昵称", "usingComponents": {} }, "pages/login/safety_monitoring/safety_monitoring": { "navigationBarTitleText": "安全监测", "usingComponents": {} }, "pages/login/reset_password/reset_password": { "navigationBarTitleText": "重置密码", "usingComponents": {} }, "pages/user/info_edit/info_edit": { "navigationBarTitleText": "编辑信息", "usingComponents": {} }, "pages/login/register/register": { "navigationBarTitleText": "注册", "usingComponents": {} }, "pages/user/my_info/my_info": { "navigationBarTitleText": "设置", "usingComponents": {} }, "pages/shop/successful_payment/successful_payment": { "navigationBarTitleText": "支付", "usingComponents": {} }, "pages/list/news_detail/news_detail": { "navigationBarTitleText": "消息", "usingComponents": {} }, "pages/list/list_detail/list_detail": { "navigationBarTitleText": "文章详情", "usingComponents": {} }, "pages/map/map": { "navigationBarTitleText": "地图导航", "usingComponents": {} }, "pages/subscribe/subscribe": { "usingComponents": {} } }, "globalStyle": { "navigationBarBackgroundColor": "#FFFFFF", "navigationBarTextStyle": "black" } };exports.default = _default;
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = { "pages": { "pages/tabber/home/home": { "enablePullDownRefresh": true, "navigationStyle": "custom" }, "pages/login/code_login/code_login": { "navigationStyle": "custom" }, "pages/login/pwd_login/pwd_login": { "navigationBarTitleText": "登录注册" }, "pages/tabber/user/user": { "navigationStyle": "custom" }, "pages/list/search_list/search_list": { "navigationStyle": "custom" }, "pages/list/search/search": { "navigationStyle": "custom" }, "pages/shop/shop_commodity/shop_commodity": { "navigationBarTitleText": "店铺详情", "enablePullDownRefresh": true }, "pages/list/line_details/line_details": { "navigationBarTitleText": "线路详情" }, "pages/list/goode_details/goode_details": { "navigationStyle": "custom" }, "pages/tabber/fengyang_fair/fengyang_fair": { "navigationStyle": "custom" }, "pages/tabber/benefit_products/benefit_products": { "navigationStyle": "custom" }, "pages/list/ideal_life/ideal_life": { "navigationBarTitleText": "热门推荐" }, "pages/list/agricultural_specialty/agricultural_specialty": { "navigationBarTitleText": "热门商品", "enablePullDownRefresh": true }, "pages/tabber/shopping_cart/shopping_cart": { "navigationBarTitleText": "购物车", "enablePullDownRefresh": true }, "pages/list/flowering_seasons/flowering_seasons": { "navigationBarTitleText": "花开四季" }, "pages/list/fruit_garden/fruit_garden": { "navigationBarTitleText": "果香满园" }, "pages/list/fengyang_scenery/fengyang_scenery": { "navigationBarTitleText": "漫游厦门" }, "pages/list/more_list/more_list": { "navigationBarTitleText": "漫游厦门", "enablePullDownRefresh": true }, "pages/user/my_evaluation/my_evaluation": { "navigationBarTitleText": "发布评价" }, "pages/user/my_coupon/my_coupon": { "navigationBarTitleText": "优惠券", "enablePullDownRefresh": true }, "pages/user/get_coupon/get_coupon": { "navigationBarTitleText": "领取优惠券", "enablePullDownRefresh": true }, "pages/shop/comments_details/comments_details": { "navigationBarTitleText": "评论详情", "enablePullDownRefresh": true }, "pages/shop/shop_collection_coupon/shop_collection_coupon": { "navigationBarTitleText": "优惠券详情", "enablePullDownRefresh": true }, "pages/user/confirmation_transaction/confirmation_transaction": { "navigationBarTitleText": "确认交易" }, "pages/user/confirm_payment/confirm_payment": { "navigationBarTitleText": "确认支付" }, "pages/user/add_address/add_address": { "navigationBarTitleText": "添加新地址" }, "pages/user/confirm_order/confirm_order": { "navigationBarTitleText": "确认订单" }, "pages/user/admin_address/admin_address": { "navigationBarTitleText": "管理收货地址" }, "pages/user/order_details/order_details": { "navigationBarTitleText": "订单详情" }, "pages/user/my_order/my_order": { "navigationBarTitleText": "我的订单" }, "pages/user/my_news/my_news": { "navigationBarTitleText": "我的消息" }, "pages/shop/shop_logistics/shop_logistics": { "navigationBarTitleText": "查看物流" }, "pages/shop/my_collection/my_collection": { "navigationBarTitleText": "我的收藏", "enablePullDownRefresh": true }, "pages/shop/shop_collection/shop_collection": { "navigationBarTitleText": "关注店铺" }, "pages/login/modify_nicknames/modify_nicknames": { "navigationBarTitleText": "修改昵称" }, "pages/login/safety_monitoring/safety_monitoring": { "navigationBarTitleText": "安全监测" }, "pages/login/reset_password/reset_password": { "navigationBarTitleText": "重置密码" }, "pages/user/info_edit/info_edit": { "navigationBarTitleText": "编辑信息" }, "pages/login/register/register": { "navigationBarTitleText": "注册" }, "pages/user/my_info/my_info": { "navigationBarTitleText": "设置" }, "pages/shop/successful_payment/successful_payment": { "navigationBarTitleText": "支付" }, "pages/list/news_detail/news_detail": { "navigationBarTitleText": "消息" }, "pages/list/list_detail/list_detail": { "navigationBarTitleText": "文章详情" }, "pages/map/map": { "navigationBarTitleText": "地图导航" }, "pages/subscribe/subscribe": {}, "pages/subscribe/exchange_goods/exchange_goods": { "navigationBarTitleText": "兑换商品" }, "pages/subscribe/transplant_tree/transplant_tree": {}, "pages/subscribe/manor_details/manor_details": {}, "pages/subscribe/tree_details/tree_details": { "navigationStyle": "custom" }, "pages/tabber/home/more_tree_list/more_tree_list": { "navigationStyle": "custom" } }, "globalStyle": { "navigationBarBackgroundColor": "#FFFFFF", "navigationBarTextStyle": "black" } };exports.default = _default;
 
 /***/ }),
 

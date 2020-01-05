@@ -44,7 +44,12 @@
     "pages/list/news_detail/news_detail",
     "pages/list/list_detail/list_detail",
     "pages/map/map",
-    "pages/subscribe/subscribe"
+    "pages/subscribe/subscribe",
+    "pages/subscribe/exchange_goods/exchange_goods",
+    "pages/subscribe/transplant_tree/transplant_tree",
+    "pages/subscribe/manor_details/manor_details",
+    "pages/subscribe/tree_details/tree_details",
+    "pages/tabber/home/more_tree_list/more_tree_list"
   ],
   "subPackages": [],
   "window": {
@@ -70,6 +75,12 @@
         "text": "我的庄园"
       },
       {
+        "pagePath": "pages/tabber/shopping_cart/shopping_cart",
+        "iconPath": "/static/cart_default.png",
+        "selectedIconPath": "/static/cart_check.png",
+        "text": "购物车"
+      },
+      {
         "pagePath": "pages/tabber/user/user",
         "iconPath": "/static/people_default.png",
         "selectedIconPath": "/static/people_check.png",
@@ -79,6 +90,7 @@
   },
   "usingComponents": {
     "sunui-star": "/components/sunui-star/sunui-star",
-    "uni-load-more": "/components/uni-load-more/uni-load-more"
+    "uni-load-more": "/components/uni-load-more/uni-load-more",
+    "num-scroll": "/components/numScroll"
   }
 }

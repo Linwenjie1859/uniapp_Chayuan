@@ -52,25 +52,19 @@
 			</view>
 			
 			<image class="radius home_pic2" :src="allInfo.banner[1].pic" mode=""></image>
-			
-		<!-- 	<view class="list_down">
-				<image :src="allInfo.article_menus[0].pic" mode="" @tap="fengyang_scenery"></image>
-				<image :src="allInfo.article_menus[1].pic" mode="" @tap="flowering_seasons"></image>
-				<image :src="allInfo.article_menus[2].pic" mode="" @tap="fruit_garden"></image>
-			</view> -->
 		</view>
 		<!-- 首页导航栏 End -->
 		
 		<!-- 热门推荐 Start-->
 		<view class="flex flex-direction padding-sm bg-white margin-top-sm">
 			<view class="flex flex-direction">
-				<view class="flex align-center justify-center">
+				<view class="flex align-center justify-center" @tap="navToMoreTree">
 					<text class="text-lg text-black margin-tb-sm">热门推荐</text>
-					<text class="cuIcon-roundright margin-left-xs" @tap="idealLife"> </text>
+					<text class="cuIcon-roundright margin-left-xs"> </text>
 				</view>
 				<text class="text-sm text-yellow margin-bottom-sm">精选线路推荐，体验厦门特色</text>
 			</view>
-			<view class="bg-img bg-mask has-bgimg" :style="{'background-image': 'url('+allInfo.info.otherList[0].image+')'}" :data-id="allInfo.info.otherList[0].id" @tap="line_details">
+			<view class="bg-img bg-mask has-bgimg" :style="{'background-image': 'url('+allInfo.info.otherList[3].image+')'}" :data-id="allInfo.info.otherList[0].id" @tap="navToTreeDetails">
 				<view class="flex flex-direction justify-between align-center text-white margin-left-sm">
 					<view class="self-start flex flex-direction align-center padding-xs  padding-lr text-black has-bg-radius">
 						<text class="text-df margin-bottom-xs">鼓浪屿</text>
@@ -79,7 +73,7 @@
 				</view>
 			</view>
 			<view class="flex margin-top-xs justify-between">
-				<view class="flex flex-direction has-margin text-left" style="width:230rpx;" v-for="(item, index) in allInfo.info.otherList" :key="index" :data-id="item.id" @tap="line_details">
+				<view class="flex flex-direction has-margin text-left" style="width:230rpx;" v-for="(item, index) in allInfo.info.otherList" v-if="index<3" :key="index" :data-id="item.id" @tap="navToTreeDetails">
 					<image :src="item.image" mode="scaleToFill" class="img-has-radius "></image>
 					<text class="text-sm text-black margin-tb-xs">{{item.store_name}}</text>
 					<text class="text-grey text-cut text-xs">{{item.store_info}}</text>
@@ -138,7 +132,7 @@
 		
 		<view class="flex flex-direction bg-white margin-top-sm padding-sm">
 			<view class="flex justify-between align-center padding-tb-sm">
-				<text class="text-lg">热门商品</text>
+				<text class="text-lg">精品茶叶</text>
 				<view class="flex text-grey text-df align-center" @tap="agriculturalSpecialty">
 					<text>更多</text>
 					<text class="cuIcon-right margin-left-xs"></text>
@@ -206,7 +200,6 @@ export default {
 				that.U({ c: 'public_api', a: 'index' }),
 				function(res) {
 					that.allInfo = res.data;
-					console.log(that.allInfo);
 				},
 				function(res) {
 					console.log(res);
@@ -268,9 +261,19 @@ export default {
 		},
 		line_details(e) {
 			uni.navigateTo({
-				url: '/pages/list/line_details/line_details?id='+e.currentTarget.dataset.id
+				url: '/pages/subscribe/tree_details/tree_details'
 			});
 		},
+		navToMoreTree(){
+			uni.navigateTo({
+				url:'/pages/tabber/home/more_tree_list/more_tree_list'
+			})
+		},
+		navToTreeDetails(e){
+			uni.navigateTo({
+				url:'/pages/subscribe/tree_details/tree_details?id='+e.currentTarget.dataset.id
+			})
+		}
 	
 	}
 };

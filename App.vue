@@ -49,6 +49,8 @@ export default {
 				Vue.prototype.StatusBarHeight = e.statusBarHeight;	//时间状态高度
 				Vue.prototype.NavigationBar = 44;	//导航栏高度
 				Vue.prototype.StatusAddNav = 44+e.statusBarHeight;	//导航栏高度+时间状态高度
+				Vue.prototype.StatusAddHalfNav=11+e.statusBarHeight;
+				
 				
 				Vue.prototype.WindowHeight = e.windowHeight;	//中心部分高度
 				Vue.prototype.TabBar = 50;	//底部选项卡高度

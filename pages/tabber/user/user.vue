@@ -85,15 +85,29 @@
 		<view class="flex flex-direction bg-white margin-lr-sm padding-sm margin-top-sm radius">
 			<view class="flex justify-between align-center padding-sm solid-bottom" @tap="coupon">
 				<view class="flex align-center">
-					<text class="cuIcon-ticket text-xxl margin-right-xs text-orange"></text>
+					<text class="cuIcon-ticket text-xxl margin-right-xs "></text>
 					<text class="text-df">优惠券</text>
 				</view>
 				<text class="cuIcon-right"></text>
 			</view>
 			<view class="flex justify-between align-center padding-sm solid-bottom" @tap="info">
 				<view class="flex align-center">
-					<text class="cuIcon-settings text-xxl margin-right-xs text-orange"></text>
-					<text class="text-df">设置</text>
+					<text class="cuIcon-settings text-xxl margin-right-xs "></text>
+					<text class="text-df">种植规则</text>
+				</view>
+				<text class="cuIcon-right"></text>
+			</view>
+			<view class="flex justify-between align-center padding-sm solid-bottom" @tap="info">
+				<view class="flex align-center">
+					<text class="cuIcon-settings text-xxl margin-right-xs "></text>
+					<text class="text-df">安全监测</text>
+				</view>
+				<text class="cuIcon-right"></text>
+			</view>
+			<view class="flex justify-between align-center padding-sm solid-bottom" @tap="info">
+				<view class="flex align-center">
+					<text class="cuIcon-settings text-xxl margin-right-xs "></text>
+					<text class="text-df">账号设置</text>
 				</view>
 				<text class="cuIcon-right"></text>
 			</view>
