@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "发布评价",
+  "usingComponents": {
+    "robby-image-upload": "/components/robby-image-upload/robby-image-upload"
+  }
+}

@@ -1,0 +1,99 @@
+{
+  "pages": [
+    "pages/tabber/home/home",
+    "pages/login/code_login/code_login",
+    "pages/login/pwd_login/pwd_login",
+    "pages/tabber/user/user",
+    "pages/list/search_list/search_list",
+    "pages/list/search/search",
+    "pages/shop/shop_commodity/shop_commodity",
+    "pages/list/line_details/line_details",
+    "pages/list/goode_details/goode_details",
+    "pages/tabber/fengyang_fair/fengyang_fair",
+    "pages/tabber/benefit_products/benefit_products",
+    "pages/list/ideal_life/ideal_life",
+    "pages/list/agricultural_specialty/agricultural_specialty",
+    "pages/tabber/shopping_cart/shopping_cart",
+    "pages/list/flowering_seasons/flowering_seasons",
+    "pages/list/fruit_garden/fruit_garden",
+    "pages/list/fengyang_scenery/fengyang_scenery",
+    "pages/list/more_list/more_list",
+    "pages/user/my_evaluation/my_evaluation",
+    "pages/user/my_coupon/my_coupon",
+    "pages/user/get_coupon/get_coupon",
+    "pages/shop/comments_details/comments_details",
+    "pages/shop/shop_collection_coupon/shop_collection_coupon",
+    "pages/user/confirmation_transaction/confirmation_transaction",
+    "pages/user/confirm_payment/confirm_payment",
+    "pages/user/add_address/add_address",
+    "pages/user/confirm_order/confirm_order",
+    "pages/user/admin_address/admin_address",
+    "pages/user/order_details/order_details",
+    "pages/user/my_order/my_order",
+    "pages/user/my_news/my_news",
+    "pages/shop/shop_logistics/shop_logistics",
+    "pages/shop/my_collection/my_collection",
+    "pages/shop/shop_collection/shop_collection",
+    "pages/login/modify_nicknames/modify_nicknames",
+    "pages/login/safety_monitoring/safety_monitoring",
+    "pages/login/reset_password/reset_password",
+    "pages/user/info_edit/info_edit",
+    "pages/login/register/register",
+    "pages/user/my_info/my_info",
+    "pages/shop/successful_payment/successful_payment",
+    "pages/list/news_detail/news_detail",
+    "pages/list/list_detail/list_detail",
+    "pages/map/map",
+    "pages/subscribe/subscribe",
+    "pages/subscribe/exchange_goods/exchange_goods",
+    "pages/subscribe/transplant_tree/transplant_tree",
+    "pages/subscribe/manor_details/manor_details",
+    "pages/subscribe/tree_details/tree_details",
+    "pages/tabber/home/more_tree_list/more_tree_list",
+    "pages/user/planting_rules/planting_rules",
+    "pages/user/safe_check/safe_check"
+  ],
+  "subPackages": [],
+  "window": {
+    "navigationBarBackgroundColor": "#FFFFFF",
+    "navigationBarTextStyle": "black"
+  },
+  "tabBar": {
+    "color": "#999999",
+    "selectedColor": "#1296db",
+    "borderStyle": "black",
+    "backgroundColor": "#ffffff",
+    "list": [
+      {
+        "pagePath": "pages/tabber/home/home",
+        "iconPath": "/static/index_default.png",
+        "selectedIconPath": "/static/index_check.png",
+        "text": "生态圈"
+      },
+      {
+        "pagePath": "pages/subscribe/subscribe",
+        "iconPath": "/static/play_default.png",
+        "selectedIconPath": "/static/play_check.png",
+        "text": "我的庄园"
+      },
+      {
+        "pagePath": "pages/tabber/shopping_cart/shopping_cart",
+        "iconPath": "/static/cart_default.png",
+        "selectedIconPath": "/static/cart_check.png",
+        "text": "购物车"
+      },
+      {
+        "pagePath": "pages/tabber/user/user",
+        "iconPath": "/static/people_default.png",
+        "selectedIconPath": "/static/people_check.png",
+        "text": "个人中心"
+      }
+    ]
+  },
+  "usingComponents": {
+    "sunui-star": "/components/sunui-star/sunui-star",
+    "uni-load-more": "/components/uni-load-more/uni-load-more",
+    "num-scroll": "/components/numScroll"
+  },
+  "sitemapLocation": "sitemap.json"
+}

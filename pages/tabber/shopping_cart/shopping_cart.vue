@@ -37,8 +37,9 @@
 							</view>
 							<image class="margin-left-xs radius" :src="rows.productInfo.image" @tap="goodDetail(rows.productInfo.id)"></image>
 							
-							<view class="margin-left-sm flex flex-direction" style="width: 460rpx;"> 
-								<text class="text-cut-two text-df" >{{ rows.productInfo.store_name }}</text>
+							<view class="margin-left-sm flex flex-direction" style="width: 430rpx;"> 
+								<text class="text-cut-two text-lg" >{{ rows.productInfo.store_name }}</text>
+								<text class="text-cut-two text-df text-grey" >{{ rows.productInfo.store_info }}</text>
 								<view class="flex justify-between margin-top-sm">
 									<text class="text-red text-price text-df">{{ rows.productInfo.price }}</text>
 									<view class="text-grey flex margin-right-xs">
@@ -112,7 +113,6 @@ export default {
 		this.goodsList=[];
 		this.getGoodsList();
 	},
-	
 	onLoad() {
 		this.isLogin();
 	},
@@ -457,7 +457,7 @@ export default {
 }
  image {
 	width: 160upx;
-	height: 140upx;
+	height: 160upx;
 }
 .carrier {
 	display: flex;
@@ -506,8 +506,6 @@ export default {
 .loading-more {
 	align-items: center;
 	justify-content: center;
-	// padding-top: 10px;
-	// padding-bottom: 10px;
 	text-align: center;
 }
 .font-32 {
@@ -520,8 +518,8 @@ export default {
 }
 
 .checkbox {
-	width: 35upx;
-	height: 35upx;
+	width: 38upx;
+	height: 38upx;
 	border-radius: 100%;
 	border: solid 2upx #d81e06;
 	display: flex;
@@ -534,8 +532,6 @@ export default {
 	width: 39upx;
 	height: 39upx;
 	margin-left: -2upx;
-	// border-radius: 100%;
-	// background-color: #f66d3c;
 	background-size: 39upx;
 	background-repeat: no-repeat;
 	background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAC+ElEQVRYR8WXy2vUUBTGv5OZpCIqRexDp8miYpOBurEuFLQKirR26wsKgv4F/gW2de9G16IbQbFrW0TEtjtfiKiT6dQuklatuJCWgk0mcySxHSeTTPMYYbLL5J7v+91zz9x7LqHFD7XYH7EBSkAbK9lBh2kIhOME6gI4xwyHiFYA/sqMVwBPO2b5ZT9gxZlcLICiLF1m4jsAdcYRZeC7wLihmtbjqPHbAix2ostqk+6DMBwlFPqdMSVtWNd6f2ClUXxDgPlcZqQiCA9AtC+V+VYQ808Gj+bN8rMwnVCAgpw9R6BpEMVaokhAZgbzeW2pPF0/NmBQ7EGOBfEjQO2RwokG8C+q2P3qEpZrwwIAuizOguhkIu24g5nnNNMebAig5zIXkMk8iauXapzjXNSWncmtWF8GdEX6AqA3lXBNEDOXiagEIB+itagZ1sEAQEERBwj0pllzgFeJcVY17de6LM6B6ES9JoOP5g37rft7NQMFRRonYKw5AF4VHJzqW7bfl7rR4YjiJxB1BAEwkTescR+ArojPATqTHqDOXJJmAWjhevxCM2zP618GZKlIhL50AEnMAWbM501LrQMQ14loZwhAIbthnXYkcZSB28HNKZm5q8/M63nT3lW/BKsA7Q4DUA3rMAFOURGvMsPdnjczl9z8rz6vaYa9pw5A0gF4aQl5JlXDuuKHwJqv4LZd84BiUTMsrz6qNRCjCH0Q5OBDtdqTmbsZCBZhsSd7kwVhIqIIqxDuOO+vltgcoEplTF0q3/JloLRfPOKI5G0OcSAWurE3jbmrnbF54NA3+50PwH3RZWkBhOo22QiEgc/EaAfhQBRtyPfwrdgDaPVh5EIUZHGGiHxHZopZhodEHcduVMsbEm8perJDEISp/zhztycbCusLG/Z8m33hw5Y0pVszd9vyjR3SPQJGUmbjqfTbup6qLa811BXpEsB3419MeEVgci8mj6LAY7fdNVezYRCONbqaZYinLKM881+vZlGzaOZ77Aw0Y7Jd7B9C42gwboolDgAAAABJRU5ErkJggg==);
@@ -545,10 +541,6 @@ export default {
 	display: flex;
 	align-items: center;
 }
-
-
-
-
 
 .footer {
 	width: 100%;

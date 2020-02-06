@@ -1,0 +1,1 @@
+<view class="content"><text class="text font-32">2018寿宁县风阳乡锌葡萄袋装500g</text><text class="text font-80 orange">￥45.0</text><view class="default font-28"><text>收款方</text><text>葡萄庄园</text></view><button data-event-opts="{{[['tap',[['successful',['$event']]]]]}}" class="btn_green" bindtap="__e">立即支付</button></view>

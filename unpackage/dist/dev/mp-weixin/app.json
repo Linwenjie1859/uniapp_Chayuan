@@ -49,7 +49,11 @@
     "pages/subscribe/transplant_tree/transplant_tree",
     "pages/subscribe/manor_details/manor_details",
     "pages/subscribe/tree_details/tree_details",
-    "pages/tabber/home/more_tree_list/more_tree_list"
+    "pages/tabber/home/more_tree_list/more_tree_list",
+    "pages/user/planting_rules/planting_rules",
+    "pages/user/safe_check/safe_check",
+    "pages/subscribe/exchange_list/exchange_list",
+    "pages/subscribe/exchange_confirm/exchange_confirm"
   ],
   "subPackages": [],
   "window": {

@@ -34,7 +34,7 @@
 							</view>
 							<!-- 公共部分 -->
 							<view class="list_info" @tap="details(item.order_id)" v-for="(ite, ind) in item.cartInfo" :key="ind">
-								<image :src="ite.productInfo.image" mode=""></image>
+								<image :src="ite.productInfo.exchange_image?ite.productInfo.exchange_image:ite.productInfo.image" mode=""></image>
 								<view class="info_view">
 									<text class=" font-28 text-cut-two">{{ ite.productInfo.store_info }}</text>
 									<text class="gray  font-24" v-if="item.open_address" style="margin: 10rpx 0 0 0;">地点:{{item.open_address}}</text>
@@ -188,8 +188,8 @@ export default {
 			that.basePost(
 				that.U({ c: 'user_api', a: 'get_user_order_list' }),
 				{
-					//type状态的代表意思:'':查询所有;0:未付款;1:代发货;2:待收货;3:已收货;4:待评价;-1:退货申请中;-2：已退款;
-					type: index == 0 ? '' : index == 1 ? 0 : index == 2 ? 1 : index == 3 ? 2 : 3,
+					//status状态的代表意思:'':查询所有;0:未付款;1:代发货;2:待收货;3:已收货;4:待评价;-1:退货申请中;-2：已退款;
+					status: index == 0 ? '' : index == 1 ? 0 : index == 2 ? 1 : index == 3 ? 2 : 3,
 					page: that.newsList[index].currentPage,
 					limit: that.newsList[index].pageSize,
 					search: ''

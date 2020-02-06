@@ -78,7 +78,7 @@
 }
 image {
   width: 160rpx;
-  height: 140rpx;
+  height: 160rpx;
 }
 .carrier {
   display: -webkit-box;
@@ -160,8 +160,8 @@ image {
   height: 35rpx;
 }
 .checkbox {
-  width: 35rpx;
-  height: 35rpx;
+  width: 38rpx;
+  height: 38rpx;
   border-radius: 100%;
   border: solid 2rpx #d81e06;
   display: -webkit-box;

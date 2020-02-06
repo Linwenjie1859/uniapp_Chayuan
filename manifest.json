@@ -1,5 +1,5 @@
 {
-    "name" : "Xianmen",
+    "name" : "啄啄茶庄",
     "appid" : "__UNI__B2A99FF",
     "description" : "1",
     "versionName" : "1.0.0",
@@ -16,7 +16,8 @@
         },
         /* 模块配置 */
         "modules" : {
-            "Payment" : {}
+            "Payment" : {},
+            "OAuth" : {}
         },
         /* 应用发布信息 */
         "distribute" : {
@@ -55,6 +56,13 @@
             "sdkConfigs" : {
                 "payment" : {
                     "alipay" : {}
+                },
+                "oauth" : {
+                    "weixin" : {
+                        "appid" : "aaaaa",
+                        "appsecret" : "bbbb",
+                        "UniversalLinks" : ""
+                    }
                 }
             }
         }

@@ -11,9 +11,6 @@
 /* ==================
         修改代码
  ==================== */
- .radius {
- 	border-radius: 12upx;
- }
 
 /* ==================
         补充代码
@@ -66,6 +63,9 @@ image {
 .round {
 	border-radius: 5000upx;
 }
+ .radius {
+ 	border-radius: 8upx;
+ }
 
 
 /* ==================

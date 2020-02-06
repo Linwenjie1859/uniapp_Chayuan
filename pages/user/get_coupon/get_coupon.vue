@@ -268,7 +268,7 @@ page {
 .coupon_list .list_left {
 	width: 200upx;
 	height: 200upx;
-	border-radius: 10upx;
+	border-radius: 0 10rpx 10rpx 0;
 	background-color: #51c77d;
 }
 .used {

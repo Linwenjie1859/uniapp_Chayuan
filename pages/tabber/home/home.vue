@@ -3,7 +3,7 @@
 		<view class="header">
 			<view class="input_view round" @tap="search"><text class="text-lg text-grey">搜索商品</text></view>
 			<!-- 头部-滚动渐变显示 -->
-			<view class="after" :style="{ opacity: afterHeaderOpacity, zIndex: afterHeaderzIndex ,height:StatusAddNav+'px'}"></view>
+			<view class="after" :style="{ opacity: afterHeaderOpacity,height:StatusAddNav+'px'}"></view>
 		</view>
 		<!-- 首页头部轮播图 Start -->
 		<view class="banner">
@@ -43,7 +43,7 @@
 		<!-- 首页导航栏 Start -->
 		<view class="home_list">
 			<view class="list_top font-28">
-				<view class="top_view" @tap="fengyangScenery" v-for="(item, index) in allInfo.menus" :key="index">
+				<view class="top_view" @tap="navToArticleList" v-for="(item, index) in allInfo.menus" :key="index">
 					<navigator :url="item.url">
 						<image :src="item.pic" mode=""></image>
 						<text>{{ item.name }}</text>
@@ -56,47 +56,39 @@
 		<!-- 首页导航栏 End -->
 		
 		<!-- 热门推荐 Start-->
-		<view class="flex flex-direction padding-sm bg-white margin-top-sm">
+<!-- 		<view class="flex flex-direction padding-sm bg-white margin-top-sm">
 			<view class="flex flex-direction">
 				<view class="flex align-center justify-center" @tap="navToMoreTree">
-					<text class="text-lg text-black margin-tb-sm">热门推荐</text>
-					<text class="cuIcon-roundright margin-left-xs"> </text>
+					<text class="text-xl text-black margin-tb-sm">{{allInfo.info.teaTreeTitle}}</text>
+					<text class="cuIcon-roundright margin-left-xs text-xl"> </text>
 				</view>
-				<text class="text-sm text-yellow margin-bottom-sm">精选线路推荐，体验厦门特色</text>
-			</view>
-			<view class="bg-img bg-mask has-bgimg" :style="{'background-image': 'url('+allInfo.info.otherList[3].image+')'}" :data-id="allInfo.info.otherList[0].id" @tap="navToTreeDetails">
-				<view class="flex flex-direction justify-between align-center text-white margin-left-sm">
-					<view class="self-start flex flex-direction align-center padding-xs  padding-lr text-black has-bg-radius">
-						<text class="text-df margin-bottom-xs">鼓浪屿</text>
-						<text class="text-xs">世界文化遗产</text>
-					</view>
-				</view>
+				<text class="text-df text-yellow margin-bottom-sm">精选线路推荐，体验厦门特色</text>
 			</view>
 			<view class="flex margin-top-xs justify-between">
-				<view class="flex flex-direction has-margin text-left" style="width:230rpx;" v-for="(item, index) in allInfo.info.otherList" v-if="index<3" :key="index" :data-id="item.id" @tap="navToTreeDetails">
+				<view class="flex flex-direction has-margin text-left" style="width:230rpx;" v-for="(item, index) in allInfo.info.teaTreeList"  :key="index" :data-id="item.id" @tap="navToTreeDetails">
 					<image :src="item.image" mode="scaleToFill" class="img-has-radius "></image>
-					<text class="text-sm text-black margin-tb-xs">{{item.store_name}}</text>
-					<text class="text-grey text-cut text-xs">{{item.store_info}}</text>
+					<text class="text-lg text-black margin-tb-xs">{{item.store_name}}</text>
+					<text class="text-grey text-cut text-df">{{item.store_info}}</text>
 				</view>
 			</view>
-		</view>
+		</view> -->
 		<!-- 热门推荐 End-->
 		
 		<!-- 主题导览 Start -->
 		<view class="flex flex-direction padding-sm bg-white margin-top-sm">
 			<view class="flex flex-direction">
-				<view class="flex align-center justify-center">
-					<text class="text-lg text-black margin-tb-sm">主题导览</text>
-					<text class="cuIcon-roundright margin-left-xs" @tap="idealLife"> </text>
+				<view class="flex align-center justify-center"  @tap="navToMoreTree">
+					<text class="text-xl text-black margin-tb-sm">{{allInfo.info.teaTreeTitle}}</text>
+					<text class="cuIcon-roundright margin-left-xs text-xl" > </text>
 				</view>
-				<text class="text-sm text-yellow margin-bottom-sm">精选热门主题推荐，欢乐玩厦门</text>
+				<text class="text-df text-yellow margin-bottom-sm">精选热门主题推荐，欢乐玩厦门</text>
 			</view>
-			<scroll-view scroll-x="true" >
+			<scroll-view scroll-x="true" style="height: 310rpx;">
 				<view class="flex">
-					<view class="flex flex-direction margin-right-sm align-start" style="width: 300rpx; height: 250rpx;" v-for="(item, index) in allInfo.info.otherList" :key="index">
+					<view class="flex flex-direction margin-right-sm align-start" style="width: 300rpx; height: 300rpx;" v-for="(item, index) in allInfo.info.teaTreeList" :key="index" :data-id="item.id" @tap="navToTreeDetails">
 						<image :src="item.image" mode="scaleToFill" style="width: 300rpx; height: 200rpx;"></image>
-						<text class="text-sm text-black margin-tb-xs">{{item.store_name}}</text>
-						<text class="text-grey text-cut text-xs" style="width: 300rpx;">{{item.store_info}}</text>
+						<text class="text-lg text-black margin-tb-xs">{{item.store_name}}</text>
+						<text class="text-grey text-cut text-df text-left" style="width: 300rpx;">{{item.store_info}}</text>
 					</view>
 				</view>
 			</scroll-view>
@@ -107,51 +99,73 @@
 		<view class="flex flex-direction padding-sm bg-white margin-top-sm">
 			<view class="flex flex-direction">
 				<view class="flex align-center justify-center">
-					<text class="text-lg text-black margin-tb-sm">行程推荐</text>
+					<text class="text-xl text-black margin-tb-sm">{{allInfo.info.articleTitle}}</text>
+					<text class="cuIcon-roundright margin-left-xs text-xl" @tap="navToArticleList"> </text>
 				</view>
-				<text class="text-sm text-yellow margin-bottom-sm">精选热门主题推荐，欢乐玩厦门</text>
+				<text class="text-df text-yellow margin-bottom-sm">精选热门主题推荐，欢乐玩厦门</text>
 			</view>
-			<view class="flex flex-direction margin-tb-sm solid-bottom" v-for="(item,index) in allInfo.article_category" :key="index">
-				<image :src="item.list[0].image_input[0]" mode="scaleToFill" class="trip-has-size"></image>
-				
-				<view class="flex align-center justify-between margin-top-sm margin-bottom-xs">
-					<view class="flex align-center">
-						<text class="cuIcon-titles  text-blue"></text>
-						<text class="text-black text-bold text-sm ">{{item.list[0].title}}</text>
+		
+			<view class="flex flex-wrap" >
+				<view class="flex flex-direction trip-has-margin margin-bottom-sm" style="width: 350rpx;" v-for="(item,index) in allInfo.info.articleList" :key="index">
+					<view class="flex flex-direction justify-end radius trip-has-size" :style="[{'background-image':'url('+item.image_input[0]+')' }]" @tap="navToArticleDetail(item.id)">
+						<view class="flex text-white">
+							<text class="cuIcon-locationfill text-xs text-bold has-black-bg round trip-has-margin-padding">{{item.title}}</text>
+						</view>
 					</view>
-					<view class="flex align-center text-grey text-sm">
-						<text>{{item.list[0].add_time}} </text>
-						<text class="cuIcon-forwardfill margin-left-xs"></text>
+					<view class="flex justify-between  align-center">
+						<text class="text-xs">{{item.author}}</text>
+						<view class="round bg-white" style="margin: -50rpx 20rpx 0 0; padding: 8rpx;">
+							<view class="cu-avatar round avatar-has-size" @tap="edit" :style="[{'background-image':'url('+item.image_input[0]+')' }]"></view> 
+						</view>
+					</view>
+					<view class="flex text-sm text-bold margin-bottom-xs">
+						<text class="text-cut-two" @tap="navToArticleDetail(item.id)">{{item.synopsis}}</text>
+					</view>
+					<view class="flex align-center text-xs"> 
+						<text class="radius bg-pink light margin-right-xs text-bold" style="padding: 6rpx 10rpx;">3日游</text>
+						<text class="radius bg-pink light margin-right-xs text-bold" style="padding: 6rpx 10rpx;">家庭出行</text>
 					</view>
 				</view>
-			</view>
-			
+			</view> 
 		</view>
 		<!-- 行程推荐 End -->
 		
 		
 		<view class="flex flex-direction bg-white margin-top-sm padding-sm">
 			<view class="flex justify-between align-center padding-tb-sm">
-				<text class="text-lg">精品茶叶</text>
-				<view class="flex text-grey text-df align-center" @tap="agriculturalSpecialty">
-					<text>更多</text>
+				<text class="text-xl">{{allInfo.info.goodsTitle}}</text>
+				<view class="flex text-grey text-lg align-center" @tap="navToMoreGoods">
+					<text>查看更多</text>
 					<text class="cuIcon-right margin-left-xs"></text>
 				</view>
 			</view>
 			<view class="flex text-df flex-wrap">
-				<view class="flex flex-direction has-margin-right-sm margin-bottom"  style="width: 347rpx;" @tap="goodeDetails" :data-id="item.id" v-for="(item, index) in allInfo.info.bestList" :key="index">
+				<view class="flex flex-direction has-margin-right-sm margin-bottom"  style="width: 337rpx;" @tap="goodeDetails" :data-id="item.id" v-for="(item, index) in allInfo.info.goodsList" :key="index">
 					<image :src="item.image" mode="scaleToFill" style="width: 347rpx; height: 320rpx;"></image>
 					<view class="flex text-left margin-top-sm margin-bottom-xs">
-						<text class="text-df text-cut-two">{{ item.store_name }}</text>
+						<text class="text-df text-cut">{{ item.store_name }}</text>
 					</view>
 					<view class="flex justify-between align-center margin-top-xs">
-						<text class="text-sm text-price text-orange">{{ item.price }}</text>
-						<text class="text-sm text-grey">月售{{ item.sales }}件</text>
+						<text class="text-lg text-price text-orange">{{ item.price }}</text>
+						<text class="texxt-df text-grey">月售{{ item.sales }}件</text>
 					</view>
 				</view>
 			</view>
 		</view>
 		
+		<!-- App下脚标 Start -->
+	<!-- 	<view class="flex flex-direction align-center padding-sm">
+			<view class="flex align-center justify-center margin-tb-xs" style="width: 100%;">
+				<text class="padding-lr-sm">店铺信息</text>
+				<text class="solid-left padding-lr-sm">安全检测</text>
+				<text class="solid-left padding-lr-sm">联系我们</text>
+			</view>
+			<view class="flex justify-center align-center">
+				<text class="text-grey text-df">App属于啄啄科技有限公司，未经许可不可抄袭。</text>
+				<image src="../../../static/woodpecker.png" mode="widthFix" style="width: 80rpx;height: 92rpx;"></image>
+			</view>
+		</view> -->
+		<!-- App下脚标 End -->
 	</view>
 </template>
 
@@ -170,22 +184,15 @@ export default {
 			interval: 2000,
 			duration: 1000,
 			//控制渐变标题栏的参数
-			beforeHeaderzIndex: 11, //层级
-			afterHeaderzIndex: 10, //层级
-			beforeHeaderOpacity: 1, //不透明度
 			afterHeaderOpacity: 0 //不透明度
 		};
 	},
 
 	onPageScroll(e) {
 		//导航栏渐变
-		let tmpY = 375;
-		e.scrollTop = e.scrollTop > tmpY ? 375 : e.scrollTop;
-		this.afterHeaderOpacity = e.scrollTop * (1 / tmpY);
-		this.beforeHeaderOpacity = 1 - this.afterHeaderOpacity;
-		//切换层级
-		this.beforeHeaderzIndex = e.scrollTop > 0 ? 10 : 11;
-		this.afterHeaderzIndex = e.scrollTop > 0 ? 11 : 10;
+		let opacity=e.scrollTop/200
+		this.afterHeaderOpacity=opacity>1?1:e.scrollTop<0?0:opacity;
+		
 	},
 	onLoad() {
 		this.getHomeAllInfo();
@@ -214,12 +221,6 @@ export default {
 			});
 		},
 
-		// 凤阳风光
-		fengyangScenery(e) {
-			uni.navigateTo({
-				url: '/pages/list/fengyang_scenery/fengyang_scenery'
-			});
-		},
 		// 凤阳集市
 		fengyangFair(e) {
 			uni.navigateTo({
@@ -227,9 +228,9 @@ export default {
 			});
 		},
 		// 农土特产
-		agriculturalSpecialty(e) {
+		navToMoreGoods(e) {
 			uni.navigateTo({
-				url: '/pages/list/agricultural_specialty/agricultural_specialty'
+				url: '/pages/tabber/fengyang_fair/fengyang_fair'
 			});
 		},
 		// 理想生活
@@ -242,11 +243,6 @@ export default {
 		goodeDetails(e) {
 			uni.navigateTo({
 				url: '/pages/list/goode_details/goode_details?id=' + e.currentTarget.dataset.id
-			});
-		},
-		fengyang_scenery(e) {
-			uni.navigateTo({
-				url: '/pages/list/fengyang_scenery/fengyang_scenery'
 			});
 		},
 		flowering_seasons(e) {
@@ -273,19 +269,50 @@ export default {
 			uni.navigateTo({
 				url:'/pages/subscribe/tree_details/tree_details?id='+e.currentTarget.dataset.id
 			})
+		},
+		navToArticleDetail(id) {
+			uni.navigateTo({
+				url: "/pages/list/list_detail/list_detail?id="+id,
+			})
+		},
+		navToArticleList(){
+			uni.navigateTo({
+				url: '/pages/list/fengyang_scenery/fengyang_scenery'
+			})
 		}
 	
 	}
 };
 </script>
 
-<style>
+<style scoped>
+	.trip-has-margin:nth-child(odd){
+		margin-right: 10rpx;
+	}
+	.avatar-has-size{
+		width: 82upx;
+		height: 82upx;
+		font-size: 1em;
+	}
+	.has-black-bg {
+		background-color: rgba(0,0,0, 0.3);
+	}
+	.solid-left::after{
+		border-left: 1rpx solid rgba(0, 0, 0, 0.8);
+	}
 	.has-margin-right-sm:nth-child(odd){
-		margin-right: 15rpx;
+		margin-right: 25rpx;
+	}
+	.trip-has-margin-padding{
+		margin: 8rpx 10rpx;
+		padding: 5rpx 10rpx;
 	}
 	.trip-has-size{
-		width: 710rpx;
-		height: 400rpx;
+		width: 350rpx;
+		height: 230rpx;
+		background-position: center;
+		background-size: cover;
+		
 	}
 	.img-has-radius {
 		width:230rpx;

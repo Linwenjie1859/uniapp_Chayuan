@@ -32,7 +32,7 @@
 	export default {
 		data() {
 			return {
-				currentDefault:0,
+				currentDefault:-1,
 				addressList:[],
 				clickFlag:0,
 			}

@@ -1,44 +1,64 @@
 
-.has-margin-right-sm:nth-child(odd){
-		margin-right: 15rpx;
+.trip-has-margin.data-v-04934c48:nth-child(odd){
+		margin-right: 10rpx;
 }
-.trip-has-size{
-		width: 710rpx;
-		height: 400rpx;
+.avatar-has-size.data-v-04934c48{
+		width: 82rpx;
+		height: 82rpx;
+		font-size: 1em;
 }
-.img-has-radius {
+.has-black-bg.data-v-04934c48 {
+		background-color: rgba(0,0,0, 0.3);
+}
+.solid-left.data-v-04934c48::after{
+		border-left: 1rpx solid rgba(0, 0, 0, 0.8);
+}
+.has-margin-right-sm.data-v-04934c48:nth-child(odd){
+		margin-right: 25rpx;
+}
+.trip-has-margin-padding.data-v-04934c48{
+		margin: 8rpx 10rpx;
+		padding: 5rpx 10rpx;
+}
+.trip-has-size.data-v-04934c48{
+		width: 350rpx;
+		height: 230rpx;
+		background-position: center;
+		background-size: cover;
+}
+.img-has-radius.data-v-04934c48 {
 		width:230rpx;
 		height: 160rpx;
 }
-.has-margin:nth-of-type(1) image{
+.has-margin:nth-of-type(1) image.data-v-04934c48{
 		border-bottom-left-radius: 8rpx;
 }
-.has-margin:nth-last-of-type(1) image{
+.has-margin:nth-last-of-type(1) image.data-v-04934c48{
 		border-bottom-right-radius: 8rpx;
 }
-.has-bgimg{
+.has-bgimg.data-v-04934c48{
 		width:710rpx;
 		height: 300rpx;
 		border-top-right-radius: 8rpx;
 		border-top-left-radius: 8rpx;
 		background-position: center;
 }
-.has-bg-radius{
+.has-bg-radius.data-v-04934c48{
 		background-color: rgba(243,198,68,0.9);
 		border-bottom-right-radius: 8rpx;
 		border-bottom-left-radius: 8rpx;
 }
-.has-margin{
+.has-margin.data-v-04934c48{
 		margin-right: 10rpx;
 }
-.has-margin:nth-last-of-type(1){
+.has-margin.data-v-04934c48:nth-last-of-type(1){
 		margin-right: 0rpx;
 }
-.content{
+.content.data-v-04934c48{
 	text-align: center;
 }
 	/* 头部 */
-.header {
+.header.data-v-04934c48 {
 	width: 100%;
 	height: 150rpx;
 	display: -webkit-box;
@@ -51,7 +71,7 @@
 	top: 0;
 	z-index: 10;
 }
-.input_view {
+.input_view.data-v-04934c48 {
 	width: 450rpx;
 	height: 50rpx;
 	background-color: rgba(255, 255, 255, 0.7);
@@ -61,23 +81,23 @@
 	border: 1px solid rgba(135, 153, 163, 0.3);
 	bottom: 39rpx;
 }
-.input_view text {
+.input_view text.data-v-04934c48 {
 	display: block;
 	width: 450rpx;
 	height: 50rpx;
 	line-height: 50rpx;
 	text-align: center;
 }
-.after {
+.after.data-v-04934c48 {
 	width: 100%;
 	position: fixed;
 	top: 0rpx;
-	background: #39b54a;
+	background: #fff;
 	-webkit-transition: opacity 0.05s linear;
 	transition: opacity 0.05s linear;
 	color: #fff;
 }
-.after .middle {
+.after .middle.data-v-04934c48 {
 	display: -webkit-box;
 	display: -webkit-flex;
 	display: flex;
@@ -91,19 +111,19 @@
 	-webkit-justify-content: space-between;
 	        justify-content: space-between;
 }
-.banner {
+.banner.data-v-04934c48 {
 	/* margin-top: 170upx; */
 	width: 100%;
 	height: 450rpx;
 }
-.banner .swiper {
+.banner .swiper.data-v-04934c48 {
 	height: 450rpx;
 }
-.banner image {
+.banner image.data-v-04934c48 {
 	width: 100%;
 	height: 450rpx;
 }
-.notice {
+.notice.data-v-04934c48 {
 	width: 100%;
 	height: 90rpx;
 	background-color: #ffffff;
@@ -114,23 +134,23 @@
 	-webkit-align-items: center;
 	        align-items: center;
 }
-.notice image {
+.notice image.data-v-04934c48 {
 	width: 35rpx;
 	height: 35rpx;
 	margin: 0rpx 25rpx;
 }
-.notice_view {
+.notice_view.data-v-04934c48 {
 	text-align: left;
 	width: 650rpx;
 	height: 75rpx;
 	line-height: 75rpx;
 }
-.home_list {
+.home_list.data-v-04934c48 {
 	width: 100%;
 	background-color: #ffffff;
 	margin-top: 25rpx;
 }
-.home_list .list_top {
+.home_list .list_top.data-v-04934c48 {
 	width: 700rpx;
 	margin: 0 auto;
 	display: -webkit-box;
@@ -143,22 +163,22 @@
 	-webkit-justify-content: space-between;
 	        justify-content: space-between;
 }
-.list_top .top_view image {
+.list_top .top_view image.data-v-04934c48 {
 	width: 80rpx;
 	height: 80rpx;
 	margin: 25rpx 35rpx 10rpx 35rpx;
 }
-.list_top .top_view text {
+.list_top .top_view text.data-v-04934c48 {
 	display: block;
 	width: 150rpx;
 	text-align: center;
 }
-.home_pic2 {
+.home_pic2.data-v-04934c48 {
 	width: 700rpx;
 	height: 300rpx;
 	margin: 25rpx auto;
 }
-.list_down {
+.list_down.data-v-04934c48 {
 	width: 700rpx;
 	margin: 0 auto;
 	display: -webkit-box;
@@ -171,12 +191,12 @@
 	-webkit-justify-content: space-between;
 	        justify-content: space-between;
 }
-.list_down image {
+.list_down image.data-v-04934c48 {
 	width: 190rpx;
 	height: 90rpx;
 	margin-bottom: 25rpx;
 }
-.title {
+.title.data-v-04934c48 {
 	width: 700rpx;
 	height: 100rpx;
 	margin: 0 auto;
@@ -190,18 +210,18 @@
 	-webkit-justify-content: space-between;
 	        justify-content: space-between;
 }
-.home_pic3 {
+.home_pic3.data-v-04934c48 {
 	width: 700rpx;
 	height: 340rpx;
 	margin: 0 auto;
 }
-.recommend {
+.recommend.data-v-04934c48 {
 	display: block;
 	width: 700rpx;
 	margin: 0 auto;
 	text-align: left;
 }
-.recommend_list {
+.recommend_list.data-v-04934c48 {
 	width: 700rpx;
 	margin: 25rpx auto;
 	display: -webkit-box;
@@ -214,15 +234,15 @@
 	-webkit-justify-content: space-between;
 	        justify-content: space-between;
 }
-.recommend_list .list_view {
+.recommend_list .list_view.data-v-04934c48 {
 	position: relative;
 	margin-bottom: 25rpx;
 }
-.recommend_list .list_view image {
+.recommend_list .list_view image.data-v-04934c48 {
 	width: 150rpx;
 	height: 150rpx;
 }
-.recommend_list .list_view text {
+.recommend_list .list_view text.data-v-04934c48 {
 	display: block;
 	width: 150rpx;
 	height: 50rpx;
@@ -234,7 +254,7 @@
 	top: 100rpx;
 	left: 0rpx;
 }
-.product_list {
+.product_list.data-v-04934c48 {
 	width: 700rpx;
 	margin: 0 auto;
 	display: -webkit-box;
@@ -249,15 +269,15 @@
 	-webkit-flex-wrap: wrap;
 	        flex-wrap: wrap;
 }
-.product_list .prod_view {
+.product_list .prod_view.data-v-04934c48 {
 	width: 335rpx;
 }
-.product_list .prod_view image {
+.product_list .prod_view image.data-v-04934c48 {
 	width: 335rpx;
 	height: 335rpx;
 	border-radius: 10rpx;
 }
-.prod_view .list_info {
+.prod_view .list_info.data-v-04934c48 {
 	width: 335rpx;
 	margin: 0 auto;
 	display: -webkit-box;
@@ -272,7 +292,7 @@
 	margin-top: 10rpx;
 	margin-bottom: 25rpx;
 }
-.no_more {
+.no_more.data-v-04934c48 {
 	width: 700rpx;
 	display: block;
 	margin: 60rpx auto;

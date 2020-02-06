@@ -1,0 +1,6 @@
+{
+  "navigationStyle": "custom",
+  "usingComponents": {
+    "num-scroll": "/components/numScroll"
+  }
+}

@@ -133,34 +133,35 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-var _default =
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var _vuex = __webpack_require__(/*! vuex */ 13);function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var _default =
 {
   data: function data() {
     return {
@@ -173,7 +174,7 @@ var _default =
   onShow: function onShow() {
     this.getUserInfo();
   },
-  methods: {
+  methods: _objectSpread({
     //获取用户的信息
     getUserInfo: function getUserInfo() {
       var that = this;
@@ -197,7 +198,26 @@ var _default =
       uni.navigateTo({
         url: '/pages/user/admin_address/admin_address' });
 
-    } } };exports.default = _default;
+    },
+    outLogin: function outLogin() {
+      var that = this;
+      uni.showModal({
+        title: '提示',
+        content: '确定退出当前用户？',
+        success: function success(res) {
+          if (res.confirm) {
+            that.logoutStore();
+            uni.clearStorageSync("data");
+            uni.redirectTo({
+              url: '/pages/login/pwd_login/pwd_login' });
+
+          } else {
+            return;
+          }
+        } });
+
+    } },
+  (0, _vuex.mapMutations)(['logoutStore'])) };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),

@@ -1,12 +1,12 @@
 
-.uni-tab-item.data-v-370a0750 {
+.uni-tab-item.data-v-1e5ebbc4 {
 	display: inline-block;
 	-webkit-flex-wrap: nowrap;
 	        flex-wrap: nowrap;
 	padding-left: 33rpx;
 	padding-right: 33rpx;
 }
-.uni-tab-item-title.data-v-370a0750 {
+.uni-tab-item-title.data-v-1e5ebbc4 {
 	color: #555;
 	font-size: 30rpx;
 	height: 80rpx;
@@ -15,12 +15,12 @@
 	        flex-wrap: nowrap;
 	white-space: nowrap;
 }
-.uni-tab-item-title-active.data-v-370a0750 {
+.uni-tab-item-title-active.data-v-1e5ebbc4 {
 	color: #51c77d;
 	padding-bottom: 10rpx;
 	border-bottom: 6rpx solid #51c77d;
 }
-.has-black-bg.data-v-370a0750 {
+.has-black-bg.data-v-1e5ebbc4 {
 	background-color: rgba(255, 255, 255, 0.4);
 	border: 1rpx solid rgba(0, 0, 0, 0.2);
 }

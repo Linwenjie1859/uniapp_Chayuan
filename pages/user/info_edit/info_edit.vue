@@ -1,20 +1,22 @@
 <template>
-	<view class="content">
-		<view class="info_edit" @tap="changeHead">
-			<text class="font-32">头像</text>
-			<image class="portrait" :src="userInfo.avatar?userInfo.avatar:'/static/logo.png'" mode=""></image>
-			<image src="/static/right.png" mode=""></image>
-		</view> 
-		<view class="info_list font-32">
-			<text>手机号</text>
-			<input type="text" :value="userInfo.phone" class="text-grey" disabled/>
+	<view class="bg-white padding-sm" style="height: 100vh;">
+		<view class="flex flex-direction padding-sm">
+			<view class="flex justify-between align-center margin-tb text-lg padding-tb-sm" @tap="changeHead">
+				<text class="text-grey self-end">头像</text>
+				<view v-if="userInfo.avatar!=''" class="cu-avatar round xl self-start" :style="{'background-image':'url('+userInfo.avatar+')'}"></view>  
+				<view v-if="userInfo.avatar==''" class="cu-avatar round xl self-start" style="background-image: url(../../../static/woodpecker.png);"></view>  
+			</view>
+			<view class="flex justify-between margin-tb text-lg padding-tb-sm align-center text-right">
+				<text class="text-grey">手机号</text>
+				<input type="text" :value="userInfo.phone" disabled class="text-grey"/>
+			</view>
+			<view class="flex justify-between margin-tb text-lg padding-tb-sm align-center text-right">
+				<text class="text-grey">庄园昵称</text>
+				<input type="text" v-model="userInfo.nickname" placeholder="请输入昵称"/>
+			</view>
+			<text class="text-df text-grey margin-top">注意：与商城业务或者卖家品牌冲突的昵称，商城将有权收回。</text>
+			<button class="bg-gradual-green margin-top-sm round" style="width: 100%;" @tap="saveUserInfo">保存</button>
 		</view>
-		<view class="info_list font-32 supplement">
-			<text>商城昵称</text>
-			<input type="text" v-model="userInfo.nickname" class="text-grey"/>
-		</view>
-		<view class="text"><text class="font-28 text-gray">注意：与商城业务或者卖家品牌冲突的昵称，商城将有权收回。</text></view>
-		<button class="btn_green" @tap="saveUserInfo">保存</button>
 	</view>
 </template>
 
@@ -52,10 +54,9 @@ export default {
 						},
 						success: function(res) {
 							var data = JSON.parse(res.data);
-							console.log(data.data.url);
-							// _self.userInfo.avatar= data.data.url;	//服务器
-							
-							_self.userInfo.avatar= _self.url+data.data.url;	//本地
+							console.log(data);
+							_self.userInfo.avatar= data.data.url;	//服务器
+							// _self.userInfo.avatar= _self.url+data.data.url;	//本地
 							uni.showToast({
 								title: '上传进度：' + 1 + '/' + imagePathArr.length,
 								icon: 'none',
@@ -107,60 +108,5 @@ export default {
 </script>
 
 <style>
-	.text {
-		display: block;
-		width: 550upx;
-		margin: 0 auto;
-		text-align: left;
-		margin-top: 60upx;
-		margin-bottom: 100upx;
-	}
-.text-grey {
-	color: #8799a3;
-}
-.info_edit {
-	width: 660upx;
-	display: flex;
-	align-items: center;
-	margin: 70upx auto;
-}
-.info_edit .portrait {
-	width: 90upx !important;
-	height: 90upx !important;
-	border-radius: 50%;
-	margin-right: 26upx;
-}
-.info_edit image {
-	width: 35upx;
-	height: 35upx;
-}
-.info_edit text {
-	display: block;
-	width: 510upx;
-}
-.info_list {
-	width: 660upx;
-	display: flex;
-	align-items: center;
-	margin: 0 auto;
-	margin: 70upx auto;
-}
-.info_list text {
-	display: block;
-	width: 625upx;
-}
-.info_list image {
-	width: 35upx;
-	height: 35upx;
-}
-.text_right {
-	margin-right: 26upx;
-}
-.info_list input {
-	text-align: right;
-	margin-right: 26upx;
-}
-.supplement {
-	margin-bottom: 120upx;
-}
+	
 </style>

@@ -1,22 +1,22 @@
 
-.has-margin-right-sm.data-v-d23fec28:nth-child(odd){
+.has-margin-right-sm.data-v-0e9a6b50:nth-child(odd){
 	margin-right: 15rpx;
 }
 /* 头部 */
-.header.data-v-d23fec28 {
+.header.data-v-0e9a6b50 {
 	background-color: #39b54a;
 	width: 100%;
 	height: 160rpx;
 	position: fixed;
 	z-index: 10000;
 }
-.view-is-absolute.data-v-d23fec28{
+.view-is-absolute.data-v-0e9a6b50{
 	position: absolute;
 	top:0;
 	width: 100%;
 	height: 100%;
 }
-.input_view.data-v-d23fec28 {
+.input_view.data-v-0e9a6b50 {
 	width: 450rpx;
 	height: 60rpx;
 	background-color: rgba(255, 255, 255, 0.7);

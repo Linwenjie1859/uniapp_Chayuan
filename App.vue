@@ -26,7 +26,6 @@ export default {
 					pwd: data.pwd
 				},
 				function(res) {
-					console.log(res);
 					that.loginStore(res.data);
 				},
 				function(res) {}
@@ -50,10 +49,10 @@ export default {
 				Vue.prototype.NavigationBar = 44;	//导航栏高度
 				Vue.prototype.StatusAddNav = 44+e.statusBarHeight;	//导航栏高度+时间状态高度
 				Vue.prototype.StatusAddHalfNav=11+e.statusBarHeight;
-				
+				Vue.prototype.TabBar = e.screenHeight - e.windowHeight;	//底部选项卡高度
 				
 				Vue.prototype.WindowHeight = e.windowHeight;	//中心部分高度
-				Vue.prototype.TabBar = 50;	//底部选项卡高度
+				
 				
 				if(e.screenHeight>800){	
 					Vue.prototype.WindowHeight_one_five = (e.windowHeight-44-e.statusBarHeight)/5;	//1/5中心部分高度
@@ -90,6 +89,7 @@ export default {
 @import url("common/colorui/icon.css");
 
 
+	
 /*每个页面公共css */
 /* 	.content{
 		color: #6d6d6d;

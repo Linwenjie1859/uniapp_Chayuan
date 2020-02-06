@@ -1,4 +1,7 @@
 
+button.data-v-d61f454a::after{
+		border: 1rpx solid #FFFFFF !important;
+}
 .height-width-sl.data-v-d61f454a{
 		height: 60rpx;
 		width: 60rpx;

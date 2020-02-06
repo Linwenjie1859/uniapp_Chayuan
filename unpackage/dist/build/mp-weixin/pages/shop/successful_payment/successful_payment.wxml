@@ -1,0 +1,1 @@
+<view class="content"><view class="successful"><image src="/static/successful_payment.png" mode></image><text class="font-32 gray">支付成功</text><view class="btn"><button data-event-opts="{{[['tap',[['black',['$event']]]]]}}" class="btn_black_green" bindtap="__e">返回首页</button></view></view></view>

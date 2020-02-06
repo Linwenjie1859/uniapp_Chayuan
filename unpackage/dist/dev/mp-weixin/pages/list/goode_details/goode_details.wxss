@@ -3,7 +3,7 @@
 		border-left: 8rpx solid #f37b1d;
 }
 .has-height-width.data-v-640630c4{
-	height: 500rpx;
+	height: 850rpx;
 	width: 750rpx;
 }
 .footer.data-v-640630c4 {
@@ -197,8 +197,8 @@ input.data-v-640630c4 {
 	top: 0rpx;
 	-webkit-transition: opacity 0.05s linear;
 	transition: opacity 0.05s linear;
-	background-color: #39b54a;
-	color: #fff;
+	background-color: #fff;
+	color: #000;
 }
 .after .middle.data-v-640630c4 {
 	display: -webkit-box;

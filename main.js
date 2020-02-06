@@ -21,7 +21,7 @@ App.mpType = 'app'
 Vue.prototype.routineStyle = '#ffffff'; 
 Vue.prototype.openPages = '';
 Vue.prototype.urlImages = '';
-Vue.prototype.url = 'http://www.chayuan.com';
+Vue.prototype.url = 'http://chayuan.vswxx.top';
 // Vue.prototype.token = '';
 // Vue.prototype.isLog = true;
 // Vue.prototype.MyMenus = [];
@@ -63,7 +63,7 @@ Vue.prototype.isLogin = function() {
 		return true;
 	}else{
 		uni.navigateTo({
-			url: "/pages/login/pwd_login/pwd_login",
+			url: "/pages/login/pwd_login/pwd_login"
 		})
 	}
 }

@@ -1,42 +1,18 @@
 <template>
 	<view>
 		<view class="flex flex-direction padding-lr-sm padding-tb-xs">
-			<view class="flex flex-direction padding-sm bg-white radius">
-				<view class="text-lg text-bold margin-bottom-sm has-sub-margin-xs"><text class="cuIcon-titles text-green text-xl"></text> 我的茶树</view>
-				<view class="flex justify-between align-center padding-sm  light radius margin-tb-xs">
-					<text>红茶可提取总数</text>
-					<text>0/盒</text>
-				</view>
-				<view class="flex justify-between align-center padding-sm bg-grey light radius margin-tb-xs">
-					<text>绿茶可提取总数</text>
-					<text>0/盒</text>
+			<view class="flex flex-direction padding-sm bg-white radius margin-top-sm">
+				<view class="text-lg text-bold margin-bottom-sm has-sub-margin-xs"><text class="cuIcon-titles text-green text-xl"></text> 可兑换数</view>
+				<view class="flex justify-center">
+					<image :src="exchangeInfo.exchange_image" class="radius" style="height: 400rpx;"></image>
 				</view>
 				<view class="flex justify-between align-center padding-sm  light radius margin-tb-xs">
-					<text>白茶可提取总数</text>
-					<text>0/盒</text>
+					<text>{{exchangeInfo.store_name}}可提取总数</text>
+					<text>{{exchangeInfo.exchange_num}}/盒</text>
 				</view>
-			</view>
-
-			<view class="flex flex-direction padding bg-white radius margin-tb-sm">
-				<view class="flex justify-between align-center margin-tb-xs solid-bottom padding-bottom-xs">
-					<text class="flex-treble text-lg">优质红茶</text>
-					<view class="flex flex-twice justify-end text-grey margin-right-xs align-center ">
-						<text class="text-has-border-left text-lg text-bold"  @tap="addSubNum(0, -1)">-</text>
-						<input type="number" class="text-lg text-has-border " v-model.number="num" disabled />
-						<text class="text-has-border-right text-lg text-bold" @tap="addSubNum(0, 1)">+</text>
-					</view> 
-				</view>
-				<view class="flex justify-between align-center margin-tb-xs solid-bottom padding-bottom-xs">
-					<text class="flex-treble text-lg">优质绿茶</text>
-					<view class="flex flex-twice justify-end text-grey margin-right-xs align-center ">
-						<text class="text-has-border-left text-lg text-bold"  @tap="addSubNum(0, -1)">-</text>
-						<input type="number" class="text-lg text-has-border " v-model.number="num" disabled />
-						<text class="text-has-border-right text-lg text-bold" @tap="addSubNum(0, 1)">+</text>
-					</view> 
-				</view>
-				<view class="flex justify-between align-center margin-tb-xs solid-bottom padding-bottom-xs">
-					<text class="flex-treble text-lg">优质白茶</text>
-					<view class="flex flex-twice justify-end text-grey margin-right-xs align-center ">
+				<view class="flex justify-between align-center solid-bottom padding-sm padding-bottom-xs">
+					<text class="flex-treble text-lg">{{exchangeInfo.store_name}}</text>
+					<view class="flex flex-twice justify-end text-grey align-center ">
 						<text class="text-has-border-left text-lg text-bold"  @tap="addSubNum(0, -1)">-</text>
 						<input type="number" class="text-lg text-has-border " v-model.number="num" disabled />
 						<text class="text-has-border-right text-lg text-bold" @tap="addSubNum(0, 1)">+</text>
@@ -44,30 +20,28 @@
 				</view>
 			</view>
 			
-			<view class="flex flex-direction padding-sm bg-white radius">
+			<view class="flex flex-direction padding-sm bg-white radius margin-top-sm" v-if="goodsInfo.storePack">
 				<view class="text-lg text-bold has-sub-margin-xs margin-bottom-sm"><text class="cuIcon-titles text-green text-xl"></text> 费用详情</view>
 				<view class="flex justify-between">
-					<image src="../../../static/banner.jpg" mode="scaleToFill" class="radius margin-right-sm" style="width: 200rpx; height: 200rpx;"></image>
+					<image :src="goodsInfo.storePack.pack_image" mode="scaleToFill" class="radius margin-right-sm" style="width: 200rpx; height: 200rpx;"></image>
 					<view class="flex flex-direction justify-between" style="width: 450rpx;">
 						<view class="flex">
-							<text class="text-bold text-lg text-cut">精品礼盒包装</text>
+							<text class="text-bold text-lg text-cut">{{goodsInfo.storePack.name}}</text>
 						</view> 
 						<view class="flex">
-							<text class="text-df text-cut-two margin-tb-sm">高端的包装礼盒送人送礼送好友 高端的包装礼盒送人送礼送好友 高端的包装礼盒送人送礼送好友</text>
+							<text class="text-df text-cut-two margin-tb-sm">{{goodsInfo.storePack.describe}}</text>
 						</view>
 						<view class="flex align-center justify-between">
-							<text class="text-price text-orange text-lg">5</text>
+							<text class="text-price text-orange text-lg">{{goodsInfo.storePack.pack_cost}}</text>
 							<text class="text-grey text-sm">销量:1000</text>
 						</view>
 					</view>
 				</view>
-				<view class="flex align-center margin-top-sm">
-					<text class="text-red text-sm">备注: 兑换数量满5件可享受包邮，不足则收取10元快递费</text>
-				</view>
 			</view>
 		</view>
+		<view style="height: 100rpx;"></view>
 		<view class="cu-bar foot bg-white flex justify-end align-center padding-lr-sm">
-			<view class=" bg-gradual-green padding-sm radius text-lg" >
+			<view class=" bg-gradual-green padding-sm radius text-lg"  @tap="confirmExchange()">
 				确定兑换
 			</view>
 		</view>
@@ -78,21 +52,97 @@
 	export default {
 		data() {
 			return {
-				num:10
+				num:1,
+				exchangeInfo:{},
+				currentIndex:0,
+				goodsInfo:{}
 			}
 		},
+		onLoad(e) {
+			this.currentIndex=e.index;
+			this.getBeforePageInfo();
+			this.getGoodInfo();
+		},
 		methods: {
+			//获取商品的信息
+			getGoodInfo() {
+				let that = this;
+				that.baseGet(
+					that.U({
+						c: 'store_api',
+						a: 'details',
+						q: {
+							id: that.exchangeInfo.product_id
+						}
+					}),
+					function(res) {
+						that.goodsInfo = res.data;
+						console.log(that.goodsInfo);
+					},
+					function(res) {
+						console.log(res);
+					},
+					true
+				);
+			},
+			//确认兑换商品
+			confirmExchange(){
+				let that = this;
+				if(that.num>that.exchangeInfo.exchange_num){
+					uni.showToast({
+						title: '兑换的数量超出~',
+						position: 'bottom',
+						icon: 'none'
+					});
+					return ;
+				}
+				
+				if(!that.goodsInfo.storePack){
+					uni.showToast({
+						title: '兑换商品异常~',
+						position: 'bottom',
+						icon: 'none'
+					});
+					return ;
+				}
+	
+				that.baseGet(
+					that.U({
+						c: 'auth_api',
+						a: 'now_buy',
+						q: {
+							productId: that.goodsInfo.storeInfo.id,
+							merId: that.goodsInfo.merInfo.id,
+							cartNum: that.num
+						}
+					}),
+					function(res) {
+						uni.navigateTo({
+							url: '/pages/subscribe/exchange_confirm/exchange_confirm?listId=' + res.data.cartId
+						});
+					},
+					function(res) {
+					},
+					true
+				);
+			},
+			//获取上个页面显示的单条数据
+			getBeforePageInfo(){
+				let pages = getCurrentPages();  //获取所有页面栈实例列表
+				let prevPage = pages[ pages.length - 2 ];  //上一页页面实例
+				this.exchangeInfo=prevPage.$vm.exchangeInfo[this.currentIndex];
+			},
 			//商品加减操作
-			addSubNum(index,num) {
-				// if (num <= 0 && this.ticketInfo[index].num <= 0) {
-				// 	uni.showToast({
-				// 		title: '该宝贝不能减少了哟~',
-				// 		position: 'bottom',
-				// 		icon: 'none'
-				// 	});
-				// } else {
-				// 	this.ticketInfo[index].num = this.ticketInfo[index].num + num;
-				// }
+			addSubNum(index,number) {
+				if (number == 0 && this.num <= 0) {
+					uni.showToast({
+						title: '兑换数不能减少了哟~',
+						position: 'bottom',
+						icon: 'none'
+					});
+				} else {
+					this.num = this.num + number;
+				}
 			},
 		}
 	}
@@ -104,7 +154,7 @@
 	}
 .text-has-border {
 		max-width: 80rpx;
-		height: 49rpx;
+		height: 51rpx;
 		text-align: center;
 		border-top: 1px solid #e0e0e0;
 		border-bottom: 1px solid #e0e0e0;

@@ -21,11 +21,12 @@
 			<text class="font-28">客服电话</text>
 			<image src="/static/right.png" mode=""></image>
 		</view>
-		<button class="btn_green">退出登录</button>
+		<button class="btn_green" @tap="outLogin">退出登录</button>
 	</view>
 </template>
 
 <script>
+	import {mapMutations } from 'vuex';
 	export default {
 		data() {
 			return {
@@ -63,7 +64,25 @@
 					url: '/pages/user/admin_address/admin_address',
 				});
 			},
-			
+			outLogin(){
+				let that=this;
+				uni.showModal({
+					title: '提示',
+					content: '确定退出当前用户？',
+					success: function(res) {
+						if (res.confirm) {
+							that.logoutStore();
+							uni.clearStorageSync("data");
+							uni.redirectTo({
+								url:'/pages/login/pwd_login/pwd_login'
+							})
+						} else{
+							return;
+						}
+					}
+				});
+			},
+			...mapMutations(['logoutStore'])
 		}
 	}
 </script>

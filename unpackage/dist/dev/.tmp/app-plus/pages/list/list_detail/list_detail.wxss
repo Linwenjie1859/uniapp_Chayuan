@@ -1,15 +1,15 @@
 
-.has-bg.data-v-8f9bc434{
+.has-bg.data-v-1a04de52{
 	background: rgba(135,153,163,0.1);
 }
-.view-has-icon.data-v-8f9bc434{
+.view-has-icon.data-v-1a04de52{
 	width: 310rpx;
 	margin:10rpx 7rpx;
 }
-.view-has-padding.data-v-8f9bc434{
+.view-has-padding.data-v-1a04de52{
 	padding: 3rpx 8rpx;
 }
-.img-has-height.data-v-8f9bc434{
+.img-has-height.data-v-1a04de52{
 	height: 380rpx;
 	width: 710rpx;
 	margin:10rpx 0;

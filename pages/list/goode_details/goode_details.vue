@@ -1,7 +1,7 @@
 <template>
 	<view class="flex flex-direction">
 		<view class="header">
-			<text class="cuIcon-back cuIcon-has-absolute text-white" @tap="back"></text>
+			<text class="cuIcon-back cuIcon-has-absolute" @tap="navToBack" :class="[afterHeaderOpacity==1 ? 'text-black':'text-white']"></text>
 			<!-- 头部-滚动渐变显示 -->
 			<view class="after" :style="{ opacity: afterHeaderOpacity, zIndex: afterHeaderzIndex }">
 				<view class="middle font-32">
@@ -20,7 +20,7 @@
 			class="has-height-width"
 		>
 			<swiper-item v-for="(item, index) in goodsInfo.storeInfo.slider_image" :key="index" >
-				<image :src="item" style="width: 750rpx;height: 500rpx;"></image>
+				<image :src="item" class="has-height-width"></image>
 			</swiper-item>
 		</swiper>
 		<!-- 商品轮播图 End -->
@@ -340,7 +340,7 @@ export default {
 			);
 		},
 		//返回上一页
-		back() {
+		navToBack() {
 			uni.navigateBack();
 		},
 		// 立即购买
@@ -464,7 +464,7 @@ export default {
 		border-left: 8rpx solid #f37b1d;
 	}
 .has-height-width{
-	height: 500rpx;
+	height: 850rpx;
 	width: 750rpx;
 }
 
@@ -641,8 +641,8 @@ input {
 	position: fixed;
 	top: 0upx;
 	transition: opacity 0.05s linear;
-	background-color: #39b54a;
-	color: #fff;
+	background-color: #fff;
+	color: #000;
 }
 
 .after .middle {

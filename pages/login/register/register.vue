@@ -1,7 +1,6 @@
 <template>
-	<view class="content">
-		
-		<view class="input_view supplement_one">
+	<view class="content bg-white" style="height: 100vh;padding-top: 100rpx;">
+		<view class="input_view">
 			<input class="font-28" type="text" value="" placeholder="请输入手机号" @input="setPhone"/>
 		</view>
 		<view class="input_view">
@@ -10,10 +9,10 @@
 			<button v-else class="btn_obtain">重新获取({{time}}s)</button>
 		</view>
 		<view class="input_view">
-			<input class="font-28" type="text" value="" placeholder="请输入密码" @input="setPwd"/>
+			<input class="font-28" type="password" value="" placeholder="请输入密码" @input="setPwd"/>
 		</view>
 		<view class="input_view">
-			<input class="font-28" type="text" value="" placeholder="请确认密码" @input="setConfirmPwd"/>
+			<input class="font-28" type="password" value="" placeholder="请确认密码" @input="setConfirmPwd"/>
 		</view>
 		<button class="btn_green btn" @click="register">注册</button>
 		<view class="tip font-24">
@@ -52,8 +51,6 @@
 			},
 			get_code(){
 				var that = this;
-				console.log(that.phone);
-				console.log(that.checkMobile(that.phone));
 				if(!that.checkMobile(that.phone)){
 					that.Tips({ title: "请输入正确的手机号"});
 					return;
@@ -163,7 +160,6 @@
 		align-items: center;
 		justify-content: space-between;
 		margin: 0upx auto;
-		margin-top: 30upx;
 		margin-bottom: 50upx;
 	}
 

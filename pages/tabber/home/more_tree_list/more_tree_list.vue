@@ -36,7 +36,6 @@
 					</view>
 				</view>
 			</view>
-			
 		</view>
 	</view>
 </template>
@@ -59,7 +58,6 @@
 			}
 		},
 		onPageScroll(e) {
-			console.log(e);
 			this.opacityNum = e.scrollTop >50? 1:0;
 		},
 		onReachBottom() {

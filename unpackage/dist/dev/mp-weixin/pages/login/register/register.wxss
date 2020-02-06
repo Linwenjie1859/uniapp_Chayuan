@@ -22,7 +22,6 @@
 	-webkit-justify-content: space-between;
 	        justify-content: space-between;
 	margin: 0rpx auto;
-	margin-top: 30rpx;
 	margin-bottom: 50rpx;
 }
 .input_view input {

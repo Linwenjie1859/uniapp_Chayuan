@@ -17,7 +17,7 @@ var _App = _interopRequireDefault(__webpack_require__(/*! ./App */ 9));
 
 var _util = _interopRequireDefault(__webpack_require__(/*! @/common/util.js */ 12));
 
-var _store = _interopRequireDefault(__webpack_require__(/*! ./store */ 17));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var sunUiStar = function sunUiStar() {return __webpack_require__.e(/*! import() | components/sunui-star/sunui-star */ "components/sunui-star/sunui-star").then(__webpack_require__.bind(null, /*! ./components/sunui-star/sunui-star.vue */ 409));};var uniLoadMore = function uniLoadMore() {return __webpack_require__.e(/*! import() | components/uni-load-more/uni-load-more */ "components/uni-load-more/uni-load-more").then(__webpack_require__.bind(null, /*! @/components/uni-load-more/uni-load-more.vue */ 416));};var numScroll = function numScroll() {return __webpack_require__.e(/*! import() | components/numScroll */ "components/numScroll").then(__webpack_require__.bind(null, /*! @/components/numScroll.vue */ 423));};
+var _store = _interopRequireDefault(__webpack_require__(/*! ./store */ 17));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var sunUiStar = function sunUiStar() {return __webpack_require__.e(/*! import() | components/sunui-star/sunui-star */ "components/sunui-star/sunui-star").then(__webpack_require__.bind(null, /*! ./components/sunui-star/sunui-star.vue */ 437));};var uniLoadMore = function uniLoadMore() {return __webpack_require__.e(/*! import() | components/uni-load-more/uni-load-more */ "components/uni-load-more/uni-load-more").then(__webpack_require__.bind(null, /*! @/components/uni-load-more/uni-load-more.vue */ 444));};var numScroll = function numScroll() {return __webpack_require__.e(/*! import() | components/numScroll */ "components/numScroll").then(__webpack_require__.bind(null, /*! @/components/numScroll.vue */ 451));};
 _vue.default.prototype.$store = _store.default;
 
 _vue.default.config.productionTip = false;
@@ -31,7 +31,7 @@ _App.default.mpType = 'app';
 _vue.default.prototype.routineStyle = '#ffffff';
 _vue.default.prototype.openPages = '';
 _vue.default.prototype.urlImages = '';
-_vue.default.prototype.url = 'http://www.chayuan.com';
+_vue.default.prototype.url = 'http://chayuan.vswxx.top';
 // Vue.prototype.token = '';
 // Vue.prototype.isLog = true;
 // Vue.prototype.MyMenus = [];
@@ -278,7 +278,6 @@ var _vuex = __webpack_require__(/*! vuex */ 13);function _interopRequireDefault(
         pwd: data.pwd },
 
       function (res) {
-        console.log(res);
         that.loginStore(res.data);
       },
       function (res) {});
@@ -302,10 +301,10 @@ var _vuex = __webpack_require__(/*! vuex */ 13);function _interopRequireDefault(
         _vue.default.prototype.NavigationBar = 44; //导航栏高度
         _vue.default.prototype.StatusAddNav = 44 + e.statusBarHeight; //导航栏高度+时间状态高度
         _vue.default.prototype.StatusAddHalfNav = 11 + e.statusBarHeight;
-
+        _vue.default.prototype.TabBar = e.screenHeight - e.windowHeight; //底部选项卡高度
 
         _vue.default.prototype.WindowHeight = e.windowHeight; //中心部分高度
-        _vue.default.prototype.TabBar = 50; //底部选项卡高度
+
 
         if (e.screenHeight > 800) {
           _vue.default.prototype.WindowHeight_one_five = (e.windowHeight - 44 - e.statusBarHeight) / 5; //1/5中心部分高度

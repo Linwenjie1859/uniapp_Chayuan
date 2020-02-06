@@ -43,10 +43,21 @@
     "pages/shop/successful_payment/successful_payment",
     "pages/list/news_detail/news_detail",
     "pages/list/list_detail/list_detail",
-    "pages/map/map"
+    "pages/map/map",
+    "pages/subscribe/subscribe",
+    "pages/subscribe/exchange_goods/exchange_goods",
+    "pages/subscribe/transplant_tree/transplant_tree",
+    "pages/subscribe/manor_details/manor_details",
+    "pages/subscribe/tree_details/tree_details",
+    "pages/tabber/home/more_tree_list/more_tree_list",
+    "pages/user/planting_rules/planting_rules",
+    "pages/user/safe_check/safe_check",
+    "pages/subscribe/exchange_list/exchange_list",
+    "pages/subscribe/exchange_confirm/exchange_confirm"
   ],
   "window": {
-    "navigationBarBackgroundColor": "#39b54a"
+    "navigationBarBackgroundColor": "#FFFFFF",
+    "navigationBarTextStyle": "black"
   },
   "tabBar": {
     "color": "#999999",
@@ -58,19 +69,13 @@
         "pagePath": "pages/tabber/home/home",
         "iconPath": "/static/index_default.png",
         "selectedIconPath": "/static/index_check.png",
-        "text": "主页"
+        "text": "生态圈"
       },
       {
-        "pagePath": "pages/tabber/fengyang_fair/fengyang_fair",
-        "iconPath": "/static/basket_default.png",
-        "selectedIconPath": "/static/basket_check.png",
-        "text": "分类栏"
-      },
-      {
-        "pagePath": "pages/list/fengyang_scenery/fengyang_scenery",
+        "pagePath": "pages/subscribe/subscribe",
         "iconPath": "/static/play_default.png",
         "selectedIconPath": "/static/play_check.png",
-        "text": "漫游厦门"
+        "text": "我的庄园"
       },
       {
         "pagePath": "pages/tabber/shopping_cart/shopping_cart",
@@ -82,7 +87,7 @@
         "pagePath": "pages/tabber/user/user",
         "iconPath": "/static/people_default.png",
         "selectedIconPath": "/static/people_check.png",
-        "text": "我的"
+        "text": "个人中心"
       }
     ]
   },
@@ -92,10 +97,11 @@
     "alwaysShowBeforeRender": true,
     "autoclose": false
   },
-  "appname": "Xianmen",
-  "compilerVersion": "2.4.6",
+  "appname": "啄啄茶庄",
+  "compilerVersion": "2.5.1",
   "usingComponents": {
     "sunui-star": "/components/sunui-star/sunui-star",
-    "uni-load-more": "/components/uni-load-more/uni-load-more"
+    "uni-load-more": "/components/uni-load-more/uni-load-more",
+    "num-scroll": "/components/numScroll"
   }
 }

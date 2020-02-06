@@ -10,9 +10,10 @@
 						<text class="text-df self-end text-grey">{{defaultAddress.phone}}</text>
 					</view>
 					<view class="flex justify-between margin-top-sm" @tap="address">
-						<text class="text-black text-df">{{defaultAddress.province}}{{defaultAddress.city}}{{defaultAddress.district}}{{defaultAddress.detail}}</text>
+						<text v-if="defaultAddress==''" class="text-black text-df">添加收货地址</text>
+						<text v-else class="text-black text-df">{{defaultAddress.province}}{{defaultAddress.city}}{{defaultAddress.district}}{{defaultAddress.detail}}</text>
 						<text class="cuIcon-right text-grey"></text>
-					</view>
+					</view> 
 					<text class="margin-top-sm text-orange text-sm">收货不便时，可选择免费暂存服务</text>
 				</view>
 			</view>
@@ -105,14 +106,13 @@
 					合计
 					<text class="text-price text-red text-df margin-left-xs">{{sumPrice}}</text>
 				</view>
-				<!-- <view class="bg-gradual-green round  cu-btn" @tap="settlement">提交订单</view> -->
+				<view class="bg-gradual-green round  cu-btn" @tap="settlement">提交订单</view>
 				
 				<!-- #ifdef APP-PLUS -->
-			
-				<template v-if="providerList.length > 0">
-					<view class="bg-gradual-green round  cu-btn" v-for="(item,index) in providerList" :key="index" @click="requestPayment(item,index)"
+			<!-- 	<template v-if="providerList.length > 0">
+					<view class="bg-gradual-green round  cu-btn"   @click="requestPayment(providerList[0],0)"
 				        :loading="item.loading">提交订单</view>
-				</template>
+				</template> -->
 				<!-- #endif -->
 				
 			</view>
@@ -175,7 +175,7 @@
 					is_default: "",
 					phone: "",
 					province: "",
-					real_name: ""
+					real_name: "",
 				},	//默认收货地址
 				createOrder:{
 					addressId:'',
@@ -253,10 +253,14 @@
 					{
 						reqsn:that.orderId,
 						sumPrice:that.sumPrice,
-						paytype:'A01',
+						paytype:'A03',
 					},
 					function(res) {
-						console.log(res);
+						uni.showToast({
+							title:res.data.errmsg,
+							icon:'none'
+						})
+						that.hideOrOpenModal();
 					},
 					function(res) {
 						console.log(res);

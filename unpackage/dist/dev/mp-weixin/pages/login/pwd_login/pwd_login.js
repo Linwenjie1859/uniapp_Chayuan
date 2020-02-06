@@ -178,6 +178,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
 var _vuex = __webpack_require__(/*! vuex */ 13);function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var _default =
 {
   data: function data() {
@@ -192,8 +193,44 @@ var _vuex = __webpack_require__(/*! vuex */ 13);function _objectSpread(target) {
   },
   onLoad: function onLoad() {
 
+    uni.login({
+      success: function success(res) {
+        // "https://api.weixing.qq.com/snsZ"
+        console.log(res);
+      } });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   },
   methods: _objectSpread({
+    getUserInfo: function getUserInfo(res) {
+      console.log(res);
+    },
     // 跳转
     code_login: function code_login(e) {
       this.type = 2;
@@ -230,7 +267,6 @@ var _vuex = __webpack_require__(/*! vuex */ 13);function _objectSpread(target) {
       function (res) {
         var data = res.data;
         that.loginStore(data);
-        console.log(data.phone);
         that.Tips({ title: '登录成功！' }, { tab: 3, url: 2 });
         uni.setStorage({
           key: 'data',
@@ -241,9 +277,6 @@ var _vuex = __webpack_require__(/*! vuex */ 13);function _objectSpread(target) {
         that.Tips({ title: '账号或密码不正确。' });
       });
 
-      // uni.navigateTo({
-      // 	url: "/pages/tabber/home/home"
-      // })
     },
     //返回上一页
     back: function back() {

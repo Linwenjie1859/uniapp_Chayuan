@@ -1,13 +1,13 @@
 <template>
-	<view>
-		<view class="header">
-			<view class="input_view round" @tap="search"><text class="text-lg text-grey">搜索商品</text></view>
-			<!-- 头部-滚动渐变显示 -->
-			<view class="after" :style="{height:StatusAddNav+'px'}"></view>
+	<view class="flex flex-direction ">
+		<view class="flex align-center justify-between bg-white" :style="{'height':StatusAddNav+'px'}" style="width: 750rpx;">
+			<text class="cuIcon-back text-xxl text-grey padding-left-sm" @tap="navToBack" :style="{'margin-top':StatusAddHalfNav+'px'}"></text>
+			<input class="flex round text-lg text-center" style="border: 1rpx solid rgba(0,0,0,0.3);" @tap="search" :style="{'margin-top':StatusAddHalfNav+'px'}" placeholder="搜索商品" disabled/>
+			<text class="cuIcon-cart text-xxl text-grey padding-right" @tap="switToShoppingCart" :style="{'margin-top':StatusAddHalfNav+'px'}"></text>
 		</view>
 		
 		<!-- 操作升降序排列 Start -->
-		<view :style="{'margin-top':StatusAddNav+'px'}" class="bg-white text-grey" style="height: 40px;">
+		<view class="bg-white text-grey" style="height: 40px;">
 			<view class="flex justify-between padding-sm align-center" > 
 				<text class="text-bold text-lg text-red">分类栏</text>
 				<view class="flex align-center round margin-left-xl padding-lr-xs" @tap="changeOperation(index)" :class="[{'bg-white ':currentOperation==index}]" v-for="(item,index) in operationList" :key="index">
@@ -22,6 +22,7 @@
 		<!-- 操作升降序排列 End -->
 		
 		<view class="flex" :style="[{height:(RemainingPosition)+'px'}]">
+			
 			<!-- 左侧分类导航 -->
 			<scroll-view scroll-y="true" class="left text-df" :style="[{height:(RemainingPosition)+'px'}]">
 				<view
@@ -44,78 +45,78 @@
 						<image :src="item.image" class="radius img-has-size" mode="" @tap="goodeDetails" :data-id="item.id"></image>
 					</view>
 					<view class="flex flex-direction justify-between margin-left-sm" style="width: 330rpx;">
-						<text class="text-df text-cut" @tap="goodeDetails" :data-id="item.id">{{ item.store_name }}</text>
+						<text class="text-lg text-cut" @tap="goodeDetails" :data-id="item.id">{{ item.store_name }}</text>
 						<text class="text-df text-grey text-cut-two" @tap="goodeDetails" :data-id="item.id">{{ item.store_info }}</text>
 						<view class="flex justify-between margin-top-xs align-center">
 							<view class="flex align-center">
-								<text class="text-df text-orange text-price">{{ item.price }}</text>
-								<text class="text-sm text-grey text-line-through text-price margin-left-xs">{{ item.ot_price }}</text>
+								<text class="text-lg text-orange text-price">{{ item.price }}</text>
+								<text class="text-df text-grey text-line-through text-price margin-left-xs">{{ item.ot_price }}</text>
 							</view>
-							<text class="cuIcon-roundadd text-green text-xl" @tap="touchOnGoods($event, item.id)"></text>
+							<text class="cuIcon-roundadd text-green text-xxl" @tap="touchOnGoods($event, item.id)"></text>
 						</view>
 					</view>
 				</view>
 			</scroll-view>
 			
-			<view class="cart cu-avatar round lg" @tap="cart_detail">
+			<view class="cart cu-avatar round lg" @tap="switToShoppingCart" style="z-index: 1024;">
 				<view class="cu-tag badge bg-blue padding-xs">{{carNum}}</view> 
+				<text class="cuIcon-cart text-xxl text-black text-bold" :class="[shakeFlag ? 'has-animation':'']"></text>
 			</view> 
 			<!-- 抛物线小球 -->
-			<!-- <view class="good_box" v-show="hide_good_box" :style="'left:' + bus_x + 'px;top:' + bus_y + 'px'"></view> -->
+			<view class="good_box" v-show="hide_good_box" :style="'left:' + bus_x + 'px;top:' + bus_y + 'px'"></view>
 		</view>
 	</view>
 </template>
 
 <script>
 // 抛物线计算
-function bezier(pots, amount) {
-	var pot;
-	var lines;
-	var ret = [];
-	var points;
-	for (var i = 0; i <= amount; i++) {
-		points = pots.slice(0);
-		lines = [];
-		while ((pot = points.shift())) {
-			//将points数组中第一个元素从其中删除，并返回第一个元素的值。
-			if (points.length) {
-				//如果是有值的话
-				lines.push(pointLine([pot, points[0]], i / amount));
-			} else if (lines.length > 1) {
-				points = lines;
-				lines = [];
-			} else {
-				break;
-			}
-		}
-		ret.push(lines[0]);
-	}
-
-	function pointLine(points, rate) {
-		var pointA, pointB, pointDistance, xDistance, yDistance, tan, radian, tmpPointDistance;
+	function bezier(pots, amount) {
+		var pot;
+		var lines;
 		var ret = [];
-		pointA = points[0]; //点击
-		pointB = points[1]; //中间
-		xDistance = pointB.x - pointA.x;
-		yDistance = pointB.y - pointA.y;
-		pointDistance = Math.pow(Math.pow(xDistance, 2) + Math.pow(yDistance, 2), 1 / 2);
-		tan = yDistance / xDistance;
-		radian = Math.atan(tan);
-		tmpPointDistance = pointDistance * rate;
-		ret = {
-			x: pointA.x + tmpPointDistance * Math.cos(radian),
-			y: pointA.y + tmpPointDistance * Math.sin(radian)
+		var points;
+		for (var i = 0; i <= amount; i++) {
+			points = pots.slice(0);
+			lines = [];
+			while (pot = points.shift()) {	//将points数组中第一个元素从其中删除，并返回第一个元素的值。
+				if (points.length) {	//如果是有值的话
+					lines.push(pointLine([pot, points[0]], i / amount));
+				} else if (lines.length > 1) {
+					points = lines;
+					lines = [];
+				} else {
+					break;
+				}
+			}
+			ret.push(lines[0]);
+		}
+
+		function pointLine(points, rate) {
+			var pointA, pointB, pointDistance, xDistance, yDistance, tan, radian, tmpPointDistance;
+			var ret = [];
+			pointA = points[0]; //点击
+			pointB = points[1]; //中间
+			xDistance = pointB.x - pointA.x;
+			yDistance = pointB.y - pointA.y;
+			pointDistance = Math.pow(Math.pow(xDistance, 2) + Math.pow(yDistance, 2), 1 / 2);
+			tan = yDistance / xDistance;
+			radian = Math.atan(tan);
+			tmpPointDistance = pointDistance * rate;
+			ret = {
+				x: pointA.x + tmpPointDistance * Math.cos(radian),
+				y: pointA.y + tmpPointDistance * Math.sin(radian),
+			};
+			return ret;
+		}
+		return {
+			'bezier_points': ret
 		};
-		return ret;
 	}
-	return {
-		bezier_points: ret
-	};
-}
 export default {
 	data() {
 		return {
-			RemainingPosition:this.RemainingPosition,
+			StatusAddHalfNav:this.StatusAddHalfNav,
+			RemainingPosition:this.RemainingPosition+this.TabBar-40,
 			StatusAddNav:this.StatusAddNav,
 			operationList:[
 				{
@@ -157,26 +158,38 @@ export default {
 			//控制综合升降排序标记
 			allOrder: 0,
 			//当前分类的id
-			sortCurrentId: 0
+			sortCurrentId: 0,
+			
+			shakeFlag:false,
 		};
 	},
 	onLoad() {
 		let hh = 0;
 		const that = this;
-		that.busPos['x'] = 330; //购物车的位置
+		
+		uni.getSystemInfo({
+			success(e) {
+				console.log(e);
+				that.busPos['x'] = e.screenWidth - 50;
+				that.busPos['y'] = e.screenHeight - 83;
+			}
+		})
+		
 		//  #ifdef H5
-		hh = document.body.clientHeight;
-		that.busPos['y'] = hh - 83;
+		that.busPos['x'] = document.body.clientWidth - 50;
+		that.busPos['y'] = document.body.clientHeight - 83;
 		//  #endif
 
 		//  #ifdef MP-WEIXIN
 		wx.getSystemInfo({
 			success: function(res) {
-				hh = res.windowHeight;
-				that.busPos['y'] = hh - 83;
+				console.log(res);
+				that.busPos['x'] = res.windowWidth - 50;
+				that.busPos['y'] = res.windowHeight - 83;
 			}
 		});
 		//  #endif
+		
 		this.getCategoryList();
 	},
 
@@ -232,6 +245,7 @@ export default {
 				index--;
 				that.bus_x = bezier_points[index]['x'];
 				that.bus_y = bezier_points[index]['y'];
+				if(index<25)that.shakeFlag=true;
 				if (index < 1) {
 					clearInterval(that.timer);
 					that.hide_good_box = true;
@@ -264,7 +278,7 @@ export default {
 							},
 							function(res) {
 								that.carNum++;
-								that.Tips({ title: '添加成功,在购物车等亲' });
+								that.shakeFlag=false;
 							},
 							function(res) {
 								that.Tips({ title: '服务器开小差了，请稍后在试~' });
@@ -334,7 +348,6 @@ export default {
 				}),
 				function(res) {
 					that.goodsList = res.data;
-					console.log(that.goodsList);
 				},
 				function(res) {
 					console.log(res);
@@ -355,7 +368,7 @@ export default {
 			});
 		},
 		// 商品详情
-		cart_detail(){
+		switToShoppingCart(){
 			uni.switchTab({
 				url:'/pages/tabber/shopping_cart/shopping_cart'
 			})
@@ -364,12 +377,32 @@ export default {
 			uni.navigateTo({
 				url: '/pages/list/goode_details/goode_details?id=' + e.currentTarget.dataset.id
 			});
+		},
+		navToBack(){
+			uni.navigateBack();
 		}
 	}
 };
 </script>
 
 <style scoped>
+	@keyframes shake{
+		33% {
+			font-size: 44rpx;
+			transform: rotate(0deg);
+		}
+		33%{
+			font-size: 66rpx;
+			transform: rotate(-3deg);
+		}
+		34%{
+			font-size: 44rpx;
+			transform: rotate(0deg);
+		}
+	}
+	.has-animation{
+		animation: shake 1.8s cubic-bezier(.16,1.03,.87,.21) ;
+	}
 	.has-border-orange{
 		border: 2rpx solid #f37b1d;
 	}
@@ -377,52 +410,12 @@ export default {
 		width: 180upx;
 		height: 170upx;
 	}
-	.after {
-		width: 100%;
-		position: fixed;
-		top: 0upx;
-		background: #39b54a;
-		transition: opacity 0.05s linear;
-		color: #fff;
-	}
-	
-/* 头部 */
-.header {
-	width: 100%;
-	height: 150upx;
-	display: flex;
-	align-items: center;
-	position: fixed;
-	top: 0;
-	z-index: 10;
-}
 
-.input_view {
-	width: 450upx;
-	height: 50upx;
-	background-color: rgba(255, 255, 255, 0.7);
-	position: absolute;
-	left: 20%;
-	z-index: 1024;
-	border: 1px solid rgba(135, 153, 163, 0.3);
-	bottom: 39rpx;
-}
-
-.input_view text {
-	display: block;
-	width: 450upx;
-	height: 50upx;
-	line-height: 50upx;
-	text-align: center;
-}
 .cart {
 	position: fixed;
 	bottom: 100upx;
 	right: 25upx;
-	text-align: center;
-	z-index: 9999;
-	background-size: 20rpx 20rpx;
-	background: url(../../../static/address.png);
+	background-color: #fbbd08;
 }
 
 
@@ -469,7 +462,7 @@ export default {
 .left {
 	width: 180upx;
 	left: 0upx;
-	background: rgba(255,255,255,0.1);
+	background: rgba(255,255,255,0.5);
 	position: absolute;
 }
 

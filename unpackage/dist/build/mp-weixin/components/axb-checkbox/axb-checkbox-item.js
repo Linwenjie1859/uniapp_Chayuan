@@ -1,0 +1,10 @@
+(global["webpackJsonp"]=global["webpackJsonp"]||[]).push([["components/axb-checkbox/axb-checkbox-item"],{ad63:function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t.default=void 0;var u=function(e,t,n){var u,a,f,r,c=function c(){var o=(new Date).getTime(),i=o-a;i<t&&i>=0?(clearTimeout(u),u=setTimeout(c,t-i)):(clearTimeout(u),u=null,n||(e.apply(f,r),u||(f=r=null)))};return function(){f=this,r=arguments,a=(new Date).getTime();var o=n&&!u;u||(u=setTimeout(c,t)),o&&(e.apply(f,r),f=r=null)}},a={props:{name:{type:String,default:""},value:{default:null},checked:{type:[Boolean,Number],default:!1}},computed:{widthDefault:function(){return this.name.length<=3},activeStyle:function(){return"background: #f66d3c;color: #ffffff;"},itemStyle:function(){return"background: #f7f7f7;color: #7d7d7d;"}},data:function(){return{}},methods:{handleChange:u(f,200,!0)}};function f(){this.$emit("change",this.value)}t.default=a},ae3e:function(e,t,n){"use strict";var u,a=function(){var e=this,t=e.$createElement;e._self._c},f=[];n.d(t,"b",function(){return a}),n.d(t,"c",function(){return f}),n.d(t,"a",function(){return u})},baff:function(e,t,n){"use strict";n.r(t);var u=n("ad63"),a=n.n(u);for(var f in u)"default"!==f&&function(e){n.d(t,e,function(){return u[e]})}(f);t["default"]=a.a},bfd7:function(e,t,n){"use strict";n.r(t);var u=n("ae3e"),a=n("baff");for(var f in a)"default"!==f&&function(e){n.d(t,e,function(){return a[e]})}(f);n("f572");var r,c=n("f0c5"),o=Object(c["a"])(a["default"],u["b"],u["c"],!1,null,null,null,!1,u["a"],r);t["default"]=o.exports},e791:function(e,t,n){},f572:function(e,t,n){"use strict";var u=n("e791"),a=n.n(u);a.a}}]);
+;(global["webpackJsonp"] = global["webpackJsonp"] || []).push([
+    'components/axb-checkbox/axb-checkbox-item-create-component',
+    {
+        'components/axb-checkbox/axb-checkbox-item-create-component':(function(module, exports, __webpack_require__){
+            __webpack_require__('543d')['createComponent'](__webpack_require__("bfd7"))
+        })
+    },
+    [['components/axb-checkbox/axb-checkbox-item-create-component']]
+]);

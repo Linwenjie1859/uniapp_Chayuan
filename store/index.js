@@ -20,7 +20,7 @@ const store = new Vuex.Store({
 			state.phone = provider.phone;
 			state.isLog = true;
 		},
-		logoutStore(state) {
+		logoutStore() {
 			state.token = '';
 			state.isLog = false;
 		},

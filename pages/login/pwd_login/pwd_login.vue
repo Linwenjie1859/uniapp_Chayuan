@@ -1,17 +1,18 @@
 <template>
 	<view class="flex flex-direction bg-white" style="height: 100vh;">
 		<view class="flex justify-center align-center padding-tb-xl flex-sub">
-			<view class="cu-avatar round xl"></view> 
+			<view class="cu-avatar round xl" style="background-image: url(../../../static/woodpecker.png);">
+			</view> 
 		</view>
 		<view class="flex flex-direction align-start padding-lr-xl margin-lr-xl flex-treble">
 			<view class="margin-top-xl solid-bottom">
 				<input type="text" placeholder="请输入账号名称" v-model="phone" style="width: 550rpx;"/>
 			</view>
 			<view class="margin-top-xl solid-bottom">
-				<input type="password" value="" placeholder="请输入账号名称" v-model="pwd" style="width: 550rpx;"/>
+				<input type="password" value="" placeholder="请输入账号密码" v-model="pwd" style="width: 550rpx;"/>
 			</view>
 			<view class="flex justify-end self-end align-center text-df text-grey margin-top">
-				<text class="margin-right-sm" @tap="register">验证码登录</text>
+				<text class="margin-right-sm" @tap="register">注册账号</text>
 				<text @tap="reset_password">忘记密码?</text>
 			</view>
 			<view class="flex margin-top-xl" style="width: 550rpx;">
@@ -24,18 +25,18 @@
 					<text class="text-grey">第三方账号登录</text>
 				</view>
 				<view class="flex justify-around text-sm text-green align-center">
-					<view class="flex flex-direction align-center">
+					<button class="flex flex-direction align-center bg-white"  open-type="getUserInfo"  @getuserinfo="getUserInfo">
 						<image src="/static/weixin_icon.png" mode="" class="height-width-sl"></image>
-						<text class="margin-top-sm">微信</text>
-					</view>
-					<view class="flex flex-direction align-center">
+						<text class="text-sm">微信</text>
+					</button>
+					<button class="flex flex-direction align-center bg-white">
 						<image src="/static/qq_icon.png" mode="" class="height-width-sl"></image>
-						<text class="margin-top-sm">QQ</text>
-					</view>
-					<view class="flex flex-direction align-center">
+						<text class="text-sm">QQ</text>
+					</button>
+					<button class="flex flex-direction align-center bg-white">
 						<image src="/static/weibo_icon.png" mode="" class="height-width-sl"></image>
-						<text class="margin-top-sm">微博</text>
-					</view>
+						<text class="text-sm">微博</text>
+					</button>
 				</view>
 			</view>
 		</view>
@@ -56,9 +57,45 @@ export default {
 		};
 	},
 	onLoad() {
+		// #ifdef MP-WEIXIN
+		uni.login({
+			success: (res) => {
+				// "https://api.weixing.qq.com/snsZ"
+				console.log(res);
+			}
+		})
+		// #endif
 		
+		
+		// #ifdef APP-PLUS
+		uni.login({
+			success: (res) => {
+				console.log(res);
+				uni.getUserInfo({
+					success: (info) => {
+						console.log(info);	//将获取的用户信息保存进数据库即可
+					},
+					fail: () => {
+						uni.showToast({
+							title:"微信登录授权是失败",
+							icon:"none",
+						})
+					}
+				})
+			},
+			fail: () => {
+				uni.showToast({
+					title:"微信登录授权是失败",
+					icon:"none",
+				})
+			}
+		})
+		// #endif
 	},
 	methods: {
+		getUserInfo(res){
+			console.log(res);
+		},
 		// 跳转
 		code_login(e) {
 			this.type = 2;
@@ -95,7 +132,6 @@ export default {
 				function(res) {
 					let data=res.data;
 					that.loginStore(data);
-					console.log(data.phone);
 					that.Tips({ title: '登录成功！' }, { tab: 3, url: 2 });
 					uni.setStorage({
 						key:'data',
@@ -106,9 +142,6 @@ export default {
 					that.Tips({ title: '账号或密码不正确。' });
 				}
 			);
-			// uni.navigateTo({
-			// 	url: "/pages/tabber/home/home"
-			// })
 		},
 		//返回上一页
 		back() {
@@ -120,6 +153,9 @@ export default {
 </script>
 
 <style scoped>
+	button::after{
+		border: 1rpx solid #FFFFFF !important;
+	}
 	.height-width-sl{
 		height: 60rpx;
 		width: 60rpx;

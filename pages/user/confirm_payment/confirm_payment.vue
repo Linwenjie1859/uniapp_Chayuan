@@ -36,6 +36,7 @@
 </template>
 
 <script>
+	let time='';
 	export default {
 		data() {
 			return {
@@ -43,14 +44,39 @@
 					order_id:'',
 					total_price:0
 				},
+				
 			}
 		},
 		onLoad(e) {
 			this.orderInfo=JSON.parse(e.orderInfo);
-			console.log(this.orderInfo);
+			console.log(time);
+			time=setInterval(()=>{
+				this.watchPayStatus();
+			},10000);
+			console.log(time);
 		},
 		methods: {
-			
+			watchPayStatus(){
+				let that = this;
+				that.baseGet(
+					that.U({
+						c: 'store_api',
+						a: 'watch_pay_status',
+						q: {
+							order_id: that.orderInfo.order_id,
+						}
+					}),
+					function(res) {
+						if(res.data.paid==1){
+							clearTimeout(time);
+						}
+					},
+					function(res) {
+						console.log(res);
+					},
+					true
+				);
+			},
 			// 结算方式
 			mode(e){
 				uni.navigateTo({
