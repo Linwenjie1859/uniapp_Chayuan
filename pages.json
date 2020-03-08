@@ -1,5 +1,11 @@
 {
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+		// {
+		//     "path" : "pages/loading_page/loading_page",
+		//     "style" : {
+		// 		"navigationStyle": "custom" 
+		// 	}
+		// },
 		{
 			"path": "pages/tabber/home/home",
 			"style": {
@@ -55,8 +61,7 @@
 		{
 			"path": "pages/shop/shop_commodity/shop_commodity",
 			"style": {
-				"navigationBarTitleText": "店铺详情",
-				"enablePullDownRefresh":true
+				"navigationBarTitleText": "店铺详情" 
 			}
 		},
 		{
@@ -306,19 +311,40 @@
         }
         ,{
             "path" : "pages/user/planting_rules/planting_rules",
-            "style" : {}
+            "style" : {
+				"navigationBarTitleText": "种植规则说明"
+			}
         }
         ,{
             "path" : "pages/user/safe_check/safe_check",
-            "style" : {}
+            "style" : {
+				"navigationBarTitleText": "安全检测"
+			}
         }
         ,{
             "path" : "pages/subscribe/exchange_list/exchange_list",
-            "style" : {}
+            "style" : {
+            	"navigationBarTitleText": "兑换商品列表"
+            }
         }
         ,{
             "path" : "pages/subscribe/exchange_confirm/exchange_confirm",
-            "style" : {}
+            "style" : {
+            	"navigationBarTitleText": "确认信息"
+            }
+        }
+        
+        ,{
+            "path" : "pages/tabber/home/scenic_detail/scenic_detail",
+            "style" : {
+					"navigationBarTitleText": "景区详情"
+			}
+        }
+        ,{
+            "path" : "pages/seckill/seckill",
+           "style" : {
+           		"navigationBarTitleText": "限时秒杀"
+           }
         }
     ],
 	"globalStyle": {
@@ -360,7 +386,7 @@
 	// 	"current": 0, //当前激活的模式（list 的索引项）
 	// 	"list": [{
 	// 		"name": "Chayuan", //模式名称  
-	// 		"path": "pages/tabber/fengyang_fair/fengyang_fair" //启动页面，必选
+	// 		"path": "pages/user/my_info/my_info" //启动页面，必选
 	// 	}]
 	// } 
 }

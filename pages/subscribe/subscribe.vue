@@ -60,6 +60,7 @@ export default {
 		};
 	},
 	onLoad() {
+		this.isLogin();
 		this.farmProduceInfo();
 	},
 	onShow() {

@@ -53,7 +53,9 @@
     "pages/user/planting_rules/planting_rules",
     "pages/user/safe_check/safe_check",
     "pages/subscribe/exchange_list/exchange_list",
-    "pages/subscribe/exchange_confirm/exchange_confirm"
+    "pages/subscribe/exchange_confirm/exchange_confirm",
+    "pages/tabber/home/scenic_detail/scenic_detail",
+    "pages/seckill/seckill"
   ],
   "subPackages": [],
   "window": {

@@ -147,6 +147,9 @@ image {
 .radius {
  	border-radius: 8rpx;
 }
+.radius-sm {
+ 	border-radius: 16rpx;
+}
 /* ==================
           图片
  ==================== */

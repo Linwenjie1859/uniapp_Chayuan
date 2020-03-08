@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "理想生活",
+  "navigationBarTitleText": "热门推荐",
   "usingComponents": {
     "uni-load-more": "/components/uni-load-more/uni-load-more"
   }

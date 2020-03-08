@@ -1,12 +1,15 @@
 
-.height-width-sl.data-v-c61f7a1a{
+button.data-v-748c45b0::after{
+		border: 1rpx solid #FFFFFF !important;
+}
+.height-width-sl.data-v-748c45b0{
 		height: 60rpx;
 		width: 60rpx;
 }
-.position-relative.data-v-c61f7a1a{
+.position-relative.data-v-748c45b0{
 	position: relative;
 }
-.position-absolute.data-v-c61f7a1a{
+.position-absolute.data-v-748c45b0{
 	position: absolute;
 }
 

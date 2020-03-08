@@ -5,7 +5,7 @@
     "iPad"
   ],
   "id": "__UNI__B2A99FF",
-  "name": "Xianmen",
+  "name": "啄啄茶庄",
   "version": {
     "name": "1.0.0",
     "code": "100"
@@ -19,6 +19,7 @@
   },
   "permissions": {
     "Payment": {},
+    "OAuth": {},
     "UniNView": {
       "description": "UniNView原生渲染"
     }
@@ -42,8 +43,8 @@
     },
     "statusbar": {
       "immersed": "supportedDevice",
-      "style": "light",
-      "background": "#39b54a"
+      "style": "dark",
+      "background": "#FFFFFF"
     },
     "usingComponents": true,
     "distribute": {
@@ -80,6 +81,14 @@
         "payment": {
           "alipay": {}
         },
+        "oauth": {
+          "weixin": {
+            "appid": "aaaaa",
+            "appsecret": "bbbb",
+            "UniversalLinks": ""
+          }
+        },
+        "ad": null,
         "audio": {
           "mp3": {
             "description": "Android平台录音支持MP3格式文件"
@@ -95,7 +104,7 @@
       }
     },
     "uni-app": {
-      "compilerVersion": "2.4.6",
+      "compilerVersion": "2.6.1",
       "control": "v8",
       "nvueCompiler": "uni-app",
       "renderer": "auto",
@@ -113,19 +122,13 @@
           "pagePath": "pages/tabber/home/home",
           "iconPath": "/static/index_default.png",
           "selectedIconPath": "/static/index_check.png",
-          "text": "主页"
+          "text": "生态圈"
         },
         {
-          "pagePath": "pages/tabber/fengyang_fair/fengyang_fair",
-          "iconPath": "/static/basket_default.png",
-          "selectedIconPath": "/static/basket_check.png",
-          "text": "分类栏"
-        },
-        {
-          "pagePath": "pages/list/fengyang_scenery/fengyang_scenery",
+          "pagePath": "pages/subscribe/subscribe",
           "iconPath": "/static/play_default.png",
           "selectedIconPath": "/static/play_check.png",
-          "text": "漫游厦门"
+          "text": "我的庄园"
         },
         {
           "pagePath": "pages/tabber/shopping_cart/shopping_cart",
@@ -137,7 +140,7 @@
           "pagePath": "pages/tabber/user/user",
           "iconPath": "/static/people_default.png",
           "selectedIconPath": "/static/people_check.png",
-          "text": "我的"
+          "text": "个人中心"
         }
       ],
       "height": "50px",
@@ -146,5 +149,6 @@
       ],
       "selected": 0
     }
-  }
+  },
+  "usingComponents": {}
 }

@@ -66,6 +66,9 @@ image {
  .radius {
  	border-radius: 8upx;
  }
+ .radius-sm {
+ 	border-radius: 16upx;
+ }
 
 
 /* ==================

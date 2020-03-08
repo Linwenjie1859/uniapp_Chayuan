@@ -95,7 +95,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "recyclableRender", function() { return recyclableRender; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "components", function() { return components; });
-var components
+var components = {
+  "uni-load-more": () =>
+    __webpack_require__.e(/*! import() | components/uni-load-more/uni-load-more */ "components/uni-load-more/uni-load-more").then(__webpack_require__.bind(null, /*! @/components/uni-load-more/uni-load-more.vue */ 444))
+}
 var render = function() {
   var _vm = this
   var _h = _vm.$createElement
@@ -268,6 +271,7 @@ __webpack_require__.r(__webpack_exports__);
     this.isLogin();
   },
   onShow: function onShow() {
+    this.goodsList = [];
     this.getGoodsList();
   },
   computed: {
@@ -360,7 +364,7 @@ __webpack_require__.r(__webpack_exports__);
       },
       function (res) {
         that.refreshFlag = false;
-        console.log(res);
+        uni.stopPullDownRefresh();
       });
 
 

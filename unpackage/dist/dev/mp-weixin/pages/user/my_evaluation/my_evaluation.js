@@ -95,7 +95,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "recyclableRender", function() { return recyclableRender; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "components", function() { return components; });
-var components
+var components = {
+  "sunui-star": () =>
+    __webpack_require__.e(/*! import() | components/sunui-star/sunui-star */ "components/sunui-star/sunui-star").then(__webpack_require__.bind(null, /*! @/components/sunui-star/sunui-star.vue */ 437)),
+  "robby-image-upload": () =>
+    __webpack_require__.e(/*! import() | components/robby-image-upload/robby-image-upload */ "components/robby-image-upload/robby-image-upload").then(__webpack_require__.bind(null, /*! @/components/robby-image-upload/robby-image-upload.vue */ 479))
+}
 var render = function() {
   var _vm = this
   var _h = _vm.$createElement

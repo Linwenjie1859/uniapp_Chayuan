@@ -1,18 +1,18 @@
 
-.bg-gray.data-v-b6a727fc{
+.bg-gray.data-v-ae22cbd4{
 	background-color: #f0f0f0;
 	color: #333333;
 }
-.bg-orange.data-v-b6a727fc{
+.bg-orange.data-v-ae22cbd4{
 		background-color: #f37b1d;
 		color: #ffffff;
 }
-.has-bg.data-v-b6a727fc{
+.has-bg.data-v-ae22cbd4{
 		padding: 10rpx 30rpx;
 		border-radius: 500rpx;
 		font-size: 29rpx;
 }
-.has-flex.data-v-b6a727fc{
+.has-flex.data-v-ae22cbd4{
 		display: -webkit-box;
 		display: -webkit-flex;
 		display: flex;
@@ -23,10 +23,10 @@
 		-webkit-justify-content: space-between;
 		        justify-content: space-between;
 }
-page.data-v-b6a727fc {
+page.data-v-ae22cbd4 {
 	background-color: #f2f2f2;
 }
-.comments_info.data-v-b6a727fc {
+.comments_info.data-v-ae22cbd4 {
 	width: 750rpx;
 	background-color: #ffffff;
 	border-radius: 10rpx;
@@ -34,7 +34,7 @@ page.data-v-b6a727fc {
 	padding-bottom: 25rpx;
 	height: 100vh;
 }
-.title.data-v-b6a727fc {
+.title.data-v-ae22cbd4 {
 	height: 100rpx;
 	display: -webkit-box;
 	display: -webkit-flex;
@@ -47,13 +47,13 @@ page.data-v-b6a727fc {
 	        justify-content: space-between;
 	margin: 0 auto;
 }
-.info_list.data-v-b6a727fc {
+.info_list.data-v-ae22cbd4 {
 	width: 650rpx;
 	margin: 0 auto;
 	border-bottom: 1rpx solid #e5e5e5;
 	margin-top: 10rpx;
 }
-.list_top.data-v-b6a727fc {
+.list_top.data-v-ae22cbd4 {
 	width: 650rpx;
 	margin: 0 auto;
 	display: -webkit-box;
@@ -63,22 +63,22 @@ page.data-v-b6a727fc {
 	-webkit-align-items: center;
 	        align-items: center;
 }
-.list_top image.data-v-b6a727fc {
+.list_top image.data-v-ae22cbd4 {
 	width: 80rpx;
 	height: 80rpx;
 	border-radius: 50%;
 	margin-right: 20rpx;
 }
-.list_top text.data-v-b6a727fc {
+.list_top text.data-v-ae22cbd4 {
 	width: 270rpx;
 }
-.comments_cont.data-v-b6a727fc {
+.comments_cont.data-v-ae22cbd4 {
 	display: block;
 	width: 650rpx;
 	margin: 5rpx auto;
 	margin-bottom: 20rpx;
 }
-.pic_list.data-v-b6a727fc {
+.pic_list.data-v-ae22cbd4 {
 	width: 700rpx;
 	display: -webkit-box;
 	display: -webkit-flex;
@@ -87,7 +87,7 @@ page.data-v-b6a727fc {
 	-webkit-align-items: center;
 	        align-items: center;
 }
-.pic_list image.data-v-b6a727fc {
+.pic_list image.data-v-ae22cbd4 {
 	width: 140rpx;
 	height: 140rpx;
 	margin: 0rpx 25rpx 25rpx 4rpx;

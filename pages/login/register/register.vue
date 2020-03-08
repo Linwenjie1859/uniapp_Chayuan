@@ -115,7 +115,7 @@
 						that.Tips({ title: "注册成功！"},{tab:3 ,url :2})
 					},
 					function(res) {
-						console.log(res);
+						that.Tips({ title: res.msg});
 					},
 				);
 			},

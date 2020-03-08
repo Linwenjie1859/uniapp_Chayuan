@@ -95,7 +95,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "recyclableRender", function() { return recyclableRender; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "components", function() { return components; });
-var components
+var components = {
+  "uni-popup": () =>
+    __webpack_require__.e(/*! import() | components/uni-popup/uni-popup */ "components/uni-popup/uni-popup").then(__webpack_require__.bind(null, /*! @/components/uni-popup/uni-popup.vue */ 458))
+}
 var render = function() {
   var _vm = this
   var _h = _vm.$createElement
@@ -481,28 +484,30 @@ __webpack_require__.r(__webpack_exports__);
     // 立即购买
     purchase: function purchase(e) {
       var that = this;
-      that.baseGet(
-      that.U({
-        c: 'auth_api',
-        a: 'now_buy',
-        q: {
-          productId: that.goodsInfo.storeInfo.id,
-          merId: that.goodsInfo.merInfo.id,
-          cartNum: that.currentNum } }),
+      if (that.isLogin()) {
+        that.baseGet(
+        that.U({
+          c: 'auth_api',
+          a: 'now_buy',
+          q: {
+            productId: that.goodsInfo.storeInfo.id,
+            merId: that.goodsInfo.merInfo.id,
+            cartNum: that.currentNum } }),
 
 
-      function (res) {
-        uni.navigateTo({
-          url: '/pages/user/confirm_order/confirm_order?listId=' + res.data.cartId });
+        function (res) {
+          uni.navigateTo({
+            url: '/pages/user/confirm_order/confirm_order?listId=' + res.data.cartId });
 
-      },
-      function (res) {
-        if (res.msg.indexOf("该产品库存不足") != -1) {
-          that.Tips({ title: res.msg });
-        }
-      },
-      true);
+        },
+        function (res) {
+          if (res.msg.indexOf("该产品库存不足") != -1) {
+            that.Tips({ title: res.msg });
+          }
+        },
+        true);
 
+      }
     },
     commodity: function commodity() {
       uni.navigateTo({
@@ -515,9 +520,11 @@ __webpack_require__.r(__webpack_exports__);
 
     },
     details: function details(e) {
-      uni.navigateTo({
-        url: '/pages/shop/comments_details/comments_details?id=' + this.goodsInfo.storeInfo.id });
+      if (this.isLogin()) {
+        uni.navigateTo({
+          url: '/pages/shop/comments_details/comments_details?id=' + this.goodsInfo.storeInfo.id });
 
+      }
     },
 
     //跳转锚点

@@ -174,7 +174,7 @@ page {
 .coupon_list .list_left {
   width: 200rpx;
   height: 200rpx;
-  border-radius: 10rpx;
+  border-radius: 0 10rpx 10rpx 0;
   background-color: #51c77d;
 }
 .used {

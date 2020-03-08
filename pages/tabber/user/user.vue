@@ -2,7 +2,7 @@
 	<view class="flex flex-direction bg-gray">
 		<view class="flex flex-direction padding-lr-sm padding-bottom-sm user-has-bg padding-bottom-sm" :style="[{'padding-top':NavigationBar+'px'}]">
 			<view class="flex text-black">
-				<view v-if="userInfo.avatar!=''" class="cu-avatar round xl" @tap="edit" :style="[{ backgroundImage:'url(' + userInfo.avatar + ')' }]" >
+				<view v-if="userInfo!=''" class="cu-avatar round xl" @tap="edit" :style="[{ backgroundImage:'url(' + userInfo.avatar + ')' }]" >
 				</view> 
 				<view class="cu-avatar round xl" @tap="edit" style="background-image: url(../../../static/woodpecker.png);" v-else>
 				</view> 
@@ -26,19 +26,23 @@
 			<!-- 收藏、关注、足迹 Start -->
 			<view class="flex justify-between margin-lr-sm margin-top-xl text-df">
 				<view class="flex flex-direction align-center" @tap="mycol">
-					<text class="text-df text-bold">{{userInfo.collect_product}}</text>
+					<text class="text-df text-bold" v-if="userInfo">{{userInfo.collect_product}}</text>
+					<text class="text-df text-bold" v-else>0</text>
 					<text>收藏夹</text>
 				</view>
 				<view class="flex flex-direction align-center" @tap="shopcol">
-					<text class="text-df text-bold">{{userInfo.collect_merchant}}</text>
+					<text class="text-df text-bold" v-if="userInfo">{{userInfo.collect_merchant}}</text>
+					<text class="text-df text-bold" v-else>0</text>
 					<text>关注店铺</text>
 				</view>
 				<view class="flex flex-direction align-center">
-					<text class="text-df text-bold">5</text>
+					<text class="text-df text-bold" v-if="userInfo">5</text>
+					<text class="text-df text-bold" v-else>0</text>
 					<text>足迹</text>
 				</view>
 				<view class="flex flex-direction align-center" @tap="coupon">
-					<text class="text-df text-bold">8</text>
+					<text class="text-df text-bold" v-if="userInfo">8</text>
+					<text class="text-df text-bold" v-else>0</text>
 					<text>红包卡卷</text>
 				</view>
 			</view>

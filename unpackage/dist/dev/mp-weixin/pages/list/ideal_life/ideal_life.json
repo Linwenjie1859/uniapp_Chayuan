@@ -1,4 +1,6 @@
 {
   "navigationBarTitleText": "热门推荐",
-  "usingComponents": {}
+  "usingComponents": {
+    "uni-load-more": "/components/uni-load-more/uni-load-more"
+  }
 }

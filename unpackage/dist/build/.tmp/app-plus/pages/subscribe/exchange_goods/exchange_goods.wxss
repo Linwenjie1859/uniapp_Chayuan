@@ -1,0 +1,24 @@
+
+.has-sub-margin-xs.data-v-9dd75f3e{
+	margin-left: -10rpx;
+}
+.text-has-border.data-v-9dd75f3e {
+	max-width: 70rpx;
+	text-align: center;
+	border-top: 1px solid #e0e0e0;
+	border-bottom: 1px solid #e0e0e0;
+	padding: 5rpx 10rpx;
+}
+.text-has-border-right.data-v-9dd75f3e {
+	border: 1px solid #e0e0e0;
+	border-top-right-radius: 8rpx;
+	border-bottom-right-radius: 8rpx;
+	padding: 9rpx 20rpx;
+}
+.text-has-border-left.data-v-9dd75f3e {
+	border: 1px solid #e0e0e0;
+	border-top-left-radius: 8rpx;
+	border-bottom-left-radius: 8rpx;
+	padding: 9rpx 20rpx;
+}
+

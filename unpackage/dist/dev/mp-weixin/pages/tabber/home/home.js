@@ -304,6 +304,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 var _default =
 {
   data: function data() {
@@ -356,19 +360,16 @@ var _default =
 
     },
 
-    // 凤阳集市
     fengyangFair: function fengyangFair(e) {
       uni.navigateTo({
         url: '/pages/tabber/fengyang_fair/fengyang_fair' });
 
     },
-    // 农土特产
     navToMoreGoods: function navToMoreGoods(e) {
       uni.navigateTo({
         url: '/pages/tabber/fengyang_fair/fengyang_fair' });
 
     },
-    // 理想生活
     idealLife: function idealLife(e) {
       uni.navigateTo({
         url: '/pages/list/ideal_life/ideal_life' });
@@ -413,6 +414,11 @@ var _default =
     navToArticleList: function navToArticleList() {
       uni.navigateTo({
         url: '/pages/list/fengyang_scenery/fengyang_scenery' });
+
+    },
+    navToScenicDetail: function navToScenicDetail(id) {
+      uni.navigateTo({
+        url: '/pages/tabber/home/scenic_detail/scenic_detail?id=' + id });
 
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))

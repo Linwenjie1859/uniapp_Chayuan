@@ -345,29 +345,31 @@ export default {
 		},
 		// 立即购买
 		purchase(e) {
-			let that = this;
-			that.baseGet(
-				that.U({
-					c: 'auth_api',
-					a: 'now_buy',
-					q: {
-						productId: that.goodsInfo.storeInfo.id,
-						merId: that.goodsInfo.merInfo.id,
-						cartNum: that.currentNum
-					}
-				}),
-				function(res) {
-					uni.navigateTo({
-						url: '/pages/user/confirm_order/confirm_order?listId=' + res.data.cartId
-					});
-				},
-				function(res) {
-					if(res.msg.indexOf("该产品库存不足")!=-1){
-						that.Tips({title:res.msg});
-					}
-				},
-				true
-			);
+			let that = this; 
+			if(that.isLogin()){
+				that.baseGet(
+					that.U({
+						c: 'auth_api',
+						a: 'now_buy',
+						q: {
+							productId: that.goodsInfo.storeInfo.id,
+							merId: that.goodsInfo.merInfo.id,
+							cartNum: that.currentNum
+						}
+					}),
+					function(res) {
+						uni.navigateTo({
+							url: '/pages/user/confirm_order/confirm_order?listId=' + res.data.cartId
+						});
+					},
+					function(res) {
+						if(res.msg.indexOf("该产品库存不足")!=-1){
+							that.Tips({title:res.msg});
+						}
+					},
+					true
+				);
+			}
 		},
 		commodity() {
 			uni.navigateTo({
@@ -380,9 +382,11 @@ export default {
 			});
 		},
 		details(e) {
-			uni.navigateTo({
-				url: '/pages/shop/comments_details/comments_details?id='+this.goodsInfo.storeInfo.id
-			});
+			if(this.isLogin()){
+				uni.navigateTo({
+					url: '/pages/shop/comments_details/comments_details?id='+this.goodsInfo.storeInfo.id
+				});
+			}
 		},
 
 		//跳转锚点

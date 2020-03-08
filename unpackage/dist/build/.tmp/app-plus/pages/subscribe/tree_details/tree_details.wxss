@@ -1,0 +1,19 @@
+
+.has-backgroung-img.data-v-09d84005{
+	background-position: center;
+	background-size: cover;
+	height: 500rpx;
+	width: 345rpx;
+	margin-bottom:20rpx;
+}
+.has-backgroung-img.data-v-09d84005:nth-child(odd){
+	margin-right:20rpx;
+}
+.cu-progress.data-v-09d84005 {
+	height: 19rpx !important;
+	width: 60% !important;
+}
+.nav.fixed.data-v-09d84005{
+	box-shadow: 0 1rpx 6rpx rgba(0, 0, 0, 0);
+}
+

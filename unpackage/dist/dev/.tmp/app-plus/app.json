@@ -53,7 +53,8 @@
     "pages/user/planting_rules/planting_rules",
     "pages/user/safe_check/safe_check",
     "pages/subscribe/exchange_list/exchange_list",
-    "pages/subscribe/exchange_confirm/exchange_confirm"
+    "pages/subscribe/exchange_confirm/exchange_confirm",
+    "pages/tabber/home/scenic_detail/scenic_detail"
   ],
   "window": {
     "navigationBarBackgroundColor": "#FFFFFF",
@@ -98,7 +99,7 @@
     "autoclose": false
   },
   "appname": "啄啄茶庄",
-  "compilerVersion": "2.5.1",
+  "compilerVersion": "2.6.1",
   "usingComponents": {
     "sunui-star": "/components/sunui-star/sunui-star",
     "uni-load-more": "/components/uni-load-more/uni-load-more",

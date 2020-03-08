@@ -295,6 +295,7 @@
 			// 立即购买
 			purchase() {
 				let that = this;
+				that.isLogin();
 				that.baseGet(
 					that.U({
 						c: 'auth_api',

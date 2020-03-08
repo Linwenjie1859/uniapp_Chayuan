@@ -1,0 +1,2 @@
+setCssToHead([".",[1],"img-has-small-size{ width: ",[0,240],"; height: ",[0,180],"; }\n.",[1],"img-has-size{ width: ",[0,750],"; height: ",[0,300],"; }\n",],undefined,{path:"./pages/list/more_list/more_list.wxss"})();
+document.dispatchEvent(new CustomEvent("generateFuncReady", { detail: { generateFunc: $gwx('./pages/list/more_list/more_list.wxml') } }));

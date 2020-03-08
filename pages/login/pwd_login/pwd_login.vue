@@ -13,7 +13,7 @@
 			</view>
 			<view class="flex justify-end self-end align-center text-df text-grey margin-top">
 				<text class="margin-right-sm" @tap="register">注册账号</text>
-				<text @tap="reset_password">忘记密码?</text>
+				<text @tap="redToResetPwd">忘记密码?</text>
 			</view>
 			<view class="flex margin-top-xl" style="width: 550rpx;">
 				<button type="primary" class="round bg-gradual-green" style="width: 550rpx;" @tap="login">登录</button>
@@ -25,7 +25,7 @@
 					<text class="text-grey">第三方账号登录</text>
 				</view>
 				<view class="flex justify-around text-sm text-green align-center">
-					<button class="flex flex-direction align-center bg-white"  open-type="getUserInfo"  @getuserinfo="getUserInfo">
+					<button class="flex flex-direction align-center bg-white" @tap="getUserInfo()">
 						<image src="/static/weixin_icon.png" mode="" class="height-width-sl"></image>
 						<text class="text-sm">微信</text>
 					</button>
@@ -57,45 +57,55 @@ export default {
 		};
 	},
 	onLoad() {
-		// #ifdef MP-WEIXIN
-		uni.login({
-			success: (res) => {
-				// "https://api.weixing.qq.com/snsZ"
-				console.log(res);
-			}
-		})
-		// #endif
-		
-		
-		// #ifdef APP-PLUS
-		uni.login({
-			success: (res) => {
-				console.log(res);
-				uni.getUserInfo({
-					success: (info) => {
-						console.log(info);	//将获取的用户信息保存进数据库即可
-					},
-					fail: () => {
-						uni.showToast({
-							title:"微信登录授权是失败",
-							icon:"none",
-						})
-					}
-				})
-			},
-			fail: () => {
-				uni.showToast({
-					title:"微信登录授权是失败",
-					icon:"none",
-				})
-			}
-		})
-		// #endif
+
 	},
 	methods: {
-		getUserInfo(res){
-			console.log(res);
+		getUserInfo(){
+			uni.login({
+				provider: 'weixin',
+				success: (res) => {
+					uni.getUserInfo({
+						success: (info) => {
+							console.log(info);
+							that.basePost(
+								that.U({ c: 'login', a: 'login_by_app' }),
+								{
+									nickName: info.userInfo.nickName,
+									gender: info.userInfo.gender,
+									language:"zh_CN",
+									city:info.userInfo.city,
+									province:info.userInfo.province,
+									country:info.userInfo.country,
+									avatarUrl:info.userInfo.avatarUrl,
+									unionId:info.userInfo.unionId,
+								},
+								function(res) {
+									console.log(res);
+								},
+								function(res) {
+									console.log(res);
+								}
+							);
+							
+						},
+						fail: () => {
+							uni.showToast({
+								title:"微信登录授权是失败",
+								icon:"none",
+							})
+						}
+					})
+				},
+				fail: () => {
+					uni.showToast({
+						title:"微信登录授权是失败",
+						icon:"none",
+					})
+				}
+			})
 		},
+		
+		
 		// 跳转
 		code_login(e) {
 			this.type = 2;
@@ -103,10 +113,10 @@ export default {
 		pwd_login(e) {
 			this.type = 1;
 		},
-		reset_password(e) {
-			uni.navigateTo({
+		redToResetPwd() {
+			uni.redirectTo({
 				url: '/pages/login/safety_monitoring/safety_monitoring'
-			});
+			})
 		},
 		register(e) {
 			uni.navigateTo({

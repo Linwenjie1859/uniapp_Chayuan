@@ -193,44 +193,54 @@ var _vuex = __webpack_require__(/*! vuex */ 13);function _objectSpread(target) {
   },
   onLoad: function onLoad() {
 
-    uni.login({
-      success: function success(res) {
-        // "https://api.weixing.qq.com/snsZ"
-        console.log(res);
-      } });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   },
   methods: _objectSpread({
-    getUserInfo: function getUserInfo(res) {
-      console.log(res);
+    getUserInfo: function getUserInfo() {
+      uni.login({
+        provider: 'weixin',
+        success: function success(res) {
+          uni.getUserInfo({
+            success: function success(info) {
+              console.log(info);
+              that.basePost(
+              that.U({ c: 'login', a: 'login_by_app' }),
+              {
+                nickName: info.userInfo.nickName,
+                gender: info.userInfo.gender,
+                language: "zh_CN",
+                city: info.userInfo.city,
+                province: info.userInfo.province,
+                country: info.userInfo.country,
+                avatarUrl: info.userInfo.avatarUrl,
+                unionId: info.userInfo.unionId },
+
+              function (res) {
+                console.log(res);
+              },
+              function (res) {
+                console.log(res);
+              });
+
+
+            },
+            fail: function fail() {
+              uni.showToast({
+                title: "微信登录授权是失败",
+                icon: "none" });
+
+            } });
+
+        },
+        fail: function fail() {
+          uni.showToast({
+            title: "微信登录授权是失败",
+            icon: "none" });
+
+        } });
+
     },
+
+
     // 跳转
     code_login: function code_login(e) {
       this.type = 2;
@@ -238,8 +248,8 @@ var _vuex = __webpack_require__(/*! vuex */ 13);function _objectSpread(target) {
     pwd_login: function pwd_login(e) {
       this.type = 1;
     },
-    reset_password: function reset_password(e) {
-      uni.navigateTo({
+    redToResetPwd: function redToResetPwd() {
+      uni.redirectTo({
         url: '/pages/login/safety_monitoring/safety_monitoring' });
 
     },

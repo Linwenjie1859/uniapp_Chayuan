@@ -1,27 +1,36 @@
 <template>
-	<view class="content">
-		<view class="info_edit">
-			<image class="portrait" :src="userInfo.avatar" mode=""></image>
-			<text class="font-32">{{userInfo.nickname}}</text>
-				<button class="btn_edit_green" @tap="edit">编辑</button>
-		</view>
-			<view class="info_list" @tap="address">
-				<text class="font-28">我的收货地址</text>
-				<image src="/static/right.png" mode=""></image>
+	<view class="bg-white" style="height: 100vh;">
+		<view class="flex flex-direction padding">
+			<view class="flex justify-between align-center margin-tb padding-tb-sm">
+				<view class="flex align-center">
+					<view v-if="userInfo.avatar!=''" class="cu-avatar round xl margin-right-sm" :style="{'background-image':'url('+userInfo.avatar+')'}"></view>
+					<text class="text-bold text-xl">{{userInfo.nickname}}</text>
+				</view>
+				<view class="flex padding-lr-sm padding-tb-xs bg-gradual-green round" @tap="edit">
+					<text>编辑</text>
+				</view>
 			</view>
-		<view class="info_list">
-			<text class="font-28">鼓励评分</text>
-			<image src="/static/right.png" mode=""></image>
+			
+			<view class="flex align-center justify-between margin-tb  padding-tb-sm solid-bottom" @tap="address">
+				我的收货地址
+				<text class="cuIcon-right text-df"></text>
+			</view>
+			<view class="flex align-center justify-between margin-tb  padding-tb-sm solid-bottom" >
+				鼓励评分
+				<text class="cuIcon-right text-df"></text>
+			</view>
+			<view class="flex align-center justify-between margin-tb  padding-tb-sm solid-bottom" >
+				分享推荐
+				<text class="cuIcon-right text-df"></text>
+			</view>
+			<view class="flex align-center justify-between margin-tb  padding-tb-sm solid-bottom" >
+				客服电话
+				<text class="cuIcon-right text-df"></text>
+			</view>
+			<view @tap="outLogin" class="flex align-center bg-gradual-green round margin-top-xl padding-sm justify-center">
+				退出登录
+			</view>
 		</view>
-		<view class="info_list">
-			<text class="font-28">分享推荐</text>
-			<image src="/static/right.png" mode=""></image>
-		</view>
-		<view class="info_list supplement">
-			<text class="font-28">客服电话</text>
-			<image src="/static/right.png" mode=""></image>
-		</view>
-		<button class="btn_green" @tap="outLogin">退出登录</button>
 	</view>
 </template>
 
@@ -54,7 +63,7 @@
 					}
 				);
 			},
-			edit(e) {
+			edit() {
 				uni.navigateTo({
 					url: '/pages/user/info_edit/info_edit',
 				});
@@ -88,39 +97,5 @@
 </script>
 
 <style>
-	.info_edit{
-		width: 660upx;
-		display: flex;
-		align-items: center;
-		margin: 70upx auto;
-	}
-	.info_edit .portrait{
-		width: 90upx;
-		height: 90upx;
-		border-radius: 50%;
-	}
-	.info_edit text{
-		display: block;
-		width: 450upx;
-		margin-left: 26upx;
-	}
-	.info_list{
-		width: 660upx;
-		display: flex;
-		align-items: center;
-		margin: 0 auto;
-		margin-bottom: 80upx;
-	}
-	.info_list text{
-		display: block;
-		width: 625upx;
-	}
-	.info_list image{
-		width: 35upx;
-		height: 35upx;
-	}
-	.supplement{
-		margin-bottom: 120upx;
-	}
 
 </style>

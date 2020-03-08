@@ -75,6 +75,7 @@
 			}
 		},
 		onLoad() {
+			this.isLogin();
 			this.farmProduceInfo();
 		},
 		onShow() {

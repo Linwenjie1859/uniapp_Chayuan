@@ -1,4 +1,10 @@
 
+.view-has-size.data-v-04934c48{
+		width: 600rpx;
+		height: 500rpx;
+		background-position: center;
+		background-size: cover;
+}
 .trip-has-margin.data-v-04934c48:nth-child(odd){
 		margin-right: 10rpx;
 }
@@ -57,6 +63,7 @@
 .content.data-v-04934c48{
 	text-align: center;
 }
+	
 	/* 头部 */
 .header.data-v-04934c48 {
 	width: 100%;
@@ -122,28 +129,6 @@
 .banner image.data-v-04934c48 {
 	width: 100%;
 	height: 450rpx;
-}
-.notice.data-v-04934c48 {
-	width: 100%;
-	height: 90rpx;
-	background-color: #ffffff;
-	display: -webkit-box;
-	display: -webkit-flex;
-	display: flex;
-	-webkit-box-align: center;
-	-webkit-align-items: center;
-	        align-items: center;
-}
-.notice image.data-v-04934c48 {
-	width: 35rpx;
-	height: 35rpx;
-	margin: 0rpx 25rpx;
-}
-.notice_view.data-v-04934c48 {
-	text-align: left;
-	width: 650rpx;
-	height: 75rpx;
-	line-height: 75rpx;
 }
 .home_list.data-v-04934c48 {
 	width: 100%;

@@ -27,6 +27,9 @@
 		onShow() {
 			this.getExchangeInfo();
 		},
+		onLoad() {
+			this.isLogin(); 
+		},
 		methods: {
 			getExchangeInfo() {
 				let that = this;

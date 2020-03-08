@@ -13,9 +13,9 @@
 				<view class="flex justify-between align-center solid-bottom padding-sm padding-bottom-xs">
 					<text class="flex-treble text-lg">{{exchangeInfo.store_name}}</text>
 					<view class="flex flex-twice justify-end text-grey align-center ">
-						<text class="text-has-border-left text-lg text-bold"  @tap="addSubNum(0, -1)">-</text>
-						<input type="number" class="text-lg text-has-border " v-model.number="num" disabled />
-						<text class="text-has-border-right text-lg text-bold" @tap="addSubNum(0, 1)">+</text>
+						<text class="text-has-border-left  "  @tap="addSubNum(0, -1)">-</text>
+						<input type="number" class="text-df text-has-border " v-model.number="num" disabled />
+						<text class="text-has-border-right  " @tap="addSubNum(0, 1)">+</text>
 					</view> 
 				</view>
 			</view>
@@ -152,9 +152,8 @@
 	.has-sub-margin-xs{
 		margin-left: -10rpx;
 	}
-.text-has-border {
-		max-width: 80rpx;
-		height: 51rpx;
+	.text-has-border {
+		max-width: 70rpx;
 		text-align: center;
 		border-top: 1px solid #e0e0e0;
 		border-bottom: 1px solid #e0e0e0;
@@ -165,13 +164,13 @@
 		border: 1px solid #e0e0e0;
 		border-top-right-radius: 8upx;
 		border-bottom-right-radius: 8upx;
-		padding: 5upx 20upx;
+		padding: 9upx 20upx;
 	}
 	
 	.text-has-border-left {
 		border: 1px solid #e0e0e0;
 		border-top-left-radius: 8upx;
 		border-bottom-left-radius: 8upx;
-		padding: 5upx 20upx;
+		padding: 9upx 20upx;
 	}
 </style>
