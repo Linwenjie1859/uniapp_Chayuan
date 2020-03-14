@@ -44,6 +44,27 @@ Vue.filter('subStringToCity',function(value){
 	return value.substr(0,value.indexOf('/'));
 })
 
+Vue.filter('toDate',function(totaltime){
+		let timeData ='';
+		var h, m, s, d
+		if (totaltime > 0) {
+			d = Math.floor(totaltime / 1000 / 60 / 60 / 24) * 24
+			h = Math.floor(totaltime / 1000 / 60 / 60 % 24)
+			m = Math.floor(totaltime / 1000 / 60 % 60)
+			s = Math.floor(totaltime / 1000 % 60)
+			//获取时分秒
+			h = d + h
+			h = test(h)
+			m = test(m)
+			s = test(s)
+			timeData =`${h}时 : ${m}分 : ${s}秒`   // 每个时间的显示格式
+		} else {
+			timeData = `00 : 00 : 00`  
+		   
+		}
+		return that.timeData.toString();
+}) 
+
 App.mpType = 'app'
 
 Vue.prototype.getMyMenus = function() {

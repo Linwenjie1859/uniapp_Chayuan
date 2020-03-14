@@ -1,4 +1,5 @@
 {
   "navigationBarTitleText": "限时秒杀",
+  "navigationStyle": "custom",
   "usingComponents": {}
 }

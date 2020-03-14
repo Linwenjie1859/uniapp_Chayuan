@@ -341,10 +341,11 @@
 			}
         }
         ,{
-            "path" : "pages/seckill/seckill",
+           "path" : "pages/seckill/seckill",
            "style" : {
-           		"navigationBarTitleText": "限时秒杀"
-           }
+				"navigationBarTitleText": "限时秒杀",
+				"navigationStyle": "custom"
+           } 
         }
     ],
 	"globalStyle": {

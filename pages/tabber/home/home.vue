@@ -1,100 +1,127 @@
 <template>
-	<view class="content">
-		<view class="header">
-			<view class="input_view round" @tap="search"><text class="text-lg text-grey">搜索商品</text></view>
-			<!-- 头部-滚动渐变显示 -->
-			<view class="after" :style="{ opacity: afterHeaderOpacity,height:StatusAddNav+'px'}"></view>
-		</view>
-		<!-- 首页头部轮播图 Start -->
-		<view class="banner">
-			<view class="uni-padding-wrap">
-				<view class="page-section swiper">
-					<view class="page-section-spacing">
-						<swiper
-							class="swiper"
-							indicator-color="#fff"
-							indicator-active-color="#51c77d"
-							:indicator-dots="indicatorDots"
-							:autoplay="autoplay"
-							:interval="interval"
-							:duration="duration"
-						>
-							<swiper-item v-for="(item, index) in allInfo.banner" :key="index"><image :src="item.pic" mode=""></image></swiper-item>
+	<view>
+		<view class="fixed" style="z-index: 2048;width: 100%;">
+		 	<view class="absolute" style="width: 100%;" :style="{'padding-top':StatusBarHeight+'px','background-color':'rgba(255,255,255,'+headerOpacity+')'}">
+		 		<view class="flex align-center justify-between margin-lr-sm padding-tb-xs" >
+		 			<view class="flex align-center" :class="{'text-grey':headerOpacity==1,'text-white':headerOpacity!=1}"> 
+		 				福州 <text class="cuIcon-unfold margin-left-xs self-center"></text>
+		 			</view>
+					<view class="flex align-center text-grey padding-lr-sm padding-tb-xs justify-between round" :class="{'bg-gray light':headerOpacity==1,'bg-white':headerOpacity!=1}" >
+						<text class="cuIcon-search"></text> 
+						<swiper vertical="true" autoplay="true" circular="true" interval="3000" class="text-sm margin-lr-xs" style="width: 350rpx;height: 32rpx;overflow: hidden; line-height: 40rpx; ">
+							<swiper-item v-for="(item, index) in allInfo.roll" :key="index" >
+								<text>{{ item.info }}</text>
+							</swiper-item>
 						</swiper>
+						<text class="cuIcon-scan"></text>
+					</view>
+					<view class="flex align-center" :class="{'text-grey':headerOpacity==1,'text-white':headerOpacity!=1}">
+						<text class="cuIcon-dianhua margin-right-xs text-xl"></text>
+						<text class="cuIcon-mark text-xl"></text>
+					</view>
+		 		</view>
+		 	</view>
+		 </view>
+		
+		<!-- 首页头部轮播图 Start -->
+		<swiper class="screen-swiper square-dot" :indicator-dots="true" :circular="true"
+		 :autoplay="true" interval="5000" duration="500">
+			<swiper-item v-for="(item, index) in allInfo.banner" :key="index" class="has-bottom-lr-radius">
+				<image :src="item.pic" mode="aspectFill" ></image>
+			</swiper-item>
+		</swiper>
+		<!-- 首页头部轮播图 End -->
+		
+		<!-- 首页导航栏 Start -->
+		<view style="position: relative;min-height: 160rpx;" :style="{height:absoluteHeight+'px'}">
+			<view style="position: absolute; top: -60rpx;" id="is-absolute-nav">  
+				<view class="flex flex-direction radius-sm bg-white margin-lr-sm text-sm shadow" >
+					<view class="flex align-center flex-wrap margin-tb-sm ">
+						<view class="flex flex-direction justify-center margin-lr-sm margin-tb-xs align-center" style="width: 102rpx;" @tap="navToArticleList" v-for="(item, index) in allInfo.menus" :key="index">
+							<navigator :url="item.url">
+								<image :src="item.pic" mode="widthFix" style="width: 82rpx;"></image>
+							</navigator> 
+							<text>{{ item.name }}</text>
+						</view>
 					</view>
 				</view>
 			</view>
 		</view>
-		<!-- 首页头部轮播图 End -->
-		
-		<!-- 首页滚动消息通知 Start -->
-<!-- 		<view class="flex radius-sm" style="margin-top: -20rpx;">
-			<text class="cuIcon-notificationfill text-orange margin-left margin-right-xs"></text>
-			<swiper class="notice_view" vertical="true" autoplay="true" circular="true" interval="3000">
-				<swiper-item v-for="(item, index) in allInfo.roll" :key="index">
-					<navigator :url="item.url" open-type="switchTab">
-						<text class="font-28 text_limit" >{{ item.info }}</text>
-					</navigator>
-				</swiper-item>
-			</swiper>
-		</view> -->
-		<!-- 首页滚动消息通知 End -->
-		
-		<!-- 首页导航栏 Start -->
-		<view class="home_list radius-sm">
-			<view class="list_top font-28">
-				<view class="top_view" @tap="navToArticleList" v-for="(item, index) in allInfo.menus" :key="index">
-					<navigator :url="item.url">
-						<image :src="item.pic" mode=""></image>
-						<text>{{ item.name }}</text>
-					</navigator>
-				</view>
-			</view>
-			
-			<image class="radius home_pic2" :src="allInfo.banner[1].pic" mode=""></image>
-		</view>
 		<!-- 首页导航栏 End -->
 		
+		<!-- 首页活动 Start -->
+		<view class="flex margin-tb-sm padding-lr-sm ">
+			<view class="bg-center round shadow-warp" :style="[{'background-image':'url('+allInfo.activity[0].image+')' }]" style="width: 710rpx;height: 150rpx;">
+				
+			</view>
+		</view>
+		<!-- 首页活动 End -->
 		
 		<!-- 热门推荐 Start -->
 		<view class="flex flex-direction padding-sm bg-white margin-top-sm radius-sm">
-			<view class="flex flex-direction">
+			<view class="flex flex-direction align-center">
 				<view class="flex align-center justify-center"  @tap="navToMoreTree">
 					<text class="text-xl text-black margin-tb-sm">{{allInfo.info.teaTreeTitle}}</text>
 					<text class="cuIcon-roundright margin-left-xs text-xl" > </text>
 				</view>
 				<text class="text-df text-yellow margin-bottom-sm">精选热门主题推荐，欢乐玩厦门</text>
 			</view>
-			<scroll-view scroll-x="true" style="height: 310rpx;">
-				<view class="flex">
-					<view class="flex flex-direction margin-right-sm align-start" style="width: 400rpx; height: 300rpx;" v-for="(item, index) in allInfo.info.teaTreeList" :key="index" :data-id="item.id" @tap="navToTreeDetails">
-						<image :src="item.image" mode="scaleToFill" style="width: 400rpx; height: 250rpx;"></image>
-						<text class="text-grey text-cut text-df text-left margin-tb-xs" style="width: 400rpx;">{{item.store_info}}</text>
+			
+			<view class="flex">
+				<view class="flex flex-direction radius-sm shadow-warp bg-white margin-right-sm">
+					<swiper class="square-dot" :indicator-dots="true" :circular="true"
+					 :autoplay="true" interval="5000" duration="500" style="height: 340rpx;width: 345rpx;">
+						<swiper-item v-for="(item, index) in allInfo.info.seckillList" :key="index">
+							<view class="radius-top-sm bg-center" :style="[{'background-image':'url('+item.image+')' }]"  style="width: 345rpx;height: 230rpx;">
+								<view class="bg-gradual-orange text-xs has-radius padding-xs" style="max-width: 200rpx;">
+									距结束 {{seckillTimeString[index]}}
+								</view>
+							</view>
+							<view class="flex flex-direction margin-top-sm padding-lr-xs" style="width: 345rpx;">
+								<text class="margin-bottom-xs text-cut-two">{{item.title}}</text>
+								<text class="text-price text-red">{{item.price}}</text>
+							</view>
+						</swiper-item>
+					</swiper>
+				</view>
+				
+				<view class="flex flex-direction radius-sm shadow-warp bg-white" style="width: 345rpx;">
+					<view class="flex bg-gray light radius-top-sm padding-xs">
+						<text class="text-df">茶树热榜</text>
+						<text class="cuIcon-roundrightfill margin-left-xs text-lg text-gray"> </text>
+					</view>
+					<view class="flex flex-direction margin-top-sm padding-lr-xs" style="width: 345rpx;">
+						<view class="flex margin-bottom-xs" v-for="(item, index) in allInfo.info.teaTreeList" :key="index" :data-id="item.id" @tap="navToTreeDetails">
+							<image :src="item.image" mode="widthFix" style="width: 200rpx;" class="radius"></image>
+							<view class="flex flex-direction  margin-left-xs justify-between padding-tb-xs" style="width:145rpx;">
+								<text class="text-cut text-df">{{item.store_name}}</text>
+								<text class="text-price text-red text-sm">{{item.price}}</text>
+							</view>
+						</view>
 					</view>
 				</view>
-			</scroll-view>
+			</view>
 		</view>
 		<!-- 热门推荐 End -->
 		
 
 		<!-- 目的地推荐 Start-->
 		<view class="flex flex-direction padding-sm bg-white margin-top-sm radius-sm">
-			<view class="flex flex-direction">
+			<view class="flex flex-direction align-center">
 				<view class="flex align-center justify-center">
 					<text class="text-xl text-black margin-tb-sm">{{allInfo.info.viewTitle}}</text>
 					<text class="cuIcon-roundright margin-left-xs text-xl" @tap="navToArticleList"> </text>
 				</view>
 				<text class="text-df text-yellow margin-bottom-sm">精选热门主题推荐，欢乐玩厦门</text>
 			</view>
-			<scroll-view scroll-x="true" style="height: 450rpx;">
+			<scroll-view scroll-x="true" style="height: 350rpx;">
 				<view class="flex">
-					<view class="flex flex-direction margin-right-sm align-start" style="width: 600rpx;height: 450rpx" v-for="(item, index) in allInfo.info.viewList" :key="index"  @tap="navToScenicDetail(item.id)">
-						<view class="flex flex-direction justify-between view-has-size align-center text-white" :style="[{'background-image':'url('+item.image+')' }]">
-							<view class="flex text-white has-black-bg radius-sm self-end padding-lr-sm padding-tb-xs margin-sm"> 
+					<view class="flex flex-direction margin-right-sm align-start" style="width: 600rpx;height: 350rpx" v-for="(item, index) in allInfo.info.viewList" :key="index"  @tap="navToScenicDetail(item.id)">
+						<view class="flex flex-direction justify-between bg-center align-center text-white" :style="[{'background-image':'url('+item.image+')' }]" style="height: 350rpx;width: 600rpx;">
+							<view class="flex text-white has-bg-black radius-sm self-end padding-lr-sm padding-tb-xs margin-sm"> 
 								<view class="flex flex-direction justify-between">
 									<text class="text-df self-start text-bold">
-										<text class="text-xl">2</text>
-										<text class="text-lg">020</text>
+										<text class="text-lx">2020</text>
 									</text>
 									<text class="text-df">February</text>
 								</view>
@@ -114,7 +141,7 @@
 		
 		<!-- 精选游记 Start -->
 		<view class="flex flex-direction padding-sm bg-white margin-top-sm radius-sm">
-			<view class="flex flex-direction">
+			<view class="flex flex-direction align-center">
 				<view class="flex align-center justify-center">
 					<text class="text-xl text-black margin-tb-sm">{{allInfo.info.articleTitle}}</text>
 					<text class="cuIcon-roundright margin-left-xs text-xl" @tap="navToArticleList"> </text>
@@ -126,7 +153,7 @@
 				<view class="flex flex-direction trip-has-margin margin-bottom-sm" style="width: 350rpx;" v-for="(item,index) in allInfo.info.articleList" :key="index">
 					<view class="flex flex-direction justify-end radius trip-has-size" :style="[{'background-image':'url('+item.image_input[0]+')' }]" @tap="navToArticleDetail(item.id)">
 						<view class="flex text-white">
-							<text class="cuIcon-locationfill text-xs text-bold has-black-bg round trip-has-margin-padding">{{item.title}}</text>
+							<text class="cuIcon-locationfill text-xs text-bold has-bg-black round trip-has-margin-padding">{{item.title}}</text>
 						</view>
 					</view>
 					<view class="flex justify-between  align-center">
@@ -174,9 +201,14 @@
 </template>
 
 <script>
+	let time;
 export default {
 	data() {
 		return {
+			seckillTimeString:[],
+			seckillTime:[],
+			absoluteFlag:false,
+			absoluteHeight:0,
 			//所有参数
 			StatusBarHeight:this.StatusBarHeight,
 			NavigationBar:this.NavigationBar,
@@ -185,32 +217,74 @@ export default {
 			// banner
 			indicatorDots: true,
 			autoplay: true,
-			interval: 2000,
-			duration: 1000,
 			//控制渐变标题栏的参数
-			afterHeaderOpacity: 0 //不透明度
+			headerOpacity: 0 //不透明度
 		};
 	},
 
 	onPageScroll(e) {
-		//导航栏渐变
-		let opacity=e.scrollTop/200
-		this.afterHeaderOpacity=opacity>1?1:e.scrollTop<0?0:opacity;
-		
+		let opacity=e.scrollTop/170
+		this.headerOpacity=opacity>1?1:e.scrollTop<0?0:opacity;
 	},
 	onLoad() {
 		this.getHomeAllInfo();
+		console.log(this.changeTimeStyle());
 	},
+	onReady() {
+		let that=this;
+		that.time = setInterval(()=>{ 
+			console.log(1111);
+			if(that.absoluteFlag){
+				setTimeout(()=>{
+					clearInterval(that.time);
+					let selectorQuery = uni.createSelectorQuery().in(this);
+					 selectorQuery.select('#is-absolute-nav').boundingClientRect((data)=>{
+						that.absoluteHeight=data.height-30;
+					 }).exec();
+				},550)
+			}
+		},200)
+	}, 
+
 	onPullDownRefresh() {
 		this.getHomeAllInfo();
 	},
 	methods: {
+		changeTimeStyle(totaltime){
+			let timeData ='';
+			var h, m, s, d
+			d = Math.floor(totaltime / 86400);
+			h = Math.floor(totaltime % 86400 / 3600)
+			m = Math.floor(totaltime % 86400 % 3600 /60)
+			s = Math.floor(totaltime % 86400 % 3600 %60)
+					
+			h=d*24+h;
+			//获取时分秒
+			timeData =`${h}: ${m}: ${s}`   // 每个时间的显示格式
+			return timeData.toString();
+		},
+		changeSeckillTime(data){
+			let that=this;
+			let localTime =Math.floor(new Date().getTime()/1000);
+			for(let i=0;i<data.length;i++){
+				that.seckillTime[i]=data[i].stop_time-localTime;
+			}
+			setInterval(()=>{
+				for(let i=0;i<that.seckillTime.length;i++){
+					that.seckillTime[i]-=1;
+					that.seckillTimeString[i] = that.changeTimeStyle(that.seckillTime[i]);
+				}
+				this.$forceUpdate();
+			},1000);
+		},
 		getHomeAllInfo() {
 			let that = this;
 			that.baseGet(
 				that.U({ c: 'public_api', a: 'index' }),
 				function(res) {
 					that.allInfo = res.data;
+					that.absoluteFlag=true;
+					that.changeSeckillTime(res.data.info.seckillList);
 				},
 				function(res) {
 					console.log(res);
@@ -292,13 +366,12 @@ export default {
 </script>
 
 <style scoped>
-	.view-has-size{
-		width: 600rpx;
-		height: 500rpx;
-		background-position: center;
-		background-size: cover;
-	}
 	
+.has-radius{
+	border-top-left-radius: 16rpx;
+	border-bottom-right-radius: 30rpx;
+}
+
 	.trip-has-margin:nth-child(odd){
 		margin-right: 10rpx;
 	}
@@ -306,9 +379,6 @@ export default {
 		width: 82upx;
 		height: 82upx;
 		font-size: 1em;
-	}
-	.has-black-bg {
-		background-color: rgba(0,0,0, 0.3);
 	}
 	.solid-left::after{
 		border-left: 1rpx solid rgba(0, 0, 0, 0.8);
@@ -358,207 +428,5 @@ export default {
 
 	}
 	
-	
-.content{
-	text-align: center;
-}
 
-
-
-/* 头部 */
-.header {
-	width: 100%;
-	height: 150upx;
-	display: flex;
-	align-items: center;
-	position: fixed;
-	top: 0;
-	z-index: 10;
-}
-.input_view {
-	width: 450upx;
-	height: 50upx;
-	background-color: rgba(255, 255, 255, 0.7);
-	position: absolute;
-	left: 20%;
-	z-index: 1024;
-	border: 1px solid rgba(135, 153, 163, 0.3);
-	bottom: 39rpx;
-}
-
-.input_view text {
-	display: block;
-	width: 450upx;
-	height: 50upx;
-	line-height: 50upx;
-	text-align: center;
-}
-.after {
-	width: 100%;
-	position: fixed;
-	top: 0upx;
-	background: #fff;
-	transition: opacity 0.05s linear;
-	color: #fff;
-}
-
-.after .middle {
-	display: flex;
-	align-items: center;
-	width: 400upx;
-	padding-top: 90upx;
-	margin: 0 auto;
-	justify-content: space-between;
-}
-
-.banner {
-	/* margin-top: 170upx; */
-	width: 100%;
-	height: 450upx;
-}
-
-.banner .swiper {
-	height: 450upx;
-}
-
-.banner image {
-	width: 100%;
-	height: 450upx;
-}
-
-
-.home_list {
-	width: 100%;
-	background-color: #ffffff;
-	margin-top: 25upx;
-}
-
-.home_list .list_top {
-	width: 700upx;
-	margin: 0 auto;
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-}
-
-.list_top .top_view image {
-	width: 80upx;
-	height: 80upx;
-	margin: 25upx 35upx 10upx 35upx;
-}
-
-.list_top .top_view text {
-	display: block;
-	width: 150upx;
-	text-align: center;
-}
-
-.home_pic2 {
-	width: 700upx;
-	height: 300upx;
-	margin: 25upx auto;
-}
-
-.list_down {
-	width: 700upx;
-	margin: 0 auto;
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-}
-
-.list_down image {
-	width: 190upx;
-	height: 90upx;
-	margin-bottom: 25upx;
-}
-
-.title {
-	width: 700upx;
-	height: 100upx;
-	margin: 0 auto;
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-}
-
-.home_pic3 {
-	width: 700upx;
-	height: 340upx;
-	margin: 0 auto;
-}
-
-.recommend {
-	display: block;
-	width: 700upx;
-	margin: 0 auto;
-	text-align: left;
-}
-
-.recommend_list {
-	width: 700upx;
-	margin: 25upx auto;
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-}
-
-.recommend_list .list_view {
-	position: relative;
-	margin-bottom: 25upx;
-}
-
-.recommend_list .list_view image {
-	width: 150upx;
-	height: 150upx;
-}
-
-.recommend_list .list_view text {
-	display: block;
-	width: 150upx;
-	height: 50upx;
-	line-height: 50upx;
-	color: #ffffff;
-	background-color: rgba(255, 255, 255, 0.5);
-	text-align: center;
-	position: absolute;
-	top: 100upx;
-	left: 0upx;
-}
-
-.product_list {
-	width: 700upx;
-	margin: 0 auto;
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-	flex-wrap: wrap;
-}
-
-.product_list .prod_view {
-	width: 335upx;
-}
-
-.product_list .prod_view image {
-	width: 335upx;
-	height: 335upx;
-	border-radius: 10upx;
-}
-
-.prod_view .list_info {
-	width: 335upx;
-	margin: 0 auto;
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-	margin-top: 10upx;
-	margin-bottom: 25upx;
-}
-
-.no_more {
-	width: 700upx;
-	display: block;
-	margin: 60upx auto;
-	text-align: center;
-}
 </style>

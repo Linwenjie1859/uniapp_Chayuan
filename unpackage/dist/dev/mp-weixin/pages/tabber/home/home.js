@@ -308,10 +308,42 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-var _default =
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+var time;var _default =
 {
   data: function data() {
     return {
+      seckillTimeString: [],
+      seckillTime: [],
+      absoluteFlag: false,
+      absoluteHeight: 0,
       //所有参数
       StatusBarHeight: this.StatusBarHeight,
       NavigationBar: this.NavigationBar,
@@ -320,32 +352,74 @@ var _default =
       // banner
       indicatorDots: true,
       autoplay: true,
-      interval: 2000,
-      duration: 1000,
       //控制渐变标题栏的参数
-      afterHeaderOpacity: 0 //不透明度
+      headerOpacity: 0 //不透明度
     };
   },
 
   onPageScroll: function onPageScroll(e) {
-    //导航栏渐变
-    var opacity = e.scrollTop / 200;
-    this.afterHeaderOpacity = opacity > 1 ? 1 : e.scrollTop < 0 ? 0 : opacity;
-
+    var opacity = e.scrollTop / 170;
+    this.headerOpacity = opacity > 1 ? 1 : e.scrollTop < 0 ? 0 : opacity;
   },
   onLoad: function onLoad() {
     this.getHomeAllInfo();
+    console.log(this.changeTimeStyle());
   },
+  onReady: function onReady() {var _this = this;
+    var that = this;
+    that.time = setInterval(function () {
+      console.log(1111);
+      if (that.absoluteFlag) {
+        setTimeout(function () {
+          clearInterval(that.time);
+          var selectorQuery = uni.createSelectorQuery().in(_this);
+          selectorQuery.select('#is-absolute-nav').boundingClientRect(function (data) {
+            that.absoluteHeight = data.height - 30;
+          }).exec();
+        }, 550);
+      }
+    }, 200);
+  },
+
   onPullDownRefresh: function onPullDownRefresh() {
     this.getHomeAllInfo();
   },
   methods: {
+    changeTimeStyle: function changeTimeStyle(totaltime) {
+      var timeData = '';
+      var h, m, s, d;
+      d = Math.floor(totaltime / 86400);
+      h = Math.floor(totaltime % 86400 / 3600);
+      m = Math.floor(totaltime % 86400 % 3600 / 60);
+      s = Math.floor(totaltime % 86400 % 3600 % 60);
+
+      h = d * 24 + h;
+      //获取时分秒
+      timeData = "".concat(h, ": ").concat(m, ": ").concat(s); // 每个时间的显示格式
+      return timeData.toString();
+    },
+    changeSeckillTime: function changeSeckillTime(data) {var _this2 = this;
+      var that = this;
+      var localTime = Math.floor(new Date().getTime() / 1000);
+      for (var i = 0; i < data.length; i++) {
+        that.seckillTime[i] = data[i].stop_time - localTime;
+      }
+      setInterval(function () {
+        for (var _i = 0; _i < that.seckillTime.length; _i++) {
+          that.seckillTime[_i] -= 1;
+          that.seckillTimeString[_i] = that.changeTimeStyle(that.seckillTime[_i]);
+        }
+        _this2.$forceUpdate();
+      }, 1000);
+    },
     getHomeAllInfo: function getHomeAllInfo() {
       var that = this;
       that.baseGet(
       that.U({ c: 'public_api', a: 'index' }),
       function (res) {
         that.allInfo = res.data;
+        that.absoluteFlag = true;
+        that.changeSeckillTime(res.data.info.seckillList);
       },
       function (res) {
         console.log(res);

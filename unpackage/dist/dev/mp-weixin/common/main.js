@@ -17,7 +17,7 @@ var _App = _interopRequireDefault(__webpack_require__(/*! ./App */ 9));
 
 var _util = _interopRequireDefault(__webpack_require__(/*! @/common/util.js */ 12));
 
-var _store = _interopRequireDefault(__webpack_require__(/*! ./store */ 17));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var sunUiStar = function sunUiStar() {return __webpack_require__.e(/*! import() | components/sunui-star/sunui-star */ "components/sunui-star/sunui-star").then(__webpack_require__.bind(null, /*! ./components/sunui-star/sunui-star.vue */ 437));};var uniLoadMore = function uniLoadMore() {return __webpack_require__.e(/*! import() | components/uni-load-more/uni-load-more */ "components/uni-load-more/uni-load-more").then(__webpack_require__.bind(null, /*! @/components/uni-load-more/uni-load-more.vue */ 444));};var numScroll = function numScroll() {return __webpack_require__.e(/*! import() | components/numScroll */ "components/numScroll").then(__webpack_require__.bind(null, /*! @/components/numScroll.vue */ 451));};
+var _store = _interopRequireDefault(__webpack_require__(/*! ./store */ 17));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var sunUiStar = function sunUiStar() {return __webpack_require__.e(/*! import() | components/sunui-star/sunui-star */ "components/sunui-star/sunui-star").then(__webpack_require__.bind(null, /*! ./components/sunui-star/sunui-star.vue */ 443));};var uniLoadMore = function uniLoadMore() {return __webpack_require__.e(/*! import() | components/uni-load-more/uni-load-more */ "components/uni-load-more/uni-load-more").then(__webpack_require__.bind(null, /*! @/components/uni-load-more/uni-load-more.vue */ 450));};var numScroll = function numScroll() {return __webpack_require__.e(/*! import() | components/numScroll */ "components/numScroll").then(__webpack_require__.bind(null, /*! @/components/numScroll.vue */ 457));};
 _vue.default.prototype.$store = _store.default;
 
 _vue.default.config.productionTip = false;
@@ -52,6 +52,27 @@ _vue.default.filter('subString', function (value) {
 _vue.default.filter('subStringToCity', function (value) {
   console.log(value);
   return value.substr(0, value.indexOf('/'));
+});
+
+_vue.default.filter('toDate', function (totaltime) {
+  var timeData = '';
+  var h, m, s, d;
+  if (totaltime > 0) {
+    d = Math.floor(totaltime / 1000 / 60 / 60 / 24) * 24;
+    h = Math.floor(totaltime / 1000 / 60 / 60 % 24);
+    m = Math.floor(totaltime / 1000 / 60 % 60);
+    s = Math.floor(totaltime / 1000 % 60);
+    //获取时分秒
+    h = d + h;
+    h = test(h);
+    m = test(m);
+    s = test(s);
+    timeData = "".concat(h, "\u65F6 : ").concat(m, "\u5206 : ").concat(s, "\u79D2"); // 每个时间的显示格式
+  } else {
+    timeData = "00 : 00 : 00";
+
+  }
+  return that.timeData.toString();
 });
 
 _App.default.mpType = 'app';
