@@ -6,6 +6,8 @@ import uniLoadMore from '@/components/uni-load-more/uni-load-more.vue';
 import numScroll from '@/components/numScroll.vue';
 // 引入插件
 import util from '@/common/util.js'
+//地区
+import citySelect from '@/components/linzq-citySelect/linzq-citySelect.vue';
 
 import store from './store'
 Vue.prototype.$store = store
@@ -15,6 +17,7 @@ Vue.config.productionTip = false
 Vue.component('sunui-star',sunUiStar);
 Vue.component('uni-load-more',uniLoadMore);
 Vue.component('num-scroll',numScroll);
+Vue.component('city-select',citySelect);
 App.mpType = 'app'
 
 // Vue.prototype.navHeight = 0;

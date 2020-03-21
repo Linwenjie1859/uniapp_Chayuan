@@ -1,4 +1,6 @@
 {
   "navigationBarTitleText": "关注店铺",
-  "usingComponents": {}
+  "usingComponents": {
+    "uni-load-more": "/components/uni-load-more/uni-load-more"
+  }
 }

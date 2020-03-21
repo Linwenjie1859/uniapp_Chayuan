@@ -101,8 +101,22 @@
 			},
 			navToMap() {
 				let that=this;
-				uni.navigateTo({
-					url:"/pages/map/map?mapInfo="+JSON.stringify(that.farmProduceList.merInfo[0].list[0])
+				// uni.navigateTo({
+				// 	url:"/pages/map/map?mapInfo="+JSON.stringify(that.farmProduceList.merInfo[0].list[0])
+				// })
+				uni.getLocation({
+				 type: 'gcj02', //返回可以用于uni.openLocation的经纬度 
+					success: function (res) {
+						const latitude = res.latitude;
+						const longitude = res.longitude;
+						uni.openLocation({
+							latitude: latitude,
+							longitude: longitude,
+							success: function () {
+								
+							},
+						});
+					}
 				})
 			},
 			farmProduceInfo() {

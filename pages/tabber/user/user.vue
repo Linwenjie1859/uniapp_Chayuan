@@ -2,7 +2,7 @@
 	<view class="flex flex-direction bg-gray">
 		<view class="flex flex-direction padding-lr-sm padding-bottom-sm user-has-bg padding-bottom-sm" :style="[{'padding-top':NavigationBar+'px'}]">
 			<view class="flex text-black">
-				<view v-if="userInfo!=''" class="cu-avatar round xl" @tap="edit" :style="[{ backgroundImage:'url(' + userInfo.avatar + ')' }]" >
+				<view v-if="userInfo!='' && userInfo.avatar!=''" class="cu-avatar round xl" @tap="edit" :style="[{ backgroundImage:'url(' + userInfo.avatar + ')' }]" >
 				</view> 
 				<view class="cu-avatar round xl" @tap="edit" style="background-image: url(../../../static/woodpecker.png);" v-else>
 				</view> 

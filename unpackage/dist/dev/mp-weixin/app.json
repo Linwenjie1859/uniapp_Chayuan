@@ -94,9 +94,15 @@
       }
     ]
   },
+  "permission": {
+    "scope.userLocation": {
+      "desc": "您的位置信息仅用于显示当前地区"
+    }
+  },
   "usingComponents": {
     "sunui-star": "/components/sunui-star/sunui-star",
     "uni-load-more": "/components/uni-load-more/uni-load-more",
-    "num-scroll": "/components/numScroll"
+    "num-scroll": "/components/numScroll",
+    "city-select": "/components/linzq-citySelect/linzq-citySelect"
   }
 }

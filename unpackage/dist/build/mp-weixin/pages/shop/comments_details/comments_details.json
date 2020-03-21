@@ -2,6 +2,7 @@
   "navigationBarTitleText": "评论详情",
   "enablePullDownRefresh": true,
   "usingComponents": {
+    "uni-load-more": "/components/uni-load-more/uni-load-more",
     "axb-check-box": "/components/axb-checkbox/axb-checkbox"
   }
 }

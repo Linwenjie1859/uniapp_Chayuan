@@ -51,7 +51,11 @@
     "pages/subscribe/tree_details/tree_details",
     "pages/tabber/home/more_tree_list/more_tree_list",
     "pages/user/planting_rules/planting_rules",
-    "pages/user/safe_check/safe_check"
+    "pages/user/safe_check/safe_check",
+    "pages/subscribe/exchange_list/exchange_list",
+    "pages/subscribe/exchange_confirm/exchange_confirm",
+    "pages/tabber/home/scenic_detail/scenic_detail",
+    "pages/seckill/seckill"
   ],
   "subPackages": [],
   "window": {

@@ -6,10 +6,10 @@
 				<text class="text-bold text-lg">{{item.name}}</text>
 				<text class="text-grey text-lg margin-tb-xs text-cut-two">{{item.synopsis}}</text>
 					
-				<text class=" text-lg margin-bottom-xs"><text class="cuIcon-locationfill text-orange text-xxl margin-right-xs"></text> {{item.store_address}}</text>
+				<text class=" text-lg margin-bottom-xs" @tap="navToMap(item)"><text class="cuIcon-locationfill text-orange text-xxl margin-right-xs"></text> {{item.store_address}}</text>
 				
 				<view class="flex justify-between align-center">
-					<text class="text-lg margin-bottom-xs"><text class="cuIcon-phone text-green text-xxl margin-right-xs"></text> {{item.telephone}}</text>
+					<text class="text-lg margin-bottom-xs" @tap="phoneCall(item.telephone)"><text class="cuIcon-phone text-green text-xxl margin-right-xs"></text> {{item.telephone}}</text>
 					<text class=" text-xl text-red text-price">{{item.ticket_price}}/人</text>
 				</view>
 			</view>
@@ -30,8 +30,19 @@
 			this.getScenicInfo();
 		},
 		methods: {
+			// 拨打电话功能
+			phoneCall(phone){
+				uni.makePhoneCall({
+					phoneNumber:phone,
+					success: (res) => {
+						console.log(res);
+					},
+					fail: (res) => {
+						console.log(res);
+					}
+				})
+			},
 			getScenicInfo() {
-				console.log(6666);
 				let that = this;
 				that.baseGet( 
 					that.U({ c: 'scenic_api', a: 'get_scenic_by_cid',q: {
@@ -46,6 +57,24 @@
 					true
 				);
 			},
+			navToMap() {
+				let that=this;
+				uni.getLocation({
+				 type: 'gcj02', //返回可以用于uni.openLocation的经纬度 
+					success: function (res) {
+						const latitude = res.latitude;
+						const longitude = res.longitude;
+						uni.openLocation({
+							latitude: latitude,
+							longitude: longitude,
+							success: function () {
+								
+							},
+						});
+					}
+				})
+			},
+			
 		}
 	}
 </script>

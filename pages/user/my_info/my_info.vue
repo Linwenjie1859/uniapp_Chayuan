@@ -3,7 +3,8 @@
 		<view class="flex flex-direction padding">
 			<view class="flex justify-between align-center margin-tb padding-tb-sm">
 				<view class="flex align-center">
-					<view v-if="userInfo.avatar!=''" class="cu-avatar round xl margin-right-sm" :style="{'background-image':'url('+userInfo.avatar+')'}"></view>
+					<view v-if="userInfo!='' && userInfo.avatar!=''" class="cu-avatar round xl margin-right-sm" :style="{'background-image':'url('+userInfo.avatar+')'}"></view>
+					<view class="cu-avatar round xl" @tap="edit" style="background-image: url(../../../static/woodpecker.png);" v-else></view>
 					<text class="text-bold text-xl">{{userInfo.nickname}}</text>
 				</view>
 				<view class="flex padding-lr-sm padding-tb-xs bg-gradual-green round" @tap="edit">

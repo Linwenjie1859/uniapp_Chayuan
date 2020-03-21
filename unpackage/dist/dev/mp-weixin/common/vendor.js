@@ -8,7 +8,7 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.createApp = createApp;exports.createComponent = createComponent;exports.createPage = createPage;exports.default = void 0;var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 2));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _slicedToArray(arr, i) {return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest();}function _nonIterableRest() {throw new TypeError("Invalid attempt to destructure non-iterable instance");}function _iterableToArrayLimit(arr, i) {var _arr = [];var _n = true;var _d = false;var _e = undefined;try {for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {_arr.push(_s.value);if (i && _arr.length === i) break;}} catch (err) {_d = true;_e = err;} finally {try {if (!_n && _i["return"] != null) _i["return"]();} finally {if (_d) throw _e;}}return _arr;}function _arrayWithHoles(arr) {if (Array.isArray(arr)) return arr;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}function _toConsumableArray(arr) {return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread();}function _nonIterableSpread() {throw new TypeError("Invalid attempt to spread non-iterable instance");}function _iterableToArray(iter) {if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter);}function _arrayWithoutHoles(arr) {if (Array.isArray(arr)) {for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) {arr2[i] = arr[i];}return arr2;}}
+Object.defineProperty(exports, "__esModule", { value: true });exports.createApp = createApp;exports.createComponent = createComponent;exports.createPage = createPage;exports.default = void 0;var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 2));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _slicedToArray(arr, i) {return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest();}function _nonIterableRest() {throw new TypeError("Invalid attempt to destructure non-iterable instance");}function _iterableToArrayLimit(arr, i) {var _arr = [];var _n = true;var _d = false;var _e = undefined;try {for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {_arr.push(_s.value);if (i && _arr.length === i) break;}} catch (err) {_d = true;_e = err;} finally {try {if (!_n && _i["return"] != null) _i["return"]();} finally {if (_d) throw _e;}}return _arr;}function _arrayWithHoles(arr) {if (Array.isArray(arr)) return arr;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}function _toConsumableArray(arr) {return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread();}function _nonIterableSpread() {throw new TypeError("Invalid attempt to spread non-iterable instance");}function _iterableToArray(iter) {if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter);}function _arrayWithoutHoles(arr) {if (Array.isArray(arr)) {for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) {arr2[i] = arr[i];}return arr2;}}
 
 var _toString = Object.prototype.toString;
 var hasOwnProperty = Object.prototype.hasOwnProperty;
@@ -1327,9 +1327,10 @@ function parseBaseComponent(vueComponentOptions)
 {var _ref5 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {},isPage = _ref5.isPage,initRelation = _ref5.initRelation;var _initVueComponent =
   initVueComponent(_vue.default, vueComponentOptions),_initVueComponent2 = _slicedToArray(_initVueComponent, 2),VueComponent = _initVueComponent2[0],vueOptions = _initVueComponent2[1];
 
-  var options = {
+  var options = _objectSpread({
     multipleSlots: true,
-    addGlobalClass: true };
+    addGlobalClass: true },
+  vueOptions.options || {});
 
 
   {
@@ -3192,7 +3193,7 @@ store;exports.default = _default;
 __webpack_require__.r(__webpack_exports__);
 /* WEBPACK VAR INJECTION */(function(global) {/*!
  * Vue.js v2.6.11
- * (c) 2014-2019 Evan You
+ * (c) 2014-2020 Evan You
  * Released under the MIT License.
  */
 /*  */
@@ -8815,7 +8816,7 @@ var patch = function(oldVnode, vnode) {
     Object.keys(data).forEach(function (key) { //仅同步 data 中有的数据
       mpData[key] = mpInstance.data[key];
     });
-    var diffData = diff(data, mpData);
+    var diffData = this.$shouldDiffData === false ? data : diff(data, mpData);
     if (Object.keys(diffData).length) {
       if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
         console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + this._uid +
@@ -8990,12 +8991,11 @@ function getTarget(obj, path) {
 function internalMixin(Vue) {
 
   Vue.config.errorHandler = function(err) {
+    console.error(err);
     /* eslint-disable no-undef */
     var app = getApp();
     if (app && app.onError) {
       app.onError(err);
-    } else {
-      console.error(err);
     }
   };
 
@@ -9212,19 +9212,19 @@ internalMixin(Vue);
 
 /***/ }),
 
-/***/ 230:
+/***/ 229:
 /*!**********************************************************!*\
   !*** ./node_modules/@babel/runtime/regenerator/index.js ***!
   \**********************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! regenerator-runtime */ 231);
+module.exports = __webpack_require__(/*! regenerator-runtime */ 230);
 
 
 /***/ }),
 
-/***/ 231:
+/***/ 230:
 /*!************************************************************!*\
   !*** ./node_modules/regenerator-runtime/runtime-module.js ***!
   \************************************************************/
@@ -9255,7 +9255,7 @@ var oldRuntime = hadRuntime && g.regeneratorRuntime;
 // Force reevalutation of runtime.js.
 g.regeneratorRuntime = undefined;
 
-module.exports = __webpack_require__(/*! ./runtime */ 232);
+module.exports = __webpack_require__(/*! ./runtime */ 231);
 
 if (hadRuntime) {
   // Restore the original runtime.
@@ -9272,7 +9272,7 @@ if (hadRuntime) {
 
 /***/ }),
 
-/***/ 232:
+/***/ 231:
 /*!*****************************************************!*\
   !*** ./node_modules/regenerator-runtime/runtime.js ***!
   \*****************************************************/
@@ -10001,6 +10001,1078 @@ if (hadRuntime) {
   })() || Function("return this")()
 );
 
+
+/***/ }),
+
+/***/ 24:
+/*!*******************************************************!*\
+  !*** F:/uni-app/cy_Chayuan_Uniapp/components/city.js ***!
+  \*******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; /**
+                                                                                                      * Created by dianwoda on 2019/3/28.
+                                                                                                      * // A B C D E F G H I J K L M N O P Q R S T U V W X Y Z
+                                                                                                         // { cityName: '', pinYin: '', py: '', code: '', airName: ''},
+                                                                                                      */var _default =
+{
+  hotCity: [
+  { cityName: '北京', pinYin: 'beijing', py: 'bj', code: 'PEK' },
+  { cityName: '上海', pinYin: 'shanghai', py: 'sh', code: 'SHA' },
+  { cityName: '天津', pinYin: 'tianjin', py: 'tj', code: 'TSN' },
+  { cityName: '青岛', pinYin: 'qingdao', py: 'qd', code: 'TAO' },
+  { cityName: '南京', pinYin: 'nanjing', py: 'nj', code: 'NKG' },
+  { cityName: '杭州', pinYin: 'hangzhou', py: 'hz', code: 'HGH' },
+  { cityName: '厦门', pinYin: 'xiamen', py: 'xm', code: 'XMN' },
+  { cityName: '成都', pinYin: 'chengdu', py: 'cd', code: 'CTU' },
+  { cityName: '深圳', pinYin: 'shenzhen', py: 'sz', code: 'SZX' },
+  { cityName: '广州', pinYin: 'guangzhou', py: 'gz', code: 'CAN' },
+  { cityName: '沈阳', pinYin: 'shenyang', py: 'sy', code: 'SHE' },
+  { cityName: '武汉', pinYin: 'wuhan', py: 'wh', code: 'WUH' }],
+
+  cities: [{
+
+    "cityName": "阿尔山",
+    "pinyin": "aershan",
+    "py": "aes",
+    "code": "YIE" },
+  {
+    "cityName": "阿克苏",
+    "pinyin": "akesu",
+    "py": "aks",
+    "code": "AKU" },
+  {
+    "cityName": "阿勒泰",
+    "pinyin": "aletai",
+    "py": "alt",
+    "code": "AAT" },
+  {
+    "cityName": "阿里",
+    "pinyin": "ali",
+    "py": "al",
+    "code": "NGQ" },
+  {
+    "cityName": "安庆",
+    "pinyin": "anqing",
+    "py": "aq",
+    "code": "AQG" },
+  {
+    "cityName": "鞍山",
+    "pinyin": "anshan",
+    "py": "as",
+    "code": "AOG" },
+  {
+    "cityName": "安顺",
+    "pinyin": "anshun",
+    "py": "as",
+    "code": "AVA" },
+  {
+    "cityName": "巴彦淖尔",
+    "pinyin": "bayanzuoer",
+    "py": "byze",
+    "code": "RLK" },
+  {
+    "cityName": "百色",
+    "pinyin": "baise",
+    "py": "bs",
+    "code": "AEB" },
+  {
+    "cityName": "保山",
+    "pinyin": "baoshan",
+    "py": "bs",
+    "code": "BSD" },
+  {
+    "cityName": "包头",
+    "pinyin": "baotou",
+    "py": "bt",
+    "code": "BAV" },
+  {
+    "cityName": "北海",
+    "pinyin": "beihai",
+    "py": "bh",
+    "code": "BHY" },
+  {
+    "cityName": "北京",
+    "pinyin": "beijing",
+    "py": "bj",
+    "code": "PEK" },
+  {
+    "cityName": "北京南苑",
+    "pinyin": "beijingnanyuan",
+    "py": "bjny",
+    "code": "NAY" },
+  {
+    "cityName": "毕节",
+    "pinyin": "bijie",
+    "py": "bj",
+    "code": "BFJ" },
+  {
+    "cityName": "池州",
+    "pinyin": "chizhou",
+    "py": "cz",
+    "code": "JUH" },
+  {
+    "cityName": "沧源",
+    "pinyin": "cangyuan",
+    "py": "cy",
+    "code": "CWJ" },
+  {
+    "cityName": "长白山",
+    "pinyin": "changbaishan",
+    "py": "cbs",
+    "code": "NBS" },
+  {
+    "cityName": "长春",
+    "pinyin": "changchun",
+    "py": "cc",
+    "code": "CGQ" },
+  {
+    "cityName": "常德",
+    "pinyin": "changde",
+    "py": "cd",
+    "code": "CGD" },
+  {
+    "cityName": "长沙",
+    "pinyin": "changsha",
+    "py": "cs",
+    "code": "CSX" },
+  {
+    "cityName": "常州",
+    "pinyin": "changzhou",
+    "py": "cz",
+    "code": "CZX" },
+  {
+    "cityName": "朝阳",
+    "pinyin": "chaoyang",
+    "py": "cy",
+    "code": "CHG" },
+  {
+    "cityName": "成都",
+    "pinyin": "chengdu",
+    "py": "cd",
+    "code": "CTU" },
+  {
+    "cityName": "赤峰",
+    "pinyin": "chifeng",
+    "py": "cf",
+    "code": "CIF" },
+  {
+    "cityName": "重庆",
+    "pinyin": "chongqing",
+    "py": "cq",
+    "code": "CKG" },
+  {
+    "cityName": "大理",
+    "pinyin": "dali",
+    "py": "dl",
+    "code": "DLU" },
+  {
+    "cityName": "大连",
+    "pinyin": "dalian",
+    "py": "dl",
+    "code": "DLC" },
+  {
+    "cityName": "大同",
+    "pinyin": "datong",
+    "py": "dt",
+    "code": "DAT" },
+  {
+    "cityName": "达州",
+    "pinyin": "dazhou",
+    "py": "dz",
+    "code": "DAX" },
+  {
+    "cityName": "丹东",
+    "pinyin": "dandong",
+    "py": "dd",
+    "code": "DDG" },
+  {
+    "cityName": "丹阳",
+    "pinyin": "danyang",
+    "py": "dy",
+    "code": "DYN" },
+  {
+    "cityName": "稻城",
+    "pinyin": "daocheng",
+    "py": "dc",
+    "code": "DCY" },
+  {
+    "cityName": "德令哈",
+    "pinyin": "delingha",
+    "py": "dlh",
+    "code": "HXD" },
+  {
+    "cityName": "东营",
+    "pinyin": "dongying",
+    "py": "dy",
+    "code": "DOY" },
+  {
+    "cityName": "敦煌",
+    "pinyin": "dunhuang",
+    "py": "dh",
+    "code": "DNH" },
+  {
+    "cityName": "鄂尔多斯",
+    "pinyin": "eerduosi",
+    "py": "eeds",
+    "code": "DSN" },
+  {
+    "cityName": "恩施",
+    "pinyin": "enshi",
+    "py": "es",
+    "code": "ENH" },
+  {
+    "cityName": "二连浩特",
+    "pinyin": "erlianhaote",
+    "py": "elht",
+    "code": "ERL" },
+  {
+    "cityName": "佛山",
+    "pinyin": "foshan",
+    "py": "fs",
+    "code": "FUO" },
+  {
+    "cityName": "阜阳",
+    "pinyin": "fuyang",
+    "py": "fy",
+    "code": "FUG" },
+  {
+    "cityName": "福州",
+    "pinyin": "fuzhou",
+    "py": "fz",
+    "code": "FOC" },
+  {
+    "cityName": "赣州",
+    "pinyin": "ganzhou",
+    "py": "gz",
+    "code": "KOW" },
+  {
+    "cityName": "格尔木",
+    "pinyin": "geermu",
+    "py": "gem",
+    "code": "GOQ" },
+  {
+    "cityName": "固原",
+    "pinyin": "guyuan",
+    "py": "gy",
+    "code": "GYU" },
+  {
+    "cityName": "广元",
+    "pinyin": "guangyuan",
+    "py": "gy",
+    "code": "GYS" },
+  {
+    "cityName": "广州",
+    "pinyin": "guangzhou",
+    "py": "gz",
+    "code": "CAN" },
+  {
+    "cityName": "桂林",
+    "pinyin": "guilin",
+    "py": "gl",
+    "code": "KWL" },
+  {
+    "cityName": "贵阳",
+    "pinyin": "guiyang",
+    "py": "gy",
+    "code": "KWE" },
+  {
+    "cityName": "果洛",
+    "pinyin": "guoluo",
+    "py": "gl",
+    "code": "GMQ" },
+  {
+    "cityName": "哈尔滨",
+    "pinyin": "haerbin",
+    "py": "heb",
+    "code": "HRB" },
+  {
+    "cityName": "哈密",
+    "pinyin": "hami",
+    "py": "hm",
+    "code": "HMI" },
+  {
+    "cityName": "海口",
+    "pinyin": "haikou",
+    "py": "hk",
+    "code": "HAK" },
+  {
+    "cityName": "海拉尔",
+    "pinyin": "hailaer",
+    "py": "hle",
+    "code": "HLD" },
+  {
+    "cityName": "邯郸",
+    "pinyin": "handan",
+    "py": "hd",
+    "code": "HDG" },
+  {
+    "cityName": "汉中",
+    "pinyin": "hanzhong",
+    "py": "hz",
+    "code": "HZG" },
+  {
+    "cityName": "杭州",
+    "pinyin": "hangzhou",
+    "py": "hz",
+    "code": "HGH" },
+  {
+    "cityName": "合肥",
+    "pinyin": "hefei",
+    "py": "hf",
+    "code": "HFE" },
+  {
+    "cityName": "和田",
+    "pinyin": "hetian",
+    "py": "ht",
+    "code": "HTN" },
+  {
+    "cityName": "黑河",
+    "pinyin": "heihe",
+    "py": "hh",
+    "code": "HEK" },
+  {
+    "cityName": "衡阳",
+    "pinyin": "hengyang",
+    "py": "hy",
+    "code": "HNY" },
+  {
+    "cityName": "呼和浩特",
+    "pinyin": "huhehaote",
+    "py": "hhht",
+    "code": "HET" },
+  {
+    "cityName": "花土沟",
+    "pinyin": "huatugou",
+    "py": "htg",
+    "code": "HTT" },
+  {
+    "cityName": "淮安",
+    "pinyin": "huaan",
+    "py": "ha",
+    "code": "HIA" },
+  {
+    "cityName": "黄山",
+    "pinyin": "huangshan",
+    "py": "hs",
+    "code": "TXN" },
+  {
+    "cityName": "惠州",
+    "pinyin": "huizhou",
+    "py": "hz",
+    "code": "HUZ" },
+  {
+    "cityName": "济南",
+    "pinyin": "jinan",
+    "py": "jn",
+    "code": "TNA" },
+  {
+    "cityName": "济宁",
+    "pinyin": "jining",
+    "py": "jn",
+    "code": "JNG" },
+  {
+    "cityName": "鸡西",
+    "pinyin": "jixi",
+    "py": "jx",
+    "code": "JXA" },
+  {
+    "cityName": "加格达奇",
+    "pinyin": "jiagedaqi",
+    "py": "jgdq",
+    "code": "JGD" },
+  {
+    "cityName": "佳木斯",
+    "pinyin": "jiamusi",
+    "py": "jms",
+    "code": "JMU" },
+  {
+    "cityName": "嘉兴",
+    "pinyin": "jiaxing",
+    "py": "jx",
+    "code": "JXS" },
+  {
+    "cityName": "嘉峪关",
+    "pinyin": "jiayuguan",
+    "py": "jyg",
+    "code": "JGN" },
+  {
+    "cityName": "揭阳",
+    "pinyin": "jieyang",
+    "py": "jy",
+    "code": "SWA" },
+  {
+    "cityName": "金昌",
+    "pinyin": "jinchang",
+    "py": "jc",
+    "code": "JIC" },
+  {
+    "cityName": "锦州",
+    "pinyin": "jinzhou",
+    "py": "jz",
+    "code": "JNZ" },
+  {
+    "cityName": "景德镇",
+    "pinyin": "jingdezhen",
+    "py": "jdz",
+    "code": "JDZ" },
+  {
+    "cityName": "井冈山",
+    "pinyin": "jinggangshan",
+    "py": "jgs",
+    "code": "JGS" },
+  {
+    "cityName": "九江",
+    "pinyin": "jiujiang",
+    "py": "jj",
+    "code": "JIU" },
+  {
+    "cityName": "九寨沟",
+    "pinyin": "jiuzhaigou",
+    "py": "jzg",
+    "code": "JZH" },
+  {
+    "cityName": "喀什",
+    "pinyin": "kashen",
+    "py": "ks",
+    "code": "KHG" },
+  {
+    "cityName": "凯里",
+    "pinyin": "kaili",
+    "py": "kl",
+    "code": "KJH" },
+  {
+    "cityName": "康定",
+    "pinyin": "kangding",
+    "py": "kd",
+    "code": "KGT" },
+  {
+    "cityName": "克拉玛依",
+    "pinyin": "kelamayi",
+    "py": "klmy",
+    "code": "KRY" },
+  {
+    "cityName": "库车",
+    "pinyin": "kuche",
+    "py": "kc",
+    "code": "KCA" },
+  {
+    "cityName": "库尔勒",
+    "pinyin": "kuerle",
+    "py": "kel",
+    "code": "KRL" },
+  {
+    "cityName": "昆明",
+    "pinyin": "kunming",
+    "py": "km",
+    "code": "KMG" },
+  {
+    "cityName": "昆山",
+    "pinyin": "kunshan",
+    "py": "ks",
+    "code": "KVN" },
+  {
+    "cityName": "连城",
+    "pinyin": "liancheng",
+    "py": "lc",
+    "code": "LCX" },
+  {
+    "cityName": "临汾",
+    "pinyin": "linfen",
+    "py": "lf",
+    "code": "LFQ" },
+  {
+    "cityName": "泸沽湖",
+    "pinyin": "luguhu",
+    "py": "lgh",
+    "code": "NLH" },
+  {
+    "cityName": "拉萨",
+    "pinyin": "lasa",
+    "py": "ls",
+    "code": "LXA" },
+  {
+    "cityName": "澜沧",
+    "pinyin": "lancang",
+    "py": "lc",
+    "code": "JMJ" },
+  {
+    "cityName": "兰州",
+    "pinyin": "lanzhou",
+    "py": "lanzhou",
+    "code": "LHW" },
+  {
+    "cityName": "丽江",
+    "pinyin": "lijiang",
+    "py": "lijiang",
+    "code": "LJG" },
+  {
+    "cityName": "黎平",
+    "pinyin": "liping",
+    "py": "liping",
+    "code": "HZH" },
+  {
+    "cityName": "连云港",
+    "pinyin": "lianyungang",
+    "py": "lyg",
+    "code": "LYG" },
+  {
+    "cityName": "临沧",
+    "pinyin": "lincang",
+    "py": "lc",
+    "code": "LNJ" },
+  {
+    "cityName": "临沂",
+    "pinyin": "linyi",
+    "py": "ly",
+    "code": "LYI" },
+  {
+    "cityName": "林芝",
+    "pinyin": "linzhi",
+    "py": "lz",
+    "code": "LZY" },
+  {
+    "cityName": "六盘水",
+    "pinyin": "liupanshui",
+    "py": "lps",
+    "code": "LPF" },
+  {
+    "cityName": "柳州",
+    "pinyin": "liuzhou",
+    "py": "lz",
+    "code": "LZH" },
+  {
+    "cityName": "陇南",
+    "pinyin": "longnan",
+    "py": "ln",
+    "code": "LNL" },
+  {
+    "cityName": "泸州",
+    "pinyin": "luzhou",
+    "py": "lz",
+    "code": "LZO" },
+  {
+    "cityName": "洛阳",
+    "pinyin": "luoyang",
+    "py": "ly",
+    "code": "LYA" },
+  {
+    "cityName": "吕梁",
+    "pinyin": "lvliang",
+    "py": "ll",
+    "code": "LLV" },
+  {
+    "cityName": "茅台",
+    "pinyin": "maotai",
+    "py": "mt",
+    "code": "WMT" },
+  {
+    "cityName": "满洲里",
+    "pinyin": "manzhouli",
+    "py": "mzl",
+    "code": "NZH" },
+  {
+    "cityName": "芒市",
+    "pinyin": "mangshi",
+    "py": "ms",
+    "code": "LUM" },
+  {
+    "cityName": "绵阳",
+    "pinyin": "mianyang",
+    "py": "my",
+    "code": "MIG" },
+  {
+    "cityName": "漠河",
+    "pinyin": "mohe",
+    "py": "mh",
+    "code": "OHE" },
+  {
+    "cityName": "牡丹江",
+    "pinyin": "mudanjiang",
+    "py": "mdj",
+    "code": "MDG" },
+  {
+    "cityName": "南昌",
+    "pinyin": "nanchang",
+    "py": "nc",
+    "code": "KHN" },
+  {
+    "cityName": "南充",
+    "pinyin": "nanchong",
+    "py": "nc",
+    "code": "NAO" },
+  {
+    "cityName": "南京",
+    "pinyin": "nanjing",
+    "py": "nj",
+    "code": "NKG" },
+  {
+    "cityName": "南宁",
+    "pinyin": "nanning",
+    "py": "nn",
+    "code": "NNG" },
+  {
+    "cityName": "南通",
+    "pinyin": "nantong",
+    "py": "nt",
+    "code": "NTG" },
+  {
+    "cityName": "南阳",
+    "pinyin": "nanyang",
+    "py": "ny",
+    "code": "NNY" },
+  {
+    "cityName": "宁波",
+    "pinyin": "ningbo",
+    "py": "nb",
+    "code": "NGB" },
+  {
+    "cityName": "攀枝花",
+    "pinyin": "panzhihua",
+    "py": "pzh",
+    "code": "PZI" },
+  {
+    "cityName": "祁连县",
+    "pinyin": "qilianxian",
+    "py": "qlx",
+    "code": "HBQ" },
+  {
+    "cityName": "齐齐哈尔",
+    "pinyin": "qiqihaer",
+    "py": "qqhe",
+    "code": "NDG" },
+  {
+    "cityName": "黔江",
+    "pinyin": "qianjiang",
+    "py": "qj",
+    "code": "JIQ" },
+  {
+    "cityName": "秦皇岛",
+    "pinyin": "qinhuadao ",
+    "py": "qhd ",
+    "code": "BPE" },
+  {
+    "cityName": "青岛",
+    "pinyin": "qingdao",
+    "py": "qd",
+    "code": "TAO" },
+  {
+    "cityName": "庆阳",
+    "pinyin": "qy",
+    "py": "QingYang",
+    "code": "IQN" },
+  {
+    "cityName": "琼海",
+    "pinyin": "qionghai",
+    "py": "qh",
+    "code": "BAR" },
+  {
+    "cityName": "衢州",
+    "pinyin": "quzhou",
+    "py": "qz",
+    "code": "JUZ" },
+  {
+    "cityName": "泉州",
+    "pinyin": "quanzhou",
+    "py": "qz",
+    "code": "JJN" },
+  {
+    "cityName": "日喀则",
+    "pinyin": "rikaze",
+    "py": "rkz",
+    "code": "RKZ" },
+  {
+    "cityName": "日照",
+    "pinyin": "rizhao",
+    "py": "rz",
+    "code": "RIZ" },
+  {
+    "cityName": "三明",
+    "pinyin": "sanming",
+    "py": "sm",
+    "code": "SQJ" },
+  {
+    "cityName": "松原",
+    "pinyin": "songyuan",
+    "py": "sy",
+    "code": "YSQ" },
+  {
+    "cityName": "上海",
+    "pinyin": "shanghai",
+    "py": "sh",
+    "code": "SHA" },
+  {
+    "cityName": "上海浦东",
+    "pinyin": "shanghaipudong",
+    "py": "shpd",
+    "code": "PVG" },
+  {
+    "cityName": "上饶",
+    "pinyin": "shangrao",
+    "py": "sr",
+    "code": "SQD" },
+  {
+    "cityName": "邵阳",
+    "pinyin": "shaoyang",
+    "py": "sy",
+    "code": "WGN" },
+  {
+    "cityName": "神农架",
+    "pinyin": "shennongjia",
+    "py": "snj",
+    "code": "HPG" },
+  {
+    "cityName": "沈阳",
+    "pinyin": "shenyang",
+    "py": "sy",
+    "code": "SHE" },
+  {
+    "cityName": "深圳",
+    "pinyin": "shenzhen",
+    "py": "ss",
+    "code": "SZX" },
+  {
+    "cityName": "石河子",
+    "pinyin": "shihezi",
+    "py": "shz",
+    "code": "SHF" },
+  {
+    "cityName": "石家庄",
+    "pinyin": "shijiazhuang",
+    "py": "sjz",
+    "code": "SJW" },
+  {
+    "cityName": "十堰",
+    "pinyin": "shiyan",
+    "py": "sy",
+    "code": "WDS" },
+  {
+    "cityName": "苏州",
+    "pinyin": "suzhou",
+    "py": "sz",
+    "code": "SZV" },
+  {
+    "cityName": "太原",
+    "pinyin": "taiyuan",
+    "py": "ty",
+    "code": "TYN" },
+  {
+    "cityName": "台州",
+    "pinyin": "taizhou",
+    "py": "tz",
+    "code": "HYN" },
+  {
+    "cityName": "唐山",
+    "pinyin": "tangshan",
+    "py": "ts",
+    "code": "TVS" },
+  {
+    "cityName": "腾冲",
+    "pinyin": "tengchong",
+    "py": "tc",
+    "code": "TCZ" },
+  {
+    "cityName": "天津",
+    "pinyin": "tianjin",
+    "py": "tj",
+    "code": "TSN" },
+  {
+    "cityName": "通化",
+    "pinyin": "tonghua",
+    "py": "th",
+    "code": "TNH" },
+  {
+    "cityName": "通辽",
+    "pinyin": "tongliao",
+    "py": "tl",
+    "code": "TGO" },
+  {
+    "cityName": "铜仁",
+    "pinyin": "tongren",
+    "py": "tr",
+    "code": "TEN" },
+  {
+    "cityName": "桐乡",
+    "pinyin": "tongxiang",
+    "py": "tx",
+    "code": "TVX" },
+  {
+    "cityName": "吐鲁番",
+    "pinyin": "tulufan",
+    "py": "tlf",
+    "code": "TLQ" },
+  {
+    "cityName": "乌兰察布",
+    "pinyin": "wulanchabu",
+    "py": "wlcb",
+    "code": "UCB" },
+  {
+    "cityName": "五台山",
+    "pinyin": "wutaishan",
+    "py": "wts",
+    "code": "WUT" },
+  {
+    "cityName": "万州",
+    "pinyin": "wanzhou",
+    "py": "wz",
+    "code": "WXN" },
+  {
+    "cityName": "威海",
+    "pinyin": "weihai",
+    "py": "wh",
+    "code": "WEH" },
+  {
+    "cityName": "文山",
+    "pinyin": "wenshan",
+    "py": "ws",
+    "code": "WNH" },
+  {
+    "cityName": "温州",
+    "pinyin": "wenzhou",
+    "py": "wz",
+    "code": "WNZ" },
+  {
+    "cityName": "乌海",
+    "pinyin": "wuhai",
+    "py": "wh",
+    "code": "WUA" },
+  {
+    "cityName": "武汉",
+    "pinyin": "whhan",
+    "py": "wh",
+    "code": "WUH" },
+  {
+    "cityName": "乌兰浩特",
+    "pinyin": "wulanhaote",
+    "py": "wlht",
+    "code": "HLH" },
+  {
+    "cityName": "乌鲁木齐",
+    "pinyin": "wulumuqi",
+    "py": "wlmq",
+    "code": "URC" },
+  {
+    "cityName": "无锡",
+    "pinyin": "wuxi",
+    "py": "wx",
+    "code": "WUX" },
+  {
+    "cityName": "武夷山",
+    "pinyin": "wuyishan",
+    "py": "wys",
+    "code": "WUS" },
+  {
+    "cityName": "梧州",
+    "pinyin": "wuzhou",
+    "py": "wz",
+    "code": "WUZ" },
+  {
+    "cityName": "西安",
+    "pinyin": "xian",
+    "py": "xa",
+    "code": "SIA" },
+  {
+    "cityName": "西昌",
+    "pinyin": "xichang",
+    "py": "xc",
+    "code": "XIC" },
+  {
+    "cityName": "锡林浩特",
+    "pinyin": "xilinhaote",
+    "py": "xlht",
+    "code": "XIL" },
+  {
+    "cityName": "西宁",
+    "pinyin": "xining",
+    "py": "xn",
+    "code": "XNN" },
+  {
+    "cityName": "西双版纳",
+    "pinyin": "xushuangbanna",
+    "py": "xsbn",
+    "code": "JHG" },
+  {
+    "cityName": "厦门",
+    "pinyin": "xiamen",
+    "py": "xm",
+    "code": "XMN" },
+  {
+    "cityName": "香格里拉",
+    "pinyin": "xianggelila",
+    "py": "xgll",
+    "code": "DIG" },
+  {
+    "cityName": "襄阳",
+    "pinyin": "xiangyang",
+    "py": "xy",
+    "code": "XFN" },
+  {
+    "cityName": "信阳市",
+    "pinyin": "xinyang",
+    "py": "xy",
+    "code": "XAI" },
+  {
+    "cityName": "兴义",
+    "pinyin": "xingyi",
+    "py": "xy",
+    "code": "ACX" },
+  {
+    "cityName": "徐州",
+    "pinyin": "xuzhou",
+    "py": "xz",
+    "code": "XUZ" },
+  {
+    "cityName": "延安",
+    "pinyin": "yanan",
+    "py": "ya",
+    "code": "ENY" },
+  {
+    "cityName": "盐城",
+    "pinyin": "yancheng",
+    "py": "yc",
+    "code": "YNZ" },
+  {
+    "cityName": "延吉",
+    "pinyin": "yanji",
+    "py": "yj",
+    "code": "YNJ" },
+  {
+    "cityName": "烟台",
+    "pinyin": "yantai",
+    "py": "yt",
+    "code": "YNT" },
+  {
+    "cityName": "扬州",
+    "pinyin": "yangzhou",
+    "py": "yz",
+    "code": "YTY" },
+  {
+    "cityName": "宜宾",
+    "pinyin": "yibin",
+    "py": "yb",
+    "code": "YBP" },
+  {
+    "cityName": "宜昌",
+    "pinyin": "yichang",
+    "py": "yc",
+    "code": "YIH" },
+  {
+    "cityName": "伊春",
+    "pinyin": "yichun",
+    "py": "yc",
+    "code": "LDS" },
+  {
+    "cityName": "伊宁",
+    "pinyin": "yining",
+    "py": "yn",
+    "code": "YIN" },
+  {
+    "cityName": "义乌",
+    "pinyin": "yiwu",
+    "py": "yw",
+    "code": "YIW" },
+  {
+    "cityName": "银川",
+    "pinyin": "yinchuan",
+    "py": "yc",
+    "code": "INC" },
+  {
+    "cityName": "营口",
+    "pinyin": "yingkou",
+    "py": "yk",
+    "code": "YKH" },
+  {
+    "cityName": "永州",
+    "pinyin": "yongzhou",
+    "py": "yz",
+    "code": "LLF" },
+  {
+    "cityName": "榆林",
+    "pinyin": "yulin",
+    "py": "yl",
+    "code": "UYN" },
+  {
+    "cityName": "玉树",
+    "pinyin": "yushu",
+    "py": "ys",
+    "code": "YUS" },
+  {
+    "cityName": "运城",
+    "pinyin": "yuncheng",
+    "py": "yc",
+    "code": "YCU" },
+  {
+    "cityName": "湛江",
+    "pinyin": "zhanjiang",
+    "py": "zj",
+    "code": "ZHA" },
+  {
+    "cityName": "张家界",
+    "pinyin": "zhangjiajie",
+    "py": "zjj",
+    "code": "DYG" },
+  {
+    "cityName": "张家口",
+    "pinyin": "zhangjiakou",
+    "py": "zjk",
+    "code": "ZQZ" },
+  {
+    "cityName": "张掖",
+    "pinyin": "zhangye",
+    "py": "zy",
+    "code": "YZY" },
+  {
+    "cityName": "昭通",
+    "pinyin": "zhaotong",
+    "py": "zt",
+    "code": "ZAT" },
+  {
+    "cityName": "镇江",
+    "pinyin": "zhenjiang",
+    "py": "zj",
+    "code": "ZUJ" },
+  {
+    "cityName": "郑州",
+    "pinyin": "zhengzhou",
+    "py": "zz",
+    "code": "CGO" },
+  {
+    "cityName": "中卫",
+    "pinyin": "zhongwei",
+    "py": "zw",
+    "code": "ZHY" },
+  {
+    "cityName": "舟山",
+    "pinyin": "zhoushan",
+    "py": "zs",
+    "code": "HSN" },
+  {
+    "cityName": "珠海",
+    "pinyin": "zhuhai",
+    "py": "zh",
+    "code": "ZUH" },
+  {
+    "cityName": "遵义",
+    "pinyin": "zunyi",
+    "py": "zy",
+    "code": "ZYI" },
+  {
+    "cityName": "大庆",
+    "pinyin": "daqing",
+    "py": "dq",
+    "code": "DQA" },
+  {
+    "cityName": "普洱",
+    "pinyin": "puer",
+    "py": "pe",
+    "code": "SYM" },
+  {
+    "cityName": "三亚",
+    "pinyin": "sanya",
+    "py": "sy",
+    "code": "SYX" }] };exports.default = _default;
 
 /***/ }),
 
@@ -10934,7 +12006,7 @@ main();
 
 /***/ }),
 
-/***/ 504:
+/***/ 508:
 /*!**************************************************************************************!*\
   !*** F:/uni-app/cy_Chayuan_Uniapp/components/mpvue-citypicker/city-data/province.js ***!
   \**************************************************************************************/
@@ -11084,7 +12156,7 @@ provinceData;exports.default = _default;
 
 /***/ }),
 
-/***/ 505:
+/***/ 509:
 /*!**********************************************************************************!*\
   !*** F:/uni-app/cy_Chayuan_Uniapp/components/mpvue-citypicker/city-data/city.js ***!
   \**********************************************************************************/
@@ -12598,7 +13670,7 @@ cityData;exports.default = _default;
 
 /***/ }),
 
-/***/ 506:
+/***/ 510:
 /*!**********************************************************************************!*\
   !*** F:/uni-app/cy_Chayuan_Uniapp/components/mpvue-citypicker/city-data/area.js ***!
   \**********************************************************************************/
@@ -25158,7 +26230,7 @@ areaData;exports.default = _default;
 /*! exports provided: _from, _id, _inBundle, _integrity, _location, _phantomChildren, _requested, _requiredBy, _resolved, _shasum, _spec, _where, author, bugs, bundleDependencies, deprecated, description, devDependencies, files, gitHead, homepage, license, main, name, repository, scripts, version, default */
 /***/ (function(module) {
 
-module.exports = {"_from":"@dcloudio/uni-stat@alpha","_id":"@dcloudio/uni-stat@2.0.0-alpha-25720200116005","_inBundle":false,"_integrity":"sha512-RZFw3WAaS/CZTzzv9JPaWvmoNitojD/06vPdHSzlqZi8GbuE222lFuyochEjrGkG8rPPrWHAnwfoPBuQVtkfdg==","_location":"/@dcloudio/uni-stat","_phantomChildren":{},"_requested":{"type":"tag","registry":true,"raw":"@dcloudio/uni-stat@alpha","name":"@dcloudio/uni-stat","escapedName":"@dcloudio%2funi-stat","scope":"@dcloudio","rawSpec":"alpha","saveSpec":null,"fetchSpec":"alpha"},"_requiredBy":["#USER","/","/@dcloudio/vue-cli-plugin-uni"],"_resolved":"https://registry.npmjs.org/@dcloudio/uni-stat/-/uni-stat-2.0.0-alpha-25720200116005.tgz","_shasum":"08bb17aba91c84a981f33d74153aa3dd07b578ad","_spec":"@dcloudio/uni-stat@alpha","_where":"/Users/guoshengqiang/Documents/dcloud-plugins/alpha/uniapp-cli","author":"","bugs":{"url":"https://github.com/dcloudio/uni-app/issues"},"bundleDependencies":false,"deprecated":false,"description":"","devDependencies":{"@babel/core":"^7.5.5","@babel/preset-env":"^7.5.5","eslint":"^6.1.0","rollup":"^1.19.3","rollup-plugin-babel":"^4.3.3","rollup-plugin-clear":"^2.0.7","rollup-plugin-commonjs":"^10.0.2","rollup-plugin-copy":"^3.1.0","rollup-plugin-eslint":"^7.0.0","rollup-plugin-json":"^4.0.0","rollup-plugin-node-resolve":"^5.2.0","rollup-plugin-replace":"^2.2.0","rollup-plugin-uglify":"^6.0.2"},"files":["dist","package.json","LICENSE"],"gitHead":"a129bde60de35f7ef497f43d5a45b4556231995c","homepage":"https://github.com/dcloudio/uni-app#readme","license":"Apache-2.0","main":"dist/index.js","name":"@dcloudio/uni-stat","repository":{"type":"git","url":"git+https://github.com/dcloudio/uni-app.git","directory":"packages/uni-stat"},"scripts":{"build":"NODE_ENV=production rollup -c rollup.config.js","dev":"NODE_ENV=development rollup -w -c rollup.config.js"},"version":"2.0.0-alpha-25720200116005"};
+module.exports = {"_from":"@dcloudio/uni-stat@next","_id":"@dcloudio/uni-stat@2.0.0-26420200313001","_inBundle":false,"_integrity":"sha512-7dPuazTiDmUyRcw+WW+UlWGKH0eeCUB+p0P4pJVKEHjpdXnXgvDQCSdJk764NH99TfsUycnuxecP5oHckVa88g==","_location":"/@dcloudio/uni-stat","_phantomChildren":{},"_requested":{"type":"tag","registry":true,"raw":"@dcloudio/uni-stat@next","name":"@dcloudio/uni-stat","escapedName":"@dcloudio%2funi-stat","scope":"@dcloudio","rawSpec":"next","saveSpec":null,"fetchSpec":"next"},"_requiredBy":["#USER","/","/@dcloudio/vue-cli-plugin-uni"],"_resolved":"https://registry.npmjs.org/@dcloudio/uni-stat/-/uni-stat-2.0.0-26420200313001.tgz","_shasum":"a006e329e033cd412accfa635f8933dbb822a9c3","_spec":"@dcloudio/uni-stat@next","_where":"/Users/guoshengqiang/Documents/dcloud-plugins/release/uniapp-cli","author":"","bugs":{"url":"https://github.com/dcloudio/uni-app/issues"},"bundleDependencies":false,"deprecated":false,"description":"","devDependencies":{"@babel/core":"^7.5.5","@babel/preset-env":"^7.5.5","eslint":"^6.1.0","rollup":"^1.19.3","rollup-plugin-babel":"^4.3.3","rollup-plugin-clear":"^2.0.7","rollup-plugin-commonjs":"^10.0.2","rollup-plugin-copy":"^3.1.0","rollup-plugin-eslint":"^7.0.0","rollup-plugin-json":"^4.0.0","rollup-plugin-node-resolve":"^5.2.0","rollup-plugin-replace":"^2.2.0","rollup-plugin-uglify":"^6.0.2"},"files":["dist","package.json","LICENSE"],"gitHead":"b1fdbafab5dd4673cff64188a5203d0c947e4f50","homepage":"https://github.com/dcloudio/uni-app#readme","license":"Apache-2.0","main":"dist/index.js","name":"@dcloudio/uni-stat","repository":{"type":"git","url":"git+https://github.com/dcloudio/uni-app.git","directory":"packages/uni-stat"},"scripts":{"build":"NODE_ENV=production rollup -c rollup.config.js","dev":"NODE_ENV=development rollup -w -c rollup.config.js"},"version":"2.0.0-26420200313001"};
 
 /***/ }),
 
@@ -25170,7 +26242,7 @@ module.exports = {"_from":"@dcloudio/uni-stat@alpha","_id":"@dcloudio/uni-stat@2
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = { "pages": { "pages/tabber/home/home": { "enablePullDownRefresh": true, "navigationStyle": "custom" }, "pages/login/code_login/code_login": { "navigationStyle": "custom" }, "pages/login/pwd_login/pwd_login": { "navigationBarTitleText": "登录注册" }, "pages/tabber/user/user": { "navigationStyle": "custom" }, "pages/list/search_list/search_list": { "navigationStyle": "custom" }, "pages/list/search/search": { "navigationStyle": "custom" }, "pages/shop/shop_commodity/shop_commodity": { "navigationBarTitleText": "店铺详情" }, "pages/list/line_details/line_details": { "navigationBarTitleText": "线路详情" }, "pages/list/goode_details/goode_details": { "navigationStyle": "custom" }, "pages/tabber/fengyang_fair/fengyang_fair": { "navigationStyle": "custom" }, "pages/tabber/benefit_products/benefit_products": { "navigationStyle": "custom" }, "pages/list/ideal_life/ideal_life": { "navigationBarTitleText": "热门推荐" }, "pages/list/agricultural_specialty/agricultural_specialty": { "navigationBarTitleText": "热门商品", "enablePullDownRefresh": true }, "pages/tabber/shopping_cart/shopping_cart": { "navigationBarTitleText": "购物车", "enablePullDownRefresh": true }, "pages/list/flowering_seasons/flowering_seasons": { "navigationBarTitleText": "花开四季" }, "pages/list/fruit_garden/fruit_garden": { "navigationBarTitleText": "果香满园" }, "pages/list/fengyang_scenery/fengyang_scenery": { "navigationBarTitleText": "漫游厦门" }, "pages/list/more_list/more_list": { "navigationBarTitleText": "漫游厦门", "enablePullDownRefresh": true }, "pages/user/my_evaluation/my_evaluation": { "navigationBarTitleText": "发布评价" }, "pages/user/my_coupon/my_coupon": { "navigationBarTitleText": "优惠券", "enablePullDownRefresh": true }, "pages/user/get_coupon/get_coupon": { "navigationBarTitleText": "领取优惠券", "enablePullDownRefresh": true }, "pages/shop/comments_details/comments_details": { "navigationBarTitleText": "评论详情", "enablePullDownRefresh": true }, "pages/shop/shop_collection_coupon/shop_collection_coupon": { "navigationBarTitleText": "优惠券详情", "enablePullDownRefresh": true }, "pages/user/confirmation_transaction/confirmation_transaction": { "navigationBarTitleText": "确认交易" }, "pages/user/confirm_payment/confirm_payment": { "navigationBarTitleText": "确认支付" }, "pages/user/add_address/add_address": { "navigationBarTitleText": "添加新地址" }, "pages/user/confirm_order/confirm_order": { "navigationBarTitleText": "确认订单" }, "pages/user/admin_address/admin_address": { "navigationBarTitleText": "管理收货地址" }, "pages/user/order_details/order_details": { "navigationBarTitleText": "订单详情" }, "pages/user/my_order/my_order": { "navigationBarTitleText": "我的订单" }, "pages/user/my_news/my_news": { "navigationBarTitleText": "我的消息" }, "pages/shop/shop_logistics/shop_logistics": { "navigationBarTitleText": "查看物流" }, "pages/shop/my_collection/my_collection": { "navigationBarTitleText": "我的收藏", "enablePullDownRefresh": true }, "pages/shop/shop_collection/shop_collection": { "navigationBarTitleText": "关注店铺" }, "pages/login/modify_nicknames/modify_nicknames": { "navigationBarTitleText": "修改昵称" }, "pages/login/safety_monitoring/safety_monitoring": { "navigationBarTitleText": "安全监测" }, "pages/login/reset_password/reset_password": { "navigationBarTitleText": "重置密码" }, "pages/user/info_edit/info_edit": { "navigationBarTitleText": "编辑信息" }, "pages/login/register/register": { "navigationBarTitleText": "注册" }, "pages/user/my_info/my_info": { "navigationBarTitleText": "设置" }, "pages/shop/successful_payment/successful_payment": { "navigationBarTitleText": "支付" }, "pages/list/news_detail/news_detail": { "navigationBarTitleText": "消息" }, "pages/list/list_detail/list_detail": { "navigationBarTitleText": "文章详情" }, "pages/map/map": { "navigationBarTitleText": "地图导航" }, "pages/subscribe/subscribe": { "navigationBarTitleText": "我的庄园" }, "pages/subscribe/exchange_goods/exchange_goods": { "navigationBarTitleText": "兑换商品" }, "pages/subscribe/transplant_tree/transplant_tree": {}, "pages/subscribe/manor_details/manor_details": { "navigationBarTitleText": "庄园详情" }, "pages/subscribe/tree_details/tree_details": { "navigationStyle": "custom" }, "pages/tabber/home/more_tree_list/more_tree_list": { "navigationStyle": "custom" }, "pages/user/planting_rules/planting_rules": { "navigationBarTitleText": "种植规则说明" }, "pages/user/safe_check/safe_check": { "navigationBarTitleText": "安全检测" }, "pages/subscribe/exchange_list/exchange_list": { "navigationBarTitleText": "兑换商品列表" }, "pages/subscribe/exchange_confirm/exchange_confirm": { "navigationBarTitleText": "确认信息" }, "pages/tabber/home/scenic_detail/scenic_detail": { "navigationBarTitleText": "景区详情" }, "pages/seckill/seckill": { "navigationBarTitleText": "限时秒杀", "navigationStyle": "custom" } }, "globalStyle": { "navigationBarBackgroundColor": "#FFFFFF", "navigationBarTextStyle": "black" } };exports.default = _default;
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = { "pages": { "pages/tabber/home/home": { "enablePullDownRefresh": true, "navigationStyle": "custom" }, "pages/login/code_login/code_login": { "navigationStyle": "custom" }, "pages/login/pwd_login/pwd_login": { "navigationBarTitleText": "登录注册" }, "pages/tabber/user/user": { "navigationStyle": "custom" }, "pages/list/search_list/search_list": { "navigationStyle": "custom" }, "pages/list/search/search": { "navigationStyle": "custom" }, "pages/shop/shop_commodity/shop_commodity": { "navigationBarTitleText": "店铺详情" }, "pages/list/line_details/line_details": { "navigationBarTitleText": "线路详情" }, "pages/list/goode_details/goode_details": { "navigationStyle": "custom" }, "pages/tabber/fengyang_fair/fengyang_fair": { "navigationStyle": "custom" }, "pages/tabber/benefit_products/benefit_products": { "navigationStyle": "custom" }, "pages/list/ideal_life/ideal_life": { "navigationBarTitleText": "热门推荐" }, "pages/list/agricultural_specialty/agricultural_specialty": { "navigationBarTitleText": "热门商品", "enablePullDownRefresh": true }, "pages/tabber/shopping_cart/shopping_cart": { "navigationBarTitleText": "购物车", "enablePullDownRefresh": true }, "pages/list/flowering_seasons/flowering_seasons": { "navigationBarTitleText": "花开四季" }, "pages/list/fruit_garden/fruit_garden": { "navigationBarTitleText": "果香满园" }, "pages/list/fengyang_scenery/fengyang_scenery": { "navigationBarTitleText": "漫游厦门" }, "pages/list/more_list/more_list": { "navigationBarTitleText": "漫游厦门", "enablePullDownRefresh": true }, "pages/user/my_evaluation/my_evaluation": { "navigationBarTitleText": "发布评价" }, "pages/user/my_coupon/my_coupon": { "navigationBarTitleText": "优惠券", "enablePullDownRefresh": true }, "pages/user/get_coupon/get_coupon": { "navigationBarTitleText": "领取优惠券", "enablePullDownRefresh": true }, "pages/shop/comments_details/comments_details": { "navigationBarTitleText": "评论详情", "enablePullDownRefresh": true }, "pages/shop/shop_collection_coupon/shop_collection_coupon": { "navigationBarTitleText": "优惠券详情", "enablePullDownRefresh": true }, "pages/user/confirmation_transaction/confirmation_transaction": { "navigationBarTitleText": "确认交易" }, "pages/user/confirm_payment/confirm_payment": { "navigationBarTitleText": "确认支付" }, "pages/user/add_address/add_address": { "navigationBarTitleText": "添加新地址" }, "pages/user/confirm_order/confirm_order": { "navigationBarTitleText": "确认订单" }, "pages/user/admin_address/admin_address": { "navigationBarTitleText": "管理收货地址" }, "pages/user/order_details/order_details": { "navigationBarTitleText": "订单详情" }, "pages/user/my_order/my_order": { "navigationBarTitleText": "我的订单" }, "pages/user/my_news/my_news": { "navigationBarTitleText": "我的消息" }, "pages/shop/shop_logistics/shop_logistics": { "navigationBarTitleText": "查看物流" }, "pages/shop/my_collection/my_collection": { "navigationBarTitleText": "我的收藏", "enablePullDownRefresh": true }, "pages/shop/shop_collection/shop_collection": { "navigationBarTitleText": "关注店铺" }, "pages/login/modify_nicknames/modify_nicknames": { "navigationBarTitleText": "修改昵称" }, "pages/login/safety_monitoring/safety_monitoring": { "navigationBarTitleText": "安全监测" }, "pages/login/reset_password/reset_password": { "navigationBarTitleText": "重置密码" }, "pages/user/info_edit/info_edit": { "navigationBarTitleText": "编辑信息" }, "pages/login/register/register": { "navigationBarTitleText": "注册" }, "pages/user/my_info/my_info": { "navigationBarTitleText": "设置" }, "pages/shop/successful_payment/successful_payment": { "navigationBarTitleText": "支付" }, "pages/list/news_detail/news_detail": { "navigationBarTitleText": "消息" }, "pages/list/list_detail/list_detail": { "navigationBarTitleText": "文章详情" }, "pages/map/map": { "navigationBarTitleText": "地图导航" }, "pages/subscribe/subscribe": { "navigationBarTitleText": "我的庄园" }, "pages/subscribe/exchange_goods/exchange_goods": { "navigationBarTitleText": "兑换商品" }, "pages/subscribe/transplant_tree/transplant_tree": {}, "pages/subscribe/manor_details/manor_details": { "navigationBarTitleText": "庄园详情" }, "pages/subscribe/tree_details/tree_details": { "navigationStyle": "custom" }, "pages/tabber/home/more_tree_list/more_tree_list": { "navigationStyle": "custom" }, "pages/user/planting_rules/planting_rules": { "navigationBarTitleText": "种植规则说明" }, "pages/user/safe_check/safe_check": { "navigationBarTitleText": "安全检测" }, "pages/subscribe/exchange_list/exchange_list": { "navigationBarTitleText": "兑换商品列表" }, "pages/subscribe/exchange_confirm/exchange_confirm": { "navigationBarTitleText": "确认信息" }, "pages/tabber/home/scenic_detail/scenic_detail": { "navigationBarTitleText": "景区详情" }, "pages/seckill/seckill": { "navigationBarTitleText": "限时秒杀" } }, "globalStyle": { "navigationBarBackgroundColor": "#FFFFFF", "navigationBarTextStyle": "black" } };exports.default = _default;
 
 /***/ }),
 

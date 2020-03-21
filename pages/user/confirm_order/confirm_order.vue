@@ -368,6 +368,7 @@
 					url:"/pages/user/admin_address/admin_address?clickFlag=1"
 				}) 
 			},
+			
 			// 结算
 			settlement(){ 
 				//创建订单编号
@@ -385,7 +386,11 @@
 					},
 					function(res) { 
 						that.orderId=res.data.result.orderId;
-						that.payModalFlag=true;
+						
+						// #ifdef APP-PLUS
+							that.requestPayment();
+						// #endif
+						// that.payModalFlag=true;
 						// let orderInfo={
 						// 	order_id:res.data.result.orderId,
 						// 	total_price:that.sumPrice
@@ -400,10 +405,9 @@
 				);
 			},
 			
-			async requestPayment(e, index) {
-			    this.providerList[index].loading = true;
-			    let orderInfo = await this.getOrderInfo_uniapp(e.id);
-			    console.log("得到订单信息", orderInfo);
+			async requestPayment() {
+			    this.providerList[0].loading = true;
+			    let orderInfo = await this.getOrderInfo_uniapp(this.providerList[0].id);
 			    if (orderInfo.statusCode !== 200) {
 			        console.log("获得订单信息失败", orderInfo);
 			        uni.showModal({
@@ -413,33 +417,31 @@
 			        return;
 			    }
 			    uni.requestPayment({
-			        provider: e.id,
+			        provider: this.providerList[0].id,
 			        orderInfo: orderInfo.data,
 			        success: (e) => {
-			            console.log("success", e);
 			            uni.showToast({
 			                title: "感谢您的赞助!"
 			            })
 			        },
 			        fail: (e) => {
-			            console.log("fail", e);
 			            uni.showModal({
 			                content: "支付失败,原因为: " + e.errMsg,
 			                showCancel: false
 			            })
 			        },
 			        complete: () => {
-			            this.providerList[index].loading = false;
+			            this.providerList[1].loading = false;
 			        }
 			    })
 			},
+			
 			getOrderInfo_uniapp(e) { 
 			    let appid = "";
 			    // #ifdef APP-PLUS
 			    appid = plus.runtime.appid;
 			    // #endif
 			    let url = 'https://demo.dcloud.net.cn/payment/?payid=' + e + '&appid=' + appid + '&total=0.1' ;
-				console.log(url);
 			    return new Promise((res) => {
 			        uni.request({
 			            url: url,

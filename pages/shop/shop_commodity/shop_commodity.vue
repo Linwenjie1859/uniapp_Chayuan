@@ -31,10 +31,7 @@
 			<swiper :current="tabIndex" :style="[{height:scrollerHeight}]" style="width: 750rpx;" :duration="300" @change="ontabchange">
 				<swiper-item v-for="(item,index) in newsList" :key="index">
 					<scroll-view  :style="[{height:scrollerHeight}]" scroll-y @scrolltolower="onReachBottom_more">
-					<!-- 	<view class="flex flex-direction padding-sm margin-bottom" style="width: 750rpx;" v-if="index==0">
-							<image src="/static/shop_banner.png" class="radius margin-bottom-sm" mode="widthFix" style="width:100%;"></image>
-							<text class="flex flex-wrap text-df">当我们说起葡萄园时，最先进入脑海的一般是诸如皮埃蒙特（Piedmont）或勃艮第（Burgundy）这样著名的产区。而位于芬兰或者泰国的葡萄园？不好意思，实在是闻所未闻。尽管这些地区看起来和葡萄园毫无交集，但其实它们也有一定的葡萄种植历史。而这些让人出乎意料的种植地也恰恰反映了葡萄树不屈不挠的精神。下面，小编就为大家介绍世界上最不可思议的九大</text>
-						</view> -->
+				
 						<view class="flex flex-direction">
 							<view class="flex align-center justify-between padding-sm"   @click="detail(data_item)" v-for="(data_item,data_index) in item.data" :key="data_index">
 								 <image :src="data_item.image" mode="scaleToFill" class="radius margin-right-sm" style="width: 200rpx; height: 200rpx;"></image>

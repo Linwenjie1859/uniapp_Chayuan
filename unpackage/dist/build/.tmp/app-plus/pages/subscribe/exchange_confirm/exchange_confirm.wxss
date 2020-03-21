@@ -1,17 +1,17 @@
 
-.bg-has-gray.data-v-42c2a665{
+.bg-has-gray.data-v-ec5f270a{
 		background-color: rgba(255,255,255,0.3);
 }
-.text-has-size.data-v-42c2a665{
+.text-has-size.data-v-ec5f270a{
 		font-size: 68rpx;
 }
-.text-price.data-v-42c2a665::before{
+.text-price.data-v-ec5f270a::before{
 		font-size: 60%;
 }
-.has-radius.data-v-42c2a665 {
+.has-radius.data-v-ec5f270a {
 	border-radius: 18rpx;
 }
-.has-padding-sm.data-v-42c2a665 {
+.has-padding-sm.data-v-ec5f270a {
 	padding: 7rpx 11rpx;
 }
 

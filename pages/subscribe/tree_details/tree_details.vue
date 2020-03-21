@@ -59,14 +59,15 @@
 				StatusAddHalfNav:this.StatusAddHalfNav,
 				opacityNum:0,
 				currentGoodsId:0,
-				goodsInfo:{},
-				
+				goodsInfo:{
+					storeInfo:{
+						open_address:''
+					}
+				},
 				cartInfo:{},
 				orderKey:'',
 				defaultAddress:{},
-				
 				providerList: [],	//支付列表
-				
 				orderId:'',			//订单Id编码
 				id:'',				//订单id
 			}
@@ -76,6 +77,7 @@
 			console.log(e);
 			this.opacityNum = e.scrollTop >50? 1:0;
 		},
+		
 		onLoad(e) {
 			this.currentGoodsId = e.id;
 			this.getTreeInfo();
@@ -83,7 +85,6 @@
 			uni.getProvider({
 			    service: "payment",
 			    success: (e) => {
-			        console.log("payment success:" + JSON.stringify(e));
 			        let providerList = [];
 			        e.provider.map((value) => {
 			            switch (value) {
@@ -136,11 +137,10 @@
 					true
 				);
 			},
+			
 			async requestPayment() {
-				console.log('uni-支付宝');
 			    this.providerList[0].loading = true;
 			    let orderInfo = await this.getOrderInfo_uniapp(this.providerList[0].id);
-			    console.log("得到订单信息", orderInfo);
 			    if (orderInfo.statusCode !== 200) {
 			        console.log("获得订单信息失败", orderInfo);
 			        uni.showModal({
@@ -153,22 +153,18 @@
 			        provider: this.providerList[0].id,
 			        orderInfo: orderInfo.data,
 			        success: (e) => {
-			            console.log("success", e);
 			            uni.showToast({
 			                title: "感谢您的赞助!"
 			            })
 			        },
 			        fail: (e) => {
-			            console.log("fail", e);
 			            uni.showModal({
 			                content: "支付失败,原因为: " + e.errMsg,
 			                showCancel: false
 			            })
-						that.updatePayStatus();
-						
 			        },
 			        complete: () => {
-			            this.providerList[0].loading = false;
+			            this.providerList[1].loading = false;
 			        }
 			    })
 			},
@@ -179,7 +175,6 @@
 			    appid = plus.runtime.appid;
 			    // #endif
 			    let url = 'https://demo.dcloud.net.cn/payment/?payid=' + e + '&appid=' + appid + '&total=0.1' ;
-				console.log(url);
 			    return new Promise((res) => {
 			        uni.request({
 			            url: url,
@@ -192,6 +187,7 @@
 			        })
 			    })
 			},
+			
 			//整理接口返回的数据
 			SortData(data){
 				let map={};	//存在mer_id
@@ -220,20 +216,7 @@
 				}
 				return array;
 			},
-			// //获取默认收货地址
-			// getAddressList(){
-			// 	let that=this;
-			// 	that.basePost(
-			// 		that.U({ c: 'user_api', a: 'user_default_address'}),
-			// 		{},
-			// 		function(res) {
-			// 			that.defaultAddress=res.data;
-			// 		},
-			// 		function(res) {
-			// 			console.log(res);
-			// 		},
-			// 	);
-			// },
+			
 			//创建订单编号
 			settlement(){ 
 				let that=this;
@@ -257,12 +240,6 @@
 							total_price:that.sumPrice
 						}
 						that.updatePayStatus();
-						// // #ifdef MP-WEIXIN
-						// 	uni.navigateTo({
-						// 		url:"/pages/user/confirm_payment/confirm_payment?orderInfo="+JSON.stringify(orderInfo)
-						// 	})
-						// // #endif
-						
 						// #ifdef APP-PLUS
 							that.requestPayment();
 						// #endif
@@ -273,6 +250,7 @@
 					}
 				);
 			},
+			
 			//用茶树商品的购物车id生成一个订单
 			getOrderInfo(cartId){
 				let that = this;
@@ -282,7 +260,6 @@
 						cartId:cartId
 					},
 					function(res) { 
-						console.log(res);
 						that.cartInfo = that.SortData(res.data.cartInfo);
 						that.orderKey=res.data.orderKey;
 						that.settlement();
@@ -292,6 +269,7 @@
 					}
 				);
 			},
+			
 			// 立即购买
 			purchase() {
 				let that = this;
@@ -317,6 +295,7 @@
 					true
 				);
 			},
+			
 			//获取茶树信息进行展示
 			getTreeInfo(){
 				let that = this;
@@ -338,6 +317,8 @@
 					true
 				);
 			},
+			
+			// 返回上一个页面
 			navToBack(){
 				uni.navigateBack({
 					delta:1

@@ -100,10 +100,11 @@
     "autoclose": false
   },
   "appname": "啄啄茶庄",
-  "compilerVersion": "2.6.1",
+  "compilerVersion": "2.6.5",
   "usingComponents": {
     "sunui-star": "/components/sunui-star/sunui-star",
     "uni-load-more": "/components/uni-load-more/uni-load-more",
-    "num-scroll": "/components/numScroll"
+    "num-scroll": "/components/numScroll",
+    "city-select": "/components/linzq-citySelect/linzq-citySelect"
   }
 }

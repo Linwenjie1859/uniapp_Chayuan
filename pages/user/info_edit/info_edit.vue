@@ -53,8 +53,16 @@ export default {
 							'Content-Type': 'multipart/form-data'
 						},
 						success: function(res) {
+							if(res.data.indexOf("413 Request Entity Too Large")!=-1 || res.statusCode == 413){
+								uni.showToast({
+									title: '上传的文件过大,请重新上传',
+									icon: 'none',
+									mask: false,
+									duration: 3000
+								});
+								return;
+							}
 							var data = JSON.parse(res.data);
-							console.log(data);
 							_self.userInfo.avatar= data.data.url;	//服务器
 							// _self.userInfo.avatar= _self.url+data.data.url;	//本地
 							uni.showToast({
@@ -63,6 +71,9 @@ export default {
 								mask: false,
 								duration: 1000
 							});
+						},
+						fail:function(res){
+							console.log(res);
 						}
 					});
 				}

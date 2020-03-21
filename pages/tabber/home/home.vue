@@ -4,20 +4,20 @@
 		 	<view class="absolute" style="width: 100%;" :style="{'padding-top':StatusBarHeight+'px','background-color':'rgba(255,255,255,'+headerOpacity+')'}">
 		 		<view class="flex align-center justify-between margin-lr-sm padding-tb-xs" >
 		 			<view class="flex align-center" :class="{'text-grey':headerOpacity==1,'text-white':headerOpacity!=1}"> 
-		 				福州 <text class="cuIcon-unfold margin-left-xs self-center"></text>
+						福州 <text class="cuIcon-unfold margin-left-xs self-center"></text>
 		 			</view>
 					<view class="flex align-center text-grey padding-lr-sm padding-tb-xs justify-between round" :class="{'bg-gray light':headerOpacity==1,'bg-white':headerOpacity!=1}" >
 						<text class="cuIcon-search"></text> 
-						<swiper vertical="true" autoplay="true" circular="true" interval="3000" class="text-sm margin-lr-xs" style="width: 350rpx;height: 32rpx;overflow: hidden; line-height: 40rpx; ">
+						<swiper @tap="navToSearch" vertical="true" autoplay="true" circular="true" interval="3000" class="text-sm margin-lr-xs" style="width: 350rpx;height: 32rpx;overflow: hidden; line-height: 40rpx; ">
 							<swiper-item v-for="(item, index) in allInfo.roll" :key="index" >
 								<text>{{ item.info }}</text>
 							</swiper-item>
 						</swiper>
-						<text class="cuIcon-scan"></text>
+						<text class="cuIcon-scan" @tap="scanCode()"></text>
 					</view>
 					<view class="flex align-center" :class="{'text-grey':headerOpacity==1,'text-white':headerOpacity!=1}">
-						<text class="cuIcon-dianhua margin-right-xs text-xl"></text>
-						<text class="cuIcon-mark text-xl"></text>
+						<text class="cuIcon-dianhua margin-right-xs text-xl" @tap="phoneCall()"></text>
+						<text class="cuIcon-mark text-xl" @tap="functionDome()"></text>
 					</view>
 		 		</view>
 		 	</view>
@@ -58,9 +58,9 @@
 		<!-- 首页活动 End -->
 		
 		<!-- 热门推荐 Start -->
-		<view class="flex flex-direction padding-sm bg-white margin-top-sm radius-sm">
+		<view class="flex flex-direction padding-sm bg-white margin-top-sm radius-sm" :style="{display: (allInfo.info.teaTreeList || allInfo.info.seckillList)?'block':'none'}">
 			<view class="flex flex-direction align-center">
-				<view class="flex align-center justify-center"  @tap="navToMoreTree">
+				<view class="flex align-center justify-center" @tap="navToMoreTree">
 					<text class="text-xl text-black margin-tb-sm">{{allInfo.info.teaTreeTitle}}</text>
 					<text class="cuIcon-roundright margin-left-xs text-xl" > </text>
 				</view>
@@ -71,7 +71,7 @@
 				<view class="flex flex-direction radius-sm shadow-warp bg-white margin-right-sm">
 					<swiper class="square-dot" :indicator-dots="true" :circular="true"
 					 :autoplay="true" interval="5000" duration="500" style="height: 340rpx;width: 345rpx;">
-						<swiper-item v-for="(item, index) in allInfo.info.seckillList" :key="index">
+						<swiper-item v-for="(item, index) in allInfo.info.seckillList" :key="index" @tap="navToSeckill">
 							<view class="radius-top-sm bg-center" :style="[{'background-image':'url('+item.image+')' }]"  style="width: 345rpx;height: 230rpx;">
 								<view class="bg-gradual-orange text-xs has-radius padding-xs" style="max-width: 200rpx;">
 									距结束 {{seckillTimeString[index]}}
@@ -88,7 +88,7 @@
 				<view class="flex flex-direction radius-sm shadow-warp bg-white" style="width: 345rpx;">
 					<view class="flex bg-gray light radius-top-sm padding-xs">
 						<text class="text-df">茶树热榜</text>
-						<text class="cuIcon-roundrightfill margin-left-xs text-lg text-gray"> </text>
+						<text class="cuIcon-roundrightfill margin-left-xs text-lg text-gray" @tap="navToMoreTree"> </text>
 					</view>
 					<view class="flex flex-direction margin-top-sm padding-lr-xs" style="width: 345rpx;">
 						<view class="flex margin-bottom-xs" v-for="(item, index) in allInfo.info.teaTreeList" :key="index" :data-id="item.id" @tap="navToTreeDetails">
@@ -106,7 +106,7 @@
 		
 
 		<!-- 目的地推荐 Start-->
-		<view class="flex flex-direction padding-sm bg-white margin-top-sm radius-sm">
+		<view class="flex flex-direction padding-sm bg-white margin-top-sm radius-sm" :style="{display: allInfo.info.viewList?'block':'none'}">
 			<view class="flex flex-direction align-center">
 				<view class="flex align-center justify-center">
 					<text class="text-xl text-black margin-tb-sm">{{allInfo.info.viewTitle}}</text>
@@ -117,15 +117,15 @@
 			<scroll-view scroll-x="true" style="height: 350rpx;">
 				<view class="flex">
 					<view class="flex flex-direction margin-right-sm align-start" style="width: 600rpx;height: 350rpx" v-for="(item, index) in allInfo.info.viewList" :key="index"  @tap="navToScenicDetail(item.id)">
-						<view class="flex flex-direction justify-between bg-center align-center text-white" :style="[{'background-image':'url('+item.image+')' }]" style="height: 350rpx;width: 600rpx;">
-							<view class="flex text-white has-bg-black radius-sm self-end padding-lr-sm padding-tb-xs margin-sm"> 
+						<view class="flex flex-direction justify-end bg-center align-center text-white" :style="[{'background-image':'url('+item.image+')' }]" style="height: 350rpx;width: 600rpx;">
+						<!-- 	<view class="flex text-white has-bg-black radius-sm self-end padding-lr-sm padding-tb-xs margin-sm"> 
 								<view class="flex flex-direction justify-between">
 									<text class="text-df self-start text-bold">
 										<text class="text-lx">2020</text>
 									</text>
 									<text class="text-df">February</text>
 								</view>
-							</view>
+							</view> -->
 							
 							<view class="flex flex-direction align-center">
 								<text class="text-lg text-bold ">{{item.title}}</text>
@@ -140,7 +140,7 @@
 		
 		
 		<!-- 精选游记 Start -->
-		<view class="flex flex-direction padding-sm bg-white margin-top-sm radius-sm">
+		<view class="flex flex-direction padding-sm bg-white margin-top-sm radius-sm" :style="{display: allInfo.info.articleList?'block':'none'}">
 			<view class="flex flex-direction align-center">
 				<view class="flex align-center justify-center">
 					<text class="text-xl text-black margin-tb-sm">{{allInfo.info.articleTitle}}</text>
@@ -175,7 +175,7 @@
 		<!-- 精选游记 End -->
 		
 		
-		<view class="flex flex-direction bg-white margin-top-sm padding-sm radius-sm">
+		<view class="flex flex-direction bg-white margin-top-sm padding-sm radius-sm" :style="{display: allInfo.info.goodsList?'block':'none'}">
 			<view class="flex justify-between align-center padding-tb-sm">
 				<text class="text-xl">{{allInfo.info.goodsTitle}}</text>
 				<view class="flex text-grey text-lg align-center" @tap="navToMoreGoods">
@@ -202,6 +202,7 @@
 
 <script>
 	let time;
+	import Citys from '@/components/city.js';
 export default {
 	data() {
 		return {
@@ -228,12 +229,11 @@ export default {
 	},
 	onLoad() {
 		this.getHomeAllInfo();
-		console.log(this.changeTimeStyle());
 	},
 	onReady() {
 		let that=this;
 		that.time = setInterval(()=>{ 
-			console.log(1111);
+			console.log(1);
 			if(that.absoluteFlag){
 				setTimeout(()=>{
 					clearInterval(that.time);
@@ -241,15 +241,48 @@ export default {
 					 selectorQuery.select('#is-absolute-nav').boundingClientRect((data)=>{
 						that.absoluteHeight=data.height-30;
 					 }).exec();
-				},550)
+				},800)
 			}
-		},200)
+		},100)
 	}, 
 
 	onPullDownRefresh() {
 		this.getHomeAllInfo();
 	},
 	methods: {
+	
+		// 拨打电话功能
+		phoneCall(){
+			uni.makePhoneCall({
+				phoneNumber:"15884424595",
+				success: (res) => {
+					console.log(res);
+				},
+				fail: (res) => {
+					console.log(res);
+				}
+			})
+		},
+		// 开启扫码功能
+		scanCode(){
+			uni.scanCode({
+				success: (res) => {
+					if(res.result!=''){
+						uni.showToast({
+							title:"扫描内容为:"+res.result,
+							icon:"none"
+						})
+					}
+				},
+				fail: (err) => {
+					uni.showToast({
+						title:"关闭扫码功能",
+						icon:"none"
+					})
+				},
+			})
+		},
+		
 		changeTimeStyle(totaltime){
 			let timeData ='';
 			var h, m, s, d
@@ -359,7 +392,17 @@ export default {
 			uni.navigateTo({
 				url: '/pages/tabber/home/scenic_detail/scenic_detail?id='+id
 			})
-		}
+		},
+		navToSeckill(){
+			uni.navigateTo({
+				url:'/pages/seckill/seckill'
+			})
+		},
+		navToSearch() {
+			uni.navigateTo({
+				url: '/pages/list/search/search'
+			});
+		},
 	
 	}
 };

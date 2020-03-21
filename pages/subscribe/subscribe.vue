@@ -36,7 +36,7 @@
 				</view>
 				<text>前往庄园</text>
 			</view>
-			<view class="flex flex-direction align-center">
+			<view class="flex flex-direction align-center"  @tap="shareInfo()">
 				<view class="cuIcon-share text-sl cu-avatar">
 					<!-- <view class="cu-tag badge bg-red">2</view> -->
 				</view>
@@ -67,6 +67,22 @@ export default {
 		this.getTreeAllInfo();
 	},
 	methods: {
+		shareInfo(){
+			uni.share({
+				provider:"weixin",
+				type:0,
+				scene:"WXSceneSession",
+				title:"QQ分享",
+				href:"www.baidu.com",
+				imageUrl:"http://chayuan.vswxx.top/public/uploads/attach/2020/03/12/5e698c08b5768.png",
+				success: (res) => {
+					console.log(res);
+				},
+				fail: (res) => {
+					console.log("err",res);
+				}
+			})
+		},
 		getTreeAllInfo() {
 			let that = this;
 			that.baseGet(
@@ -86,8 +102,22 @@ export default {
 		},
 		navToMap() {
 			let that=this;
-			uni.navigateTo({
-				url:"/pages/map/map?mapInfo="+JSON.stringify(that.farmProduceList.merInfo[0].list[0])
+			// uni.navigateTo({
+			// 	url:"/pages/map/map?mapInfo="+JSON.stringify(that.farmProduceList.merInfo[0].list[0])
+			// })
+			uni.getLocation({
+			 type: 'gcj02', //返回可以用于uni.openLocation的经纬度 
+				success: function (res) {
+					const latitude = res.latitude;
+					const longitude = res.longitude;
+					uni.openLocation({
+						latitude: latitude,
+						longitude: longitude,
+						success: function () {
+							
+						},
+					});
+				}
 			})
 		},
 		farmProduceInfo() {

@@ -1,8 +1,10 @@
 <template>
 	<view class="flex flex-direction ">
-		<view class="flex align-center justify-between bg-white" :style="{'height':StatusAddNav+'px'}" style="width: 750rpx;">
+		<view class="flex align-center justify-between bg-white " :style="{'height':StatusAddNav+'px'}" style="width: 750rpx;">
 			<text class="cuIcon-back text-xxl text-grey padding-left-sm" @tap="navToBack" :style="{'margin-top':StatusAddHalfNav+'px'}"></text>
-			<input class="flex round text-lg text-center" style="border: 1rpx solid rgba(0,0,0,0.3);" @tap="search" :style="{'margin-top':StatusAddHalfNav+'px'}" placeholder="搜索商品" disabled/>
+			<view class="flex align-center text-grey padding-lr-sm padding-tb-xs justify-center round bg-gray light" style="width: 350rpx;" @tap="navToSearch" :style="{'margin-top':StatusAddHalfNav+'px'}">
+				<text class="text-sm text-grey" >搜索商品</text>
+			</view>
 			<text class="cuIcon-cart text-xxl text-grey padding-right" @tap="switToShoppingCart" :style="{'margin-top':StatusAddHalfNav+'px'}"></text>
 		</view>
 		
@@ -362,7 +364,7 @@ export default {
 			this.getSortGoods();
 		},
 		// 搜索商品
-		search(e) {
+		navToSearch(e) {
 			uni.navigateTo({
 				url: '/pages/list/search/search'
 			});

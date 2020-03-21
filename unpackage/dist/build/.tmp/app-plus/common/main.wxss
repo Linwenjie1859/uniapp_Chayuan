@@ -94,11 +94,38 @@
   （QQ交流群：240787041）
 */
 /* ==================
-        修改代码
+        绝对定位补充
  ==================== */
+.fixed{
+	 position: fixed;
+}
+.relative{
+	 position: relative;
+}
+.absolute{
+	 position: absolute;
+}
 /* ==================
         补充代码
  ==================== */
+.text-line-through {
+ 	text-decoration: line-through;
+}
+.bg-center{
+	 background-position: center;
+	 background-size: cover;
+}
+.has-bg-black {
+ 	background-color: rgba(0,0,0, 0.3);
+}
+.has-bottom-lr-radius{
+ 	border-bottom-left-radius: 30rpx;
+ 	border-bottom-right-radius: 30rpx;
+}
+.has-top-tb-radius{
+ 	border-top-left-radius: 30rpx;
+ 	border-top-right-radius: 30rpx;
+}
 .text-indent{
 	 text-indent:4rpx;
 }
@@ -146,6 +173,17 @@ image {
 }
 .radius {
  	border-radius: 8rpx;
+}
+.radius-sm {
+ 	border-radius: 16rpx;
+}
+.radius-top-sm {
+	border-top-left-radius: 16rpx;
+	border-top-right-radius: 16rpx;
+}
+.radius-bottom-sm {
+ 	border-bottom-left-radius: 16rpx;
+ 	border-bottom-right-radius: 16rpx;
 }
 /* ==================
           图片
