@@ -19,6 +19,7 @@
 						<text class="cuIcon-dianhua margin-right-xs text-xl" @tap="phoneCall()"></text>
 						<text class="cuIcon-mark text-xl" @tap="functionDome()"></text>
 					</view>
+					
 		 		</view>
 		 	</view>
 		 </view>
