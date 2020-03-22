@@ -117,35 +117,7 @@
 				
 			</view>
 		</view>
-		<!-- 模态窗 Start -->
-		<view class="cu-modal bottom-modal" :class="payModalFlag?'show':''">
-			<view class="cu-dialog">
-				<view class="cu-bar bg-white solid-bottom">
-					<view class="action text-grey" @tap="hideOrOpenModal"><text class="cuIcon-close text-xxl"></text></view>
-					<view class="action text-black">确认付款</view>
-					<view class="action text-blue"><text class="cuIcon-question text-xxl"></text></view>
-				</view>
-				<view class="padding-xl bg-white">
-					<view class="flex flex-direction">
-						<view class="flex align-center justify-center">
-							<text class="text-has-size text-price text-black text-bold">{{sumPrice}}</text>
-						</view>
-						<view class="flex align-center justify-between margin-tb-sm">
-							<text class="text-grey">订单编号</text>
-							<text class=" text-black ">{{orderId}}</text>
-						</view>
-						<view class="flex align-center justify-between ">
-							<text class="text-grey">付款方式</text>
-							<text class=" text-black ">支付宝</text>
-						</view>
-					</view>
-				</view>
-				<view class="bg-has-gray light padding text-black" @tap="payMoney">
-					立即付款
-				</view>
-			</view>
-		</view>
-		<!-- 模态窗 End -->
+		
 	</view>
 </template>
 
@@ -153,6 +125,7 @@
 	export default {
 		data() {
 			return {
+				time:'',
 				orderId:'',		//订单提交后获得信息显示在模态窗中
 				payModalFlag:false,
 				array: [
@@ -245,35 +218,7 @@
 			},
 		},
 		methods: {
-			//进行支付跳转操作
-			payMoney(){
-				let that=this;
-				that.basePost(
-					that.U({ c: 'pay', a: 'pay'}),
-					{
-						reqsn:that.orderId,
-						sumPrice:that.sumPrice,
-						paytype:'A03',
-					},
-					function(res) {
-						uni.showToast({
-							title:res.data.errmsg,
-							icon:'none'
-						})
-						that.hideOrOpenModal();
-					},
-					function(res) {
-						console.log(res);
-					},
-				);
-			},
-			// 关闭支付窗口
-			hideOrOpenModal(){
-				this.payModalFlag= false;
-				uni.redirectTo({
-					url:'/pages/user/order_details/order_details?order_id='+this.orderId
-				})
-			},
+		
 			// 处理接口数据将价钱转成浮点型
 			dealData(data){
 				for(let i=0;i<data.length;i++){
@@ -377,7 +322,7 @@
 					that.U({ c: 'auth_api', a: 'create_order'}),
 					{
 						mer_id:that.cartInfo[0].mer_id,
-						key:that.orderKey,
+						key:that.orderKey, 
 						addressId:that.defaultAddress.id,
 						couponId:that.array[that.couponIndex].id,
 						userIntegral:that.createOrder.userIntegral,
@@ -386,18 +331,13 @@
 					},
 					function(res) { 
 						that.orderId=res.data.result.orderId;
-						
 						// #ifdef APP-PLUS
-							that.requestPayment();
+							that.requestPayment(res.data.result.orderId);
+							// 定时轮询结果
+							that.time=setInterval(()=>{
+								that.watchPayStatus(res.data.result.orderId);
+							},1000);
 						// #endif
-						// that.payModalFlag=true;
-						// let orderInfo={
-						// 	order_id:res.data.result.orderId,
-						// 	total_price:that.sumPrice
-						// }
-						// uni.redirectTo({
-						// 	url:"/pages/user/confirm_payment/confirm_payment?orderInfo="+JSON.stringify(orderInfo)
-						// })
 					},  
 					function(res) {
 						console.log(res);
@@ -405,11 +345,11 @@
 				);
 			},
 			
-			async requestPayment() {
-			    this.providerList[0].loading = true;
-			    let orderInfo = await this.getOrderInfo_uniapp(this.providerList[0].id);
+			async requestPayment(order_id) {
+				let that=this;
+			    that.providerList[0].loading = true;
+			    let orderInfo = await that.getOrderInfo_uniapp(that.providerList[0].id);
 			    if (orderInfo.statusCode !== 200) {
-			        console.log("获得订单信息失败", orderInfo);
 			        uni.showModal({
 			            content: "获得订单信息失败",
 			            showCancel: false
@@ -417,21 +357,24 @@
 			        return;
 			    }
 			    uni.requestPayment({
-			        provider: this.providerList[0].id,
+			        provider: that.providerList[0].id,
 			        orderInfo: orderInfo.data,
 			        success: (e) => {
 			            uni.showToast({
-			                title: "感谢您的赞助!"
+			                title: "支付成功!"
 			            })
+						that.updateProductPayStatus(order_id);		//这一步是由后台回调处理的，本不应该出现在前端
 			        },
 			        fail: (e) => {
 			            uni.showModal({
-			                content: "支付失败,原因为: " + e.errMsg,
+			                content: "用户退出支付，支付失败",
 			                showCancel: false
 			            })
+						that.updateProductPayStatus(order_id);		//这一步是由后台回调处理的，本不应该出现在前端
+						clearInterval(that.time);
 			        },
 			        complete: () => {
-			            this.providerList[1].loading = false;
+			            that.providerList[1].loading = false;
 			        }
 			    })
 			},
@@ -454,6 +397,51 @@
 			        })
 			    })
 			},
+			//定时查询是否已经支付
+			watchPayStatus(order_id){
+				let that = this;
+				that.baseGet(
+					that.U({
+						c: 'store_api',
+						a: 'watch_pay_status',
+						q: {
+							order_id: order_id,
+						}
+					}),
+					function(res) {
+						if(res.data.paid==1){
+							clearInterval(that.time);
+							uni.redirectTo({
+								url:"/pages/shop/successful_payment/successful_payment"
+							})
+						}
+					},
+					function(res) {
+						console.log(res);
+					},
+					true
+				);
+			},
+			
+			//支付成功之后修改订单状态
+			updateProductPayStatus(order_id){
+				let that = this;
+				that.baseGet(
+					that.U({
+						c: 'store_api',
+						a: 'update_product_pay_status',
+						q: {
+							order_id: order_id,
+						}
+					}),
+					function(res) {
+					},
+					function(res) {
+					},
+					true
+				);
+			},
+			
 		}
 	}
 </script>

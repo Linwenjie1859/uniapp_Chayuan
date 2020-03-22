@@ -115,45 +115,9 @@
 					<text class="text-price text-red text-df margin-left-xs">{{priceGroup.totalPrice}}</text>
 				</view>
 				<view class="bg-gradual-green round  cu-btn" @tap="settlement">提交订单</view>
-				
-				<!-- #ifdef APP-PLUS -->
-			<!-- 	<template v-if="providerList.length > 0">
-					<view class="bg-gradual-green round  cu-btn"   @click="requestPayment(providerList[0],0)"
-				        :loading="item.loading">提交订单</view>
-				</template> -->
-				<!-- #endif -->
-				
 			</view>
 		</view>
-		<!-- 模态窗 Start -->
-		<view class="cu-modal bottom-modal" :class="payModalFlag?'show':''">
-			<view class="cu-dialog">
-				<view class="cu-bar bg-white solid-bottom">
-					<view class="action text-grey" @tap="hideOrOpenModal"><text class="cuIcon-close text-xxl"></text></view>
-					<view class="action text-black">确认付款</view>
-					<view class="action text-blue"><text class="cuIcon-question text-xxl"></text></view>
-				</view>
-				<view class="padding-xl bg-white">
-					<view class="flex flex-direction">
-						<view class="flex align-center justify-center">
-							<text class="text-has-size text-price text-black text-bold">{{priceGroup.totalPrice}}</text>
-						</view>
-						<view class="flex align-center justify-between margin-tb-sm">
-							<text class="text-grey">订单编号</text>
-							<text class=" text-black ">{{orderId}}</text>
-						</view>
-						<view class="flex align-center justify-between ">
-							<text class="text-grey">付款方式</text>
-							<text class=" text-black ">支付宝</text>
-						</view>
-					</view>
-				</view>
-				<view class="bg-has-gray light padding text-black" @tap="payMoney">
-					立即付款
-				</view>
-			</view>
-		</view>
-		<!-- 模态窗 End -->
+
 	</view>
 </template>
 
@@ -161,8 +125,8 @@
 	export default {
 		data() {
 			return {
+				time:'',
 				priceGroup:{},
-				payModalFlag:false,
 				array: [
 					{
 						coupon_title:'未选择',
@@ -278,36 +242,7 @@
 					true
 				);
 			},
-			//进行支付跳转操作
-			payMoney(){
-				let that=this;
-				that.basePost(
-					that.U({ c: 'pay', a: 'pay'}),
-					{
-						reqsn:that.orderId,
-						sumPrice:that.sumPrice,
-						paytype:'A03',
-					},
-					function(res) {
-						uni.showToast({
-							title:res.data.errmsg,
-							icon:'none'
-						})
-						that.hideOrOpenModal();
-						
-					},
-					function(res) {
-						console.log(res);
-					},
-				);
-			},
-			// 关闭支付窗口
-			hideOrOpenModal(){
-				this.payModalFlag= false;
-				uni.redirectTo({
-					url:'/pages/user/order_details/order_details?order_id='+this.orderId
-				})
-			},
+			
 			
 			//获取默认收货地址
 			getAddressList(){
@@ -400,20 +335,19 @@
 						type:3,						//type:3代表兑换商品,和type:1功能一样
 					},
 					function(res) { 
+						console.log(res);
 						that.orderId=res.data.result.orderId;
-						// that.payModalFlag=true;
 						that.id=res.data.result.id;
-						that.updatePayStatus();
-						that.requestPayment();
-						// let orderInfo={
-						// 	order_id:res.data.result.orderId,
-						// 	total_price:that.sumPrice
-						// }
-						// uni.redirectTo({
-						// 	url:"/pages/user/confirm_payment/confirm_payment?orderInfo="+JSON.stringify(orderInfo)
-						// })
+						// #ifdef APP-PLUS
+							that.requestPayment();
+							// 定时轮询结果
+							that.time=setInterval(()=>{
+								that.watchPayStatus();
+							},1000);
+						// #endif
 					},  
 					function(res) {
+						console.log(res);
 						uni.showToast({
 							title:res.msg,
 							icon:"none"
@@ -421,8 +355,35 @@
 					}
 				);
 			},
+			//定时查询是否已经支付
+			watchPayStatus(){
+				let that = this;
+				that.baseGet(
+					that.U({
+						c: 'store_api',
+						a: 'watch_pay_status',
+						q: {
+							order_id: that.orderId,
+						}
+					}),
+					function(res) {
+						console.log(that.orderId);
+						if(res.data.paid==1){
+							clearInterval(that.time);
+							uni.redirectTo({
+								url:"/pages/shop/successful_payment/successful_payment"
+							})
+						}
+					},
+					function(res) {
+						console.log(res);
+					},
+					true
+				);
+			},
 			
 			async requestPayment() {
+				let that= this;
 			    this.providerList[0].loading = true;
 			    let orderInfo = await this.getOrderInfo_uniapp(this.providerList[0].id);
 			    if (orderInfo.statusCode !== 200) {
@@ -438,14 +399,17 @@
 			        orderInfo: orderInfo.data,
 			        success: (e) => {
 			            uni.showToast({
-			                title: "感谢您的赞助!"
+			                title: "支付成功!"
 			            })
+						that.updatePayStatus();
 			        },
 			        fail: (e) => {
 			            uni.showModal({
-			                content: "支付失败,原因为: " + e.errMsg,
+			                content: "用户退出支付，支付失败",
 			                showCancel: false
 			            })
+						that.updatePayStatus();
+						clearInterval(that.time);
 			        },
 			        complete: () => {
 			            this.providerList[1].loading = false;

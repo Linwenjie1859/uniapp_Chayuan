@@ -86,6 +86,11 @@ export default {
 	},
 	data() {
 		return {
+			order_id:'',	//订单编号id
+			product_id:'',	//商品id，只有当type为3时该属性有用
+			type:'',		//商品的类型1:商品  3:兑换商品
+ 			time:'',
+			providerList: [],	//支付列表
 			currentLoadFlag: true,
 			newsList: [], //全部宝贝、新品、活动数组集合
 			tabIndex: 0, //当前下标
@@ -112,6 +117,38 @@ export default {
 	onLoad(e) {
 		this.initInfo();
 		this.tabIndex = e.index;
+		// #ifdef APP-PLUS
+		uni.getProvider({
+		    service: "payment",
+		    success: (e) => {
+		        let providerList = [];
+		        e.provider.map((value) => {
+		            switch (value) {
+		                case 'alipay':
+		                    providerList.push({
+		                        name: '支付宝',
+		                        id: value,
+		                        loading: false
+		                    });
+		                    break;
+		                case 'wxpay':
+		                    providerList.push({
+		                        name: '微信',
+		                        id: value,
+		                        loading: false
+		                    });
+		                    break;
+		                default:
+		                    break;
+		            }
+		        })
+		        this.providerList = providerList;
+		    },
+		    fail: (e) => {
+		        console.log("获取支付通道失败：", e);
+		    }
+		});
+		// #endif
 	},
 	onShow() {
 		this.newsList[this.tabIndex].data = [];
@@ -218,14 +255,148 @@ export default {
 		},
 		//立即购买
 		purchase(inde,index) {
-			let json={
-				order_id:this.newsList[inde].data[index].order_id,
-				total_price:this.newsList[inde].data[index].total_price,
-			}
-			uni.navigateTo({
-				url: '/pages/user/confirm_payment/confirm_payment?orderInfo='+JSON.stringify(json)
-			});
+			let that=this;
+			that.order_id = that.newsList[inde].data[index].order_id;
+			that.type = that.newsList[inde].data[index].type;
+			that.product_id = that.newsList[inde].data[index].cartInfo[0].productInfo.id;
+			// #ifdef APP-PLUS
+				//发起支付
+				that.requestPayment();
+				// 定时轮询结果
+				that.time=setInterval(()=>{
+					that.watchPayStatus();
+				},1000);
+			// #endif
+			
 		},
+		async requestPayment() {
+			let that=this;
+		    that.providerList[0].loading = true;
+		    let orderInfo = await that.getOrderInfo_uniapp(that.providerList[0].id);
+		    if (orderInfo.statusCode !== 200) {
+		        uni.showModal({
+		            content: "获得订单信息失败",
+		            showCancel: false
+		        })
+		        return;
+		    }
+		    uni.requestPayment({
+		        provider: that.providerList[0].id,
+		        orderInfo: orderInfo.data,
+		        success: (e) => {
+		            uni.showToast({
+		                title: "支付成功!"
+		            })
+					if(that.type == 3){
+						that.updatePayStatus();						//兑换订单
+					}else{
+						that.updateProductPayStatus();		//商品订单 这一步是由后台回调处理的，本不应该出现在前端
+					}
+		        },
+		        fail: (e) => {
+		            uni.showModal({
+		                content: "用户退出支付，支付失败",
+		                showCancel: false
+		            })
+					if(that.type == 3){
+						that.updatePayStatus();						//兑换订单
+					}else{
+						that.updateProductPayStatus();		//商品订单 这一步是由后台回调处理的，本不应该出现在前端
+					}
+					clearInterval(that.time);
+		        },
+		        complete: () => {
+		            that.providerList[1].loading = false;
+		        }
+		    })
+		},
+		
+		getOrderInfo_uniapp(e) { 
+		    let appid = "";
+		    // #ifdef APP-PLUS
+		    appid = plus.runtime.appid;
+		    // #endif
+		    let url = 'https://demo.dcloud.net.cn/payment/?payid=' + e + '&appid=' + appid + '&total=0.1' ;
+		    return new Promise((res) => {
+		        uni.request({
+		            url: url,
+		            success: (result) => {
+		                res(result);
+		            },
+		            fail: (e) => {
+		                res(e);
+		            }
+		        })
+		    })
+		},
+		
+		//定时查询是否已经支付
+		watchPayStatus(order_id){
+			let that = this;
+			that.baseGet(
+				that.U({
+					c: 'store_api',
+					a: 'watch_pay_status',
+					q: {
+						order_id: order_id,
+					}
+				}),
+				function(res) {
+					if(res.data.paid==1){
+						clearInterval(that.time);
+						uni.redirectTo({
+							url:"/pages/shop/successful_payment/successful_payment"
+						})
+					}
+				},
+				function(res) {
+					console.log(res);
+				},
+				true
+			);
+		},
+		
+		//茶叶商品的订单——支付成功之后修改订单状态
+		updateProductPayStatus(){
+			let that = this;
+			that.baseGet(
+				that.U({
+					c: 'store_api',
+					a: 'update_product_pay_status',
+					q: {
+						order_id: that.order_id,
+					}
+				}),
+				function(res) {
+				},
+				function(res) {
+				},
+				true
+			);
+		},
+		
+		//兑换商品的订单——支付成功之后修改订单状态
+		updatePayStatus(){
+			let that = this;
+			that.baseGet(
+				that.U({
+					c: 'store_api',
+					a: 'exchange_update_pay_status',
+					q: {
+						order_id: that.order_id,
+						product_id:that.product_id,
+					}
+				}),
+				function(res) {
+					console.log(res);
+				},
+				function(res) {
+					console.log(res);
+				},
+				true
+			);
+		},
+		
 		//取消订单
 		closeOrder(order_id, inde, index) {
 			let that = this;

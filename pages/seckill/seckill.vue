@@ -96,6 +96,7 @@
 			//现在立即秒杀
 			nowToSeckill(index){
 				let that=this;
+				that.isLogin();
 				if(!that.isAllowFlag){
 					uni.showToast({
 						title:"当前不是该时段,无法抢购",

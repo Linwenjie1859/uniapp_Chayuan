@@ -23,8 +23,6 @@
     "pages/user/get_coupon/get_coupon",
     "pages/shop/comments_details/comments_details",
     "pages/shop/shop_collection_coupon/shop_collection_coupon",
-    "pages/user/confirmation_transaction/confirmation_transaction",
-    "pages/user/confirm_payment/confirm_payment",
     "pages/user/add_address/add_address",
     "pages/user/confirm_order/confirm_order",
     "pages/user/admin_address/admin_address",

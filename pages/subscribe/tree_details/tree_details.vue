@@ -55,6 +55,7 @@
 	export default {
 		data() {
 			return {
+				time:'',
 				StatusAddNav:this.StatusAddNav,
 				StatusAddHalfNav:this.StatusAddHalfNav,
 				opacityNum:0,
@@ -139,6 +140,7 @@
 			},
 			
 			async requestPayment() {
+				let that=this;
 			    this.providerList[0].loading = true;
 			    let orderInfo = await this.getOrderInfo_uniapp(this.providerList[0].id);
 			    if (orderInfo.statusCode !== 200) {
@@ -154,14 +156,17 @@
 			        orderInfo: orderInfo.data,
 			        success: (e) => {
 			            uni.showToast({
-			                title: "感谢您的赞助!"
+			                title: "支付成功!"
 			            })
+						that.updatePayStatus();
 			        },
 			        fail: (e) => {
 			            uni.showModal({
-			                content: "支付失败,原因为: " + e.errMsg,
+			                content: "用户退出支付，支付失败",
 			                showCancel: false
 			            })
+						that.updatePayStatus();
+						clearInterval(that.time);
 			        },
 			        complete: () => {
 			            this.providerList[1].loading = false;
@@ -186,6 +191,34 @@
 			            }
 			        })
 			    })
+			},
+			
+			
+			//定时查询是否已经支付
+			watchPayStatus(){
+				let that = this;
+				that.baseGet(
+					that.U({
+						c: 'store_api',
+						a: 'watch_pay_status',
+						q: {
+							order_id: that.orderId,
+						}
+					}),
+					function(res) {
+						console.log(res);
+						if(res.data.paid==1){
+							clearInterval(that.time);
+							uni.redirectTo({
+								url:"/pages/shop/successful_payment/successful_payment"
+							})
+						}
+					},
+					function(res) {
+						console.log(res);
+					},
+					true
+				);
 			},
 			
 			//整理接口返回的数据
@@ -234,14 +267,12 @@
 					function(res) {  
 						that.orderId=res.data.result.orderId;
 						that.id=res.data.result.id;
-						// that.payModalFlag=true;
-						let orderInfo={
-							order_id:res.data.result.orderId,
-							total_price:that.sumPrice
-						}
-						that.updatePayStatus();
 						// #ifdef APP-PLUS
 							that.requestPayment();
+							// 定时轮询结果
+							that.time=setInterval(()=>{
+								that.watchPayStatus();
+							},1000);
 						// #endif
 						
 					},  

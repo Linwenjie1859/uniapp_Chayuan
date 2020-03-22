@@ -99,7 +99,7 @@
     "alwaysShowBeforeRender": true,
     "autoclose": false
   },
-  "appname": "啄啄茶庄",
+  "appname": "啄啄庄园",
   "compilerVersion": "2.6.5",
   "usingComponents": {
     "sunui-star": "/components/sunui-star/sunui-star",

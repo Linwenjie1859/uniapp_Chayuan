@@ -1,5 +1,5 @@
 {
-    "name" : "啄啄茶庄",
+    "name" : "啄啄庄园",
     "appid" : "__UNI__B2A99FF",
     "description" : "1",
     "versionName" : "1.0.0",
@@ -69,7 +69,7 @@
                 "share" : {},
                 "maps" : {
                     "amap" : {
-                        "appkey_ios" : "765221e90b50cdf110ba4992e29f22c4",
+                        "appkey_ios" : "0000000",
                         "appkey_android" : "765221e90b50cdf110ba4992e29f22c4"
                     }
                 }
@@ -104,6 +104,11 @@
                         "spotlight@2x" : "unpackage/res/icons/80x80.png",
                         "spotlight@3x" : "unpackage/res/icons/120x120.png"
                     }
+                }
+            },
+            "splashscreen" : {
+                "android" : {
+                    "xxhdpi" : "D:/数据存储位置/GoogleChrome/loading_page.png"
                 }
             }
         }

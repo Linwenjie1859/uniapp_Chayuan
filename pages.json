@@ -1,11 +1,5 @@
 {
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
-		// {
-		//     "path" : "pages/loading_page/loading_page",
-		//     "style" : {
-		// 		"navigationStyle": "custom" 
-		// 	}
-		// },
 		{
 			"path": "pages/tabber/home/home",
 			"style": {
@@ -163,16 +157,6 @@
 			"style": {
 				"navigationBarTitleText": "优惠券详情",
 				"enablePullDownRefresh": true
-			}
-		}, {
-			"path": "pages/user/confirmation_transaction/confirmation_transaction",
-			"style": {
-				"navigationBarTitleText": "确认交易"
-			}
-		}, {
-			"path": "pages/user/confirm_payment/confirm_payment",
-			"style": {
-				"navigationBarTitleText": "确认支付"
 			}
 		}, {
 			"path": "pages/user/add_address/add_address",

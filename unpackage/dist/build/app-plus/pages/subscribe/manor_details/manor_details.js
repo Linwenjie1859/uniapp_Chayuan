@@ -1,2 +1,2 @@
-setCssToHead([".",[1],"has-radius.",[1],"data-v-b9c6e222{ border-top-left-radius: ",[0,8],"; border-top-right-radius: ",[0,8],"; }\n.",[1],"has-sub-margin-xs.",[1],"data-v-b9c6e222{ margin-left: ",[0,-10],"; }\n",],undefined,{path:"./pages/subscribe/manor_details/manor_details.wxss"})();
+setCssToHead([".",[1],"has-radius.",[1],"data-v-6ee0cc90{ border-top-left-radius: ",[0,8],"; border-top-right-radius: ",[0,8],"; }\n.",[1],"has-sub-margin-xs.",[1],"data-v-6ee0cc90{ margin-left: ",[0,-10],"; }\n",],undefined,{path:"./pages/subscribe/manor_details/manor_details.wxss"})();
 document.dispatchEvent(new CustomEvent("generateFuncReady", { detail: { generateFunc: $gwx('./pages/subscribe/manor_details/manor_details.wxml') } }));
